@@ -41,12 +41,12 @@ export const insertPreRegistrationSchema = createInsertSchema(preRegistrations).
   asaasPixPaymentId: true,
   asaasBoletoPaymentId: true,
   asaasCreditCardPaymentId: true,
+  paymentMethod: true, // Removido - só é definido após pagamento confirmado
   paymentStatus: true,
   createdAt: true,
 }).extend({
   cpf: z.string().min(11, "CPF deve ter 11 dígitos").max(14, "CPF inválido"),
   amount: z.number().min(1, "Valor deve ser positivo"),
-  paymentMethod: z.enum(["PIX", "BOLETO", "CREDIT_CARD"]).optional(),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
