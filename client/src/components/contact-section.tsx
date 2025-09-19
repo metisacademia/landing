@@ -47,11 +47,11 @@ export default function ContactSection() {
                   <h3 className="text-lg font-semibold mb-2">E-mail</h3>
                   <p className="text-muted-foreground mb-2">Atendimento e informações</p>
                   <a 
-                    href="mailto:atendimento@metis.com.br" 
+                    href="mailto:atendimento@metisacademia.com.br" 
                     className="text-primary hover:underline font-medium"
                     data-testid="link-email"
                   >
-                    atendimento@metis.com.br
+                    atendimento@metisacademia.com.br
                   </a>
                 </div>
               </div>
