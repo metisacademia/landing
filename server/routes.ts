@@ -4,17 +4,27 @@ import { storage } from "./storage";
 import { insertPreRegistrationSchema } from "@shared/schema";
 import { z } from "zod";
 
-const ASAAS_API_KEY = process.env.NODE_ENV === 'production' 
-  ? process.env.ASAAS_API_KEY
-  : process.env.ASAAS_SANDBOX_API_KEY || process.env.ASAAS_API_KEY;
+// Use PRODUCTION by default, unless ASAAS_USE_SANDBOX is explicitly set to 'true'
+const USE_SANDBOX = process.env.ASAAS_USE_SANDBOX === 'true';
+
+console.log('🔧 ASAAS CONFIGURATION:');
+console.log('ASAAS_USE_SANDBOX:', process.env.ASAAS_USE_SANDBOX);
+console.log('Using SANDBOX mode:', USE_SANDBOX);
+
+const ASAAS_API_KEY = USE_SANDBOX
+  ? process.env.ASAAS_SANDBOX_API_KEY
+  : process.env.ASAAS_API_KEY;
 
 if (!ASAAS_API_KEY) {
   throw new Error('Missing required Asaas secret: ASAAS_API_KEY or ASAAS_SANDBOX_API_KEY');
 }
 
-const ASAAS_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://api.asaas.com/v3'
-  : 'https://api-sandbox.asaas.com/v3';
+const ASAAS_BASE_URL = USE_SANDBOX
+  ? 'https://api-sandbox.asaas.com/v3'
+  : 'https://api.asaas.com/v3';
+
+console.log('Selected API Key from:', USE_SANDBOX ? 'SANDBOX' : 'PRODUCTION');
+console.log('Using URL:', ASAAS_BASE_URL);
 
 const ASAAS_HEADERS = {
   'access_token': ASAAS_API_KEY,
