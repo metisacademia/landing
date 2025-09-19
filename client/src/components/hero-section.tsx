@@ -29,13 +29,16 @@ export default function HeroSection() {
         <div className="max-w-4xl text-left text-white ml-8">
           
           
-          <h2 className="lg:text-5xl font-semibold mb-8 text-white drop-shadow-2xl text-left text-[40px]" data-testid="hero-headline">
-            Liberte seu potencial.<br />
+          <h1 className="lg:text-5xl font-semibold mb-4 text-white drop-shadow-2xl text-left text-[40px]" data-testid="hero-main-title">
+            Liberte seu potencial.
+          </h1>
+          
+          <h2 className="text-2xl lg:text-3xl font-medium mb-8 text-white drop-shadow-xl text-left" data-testid="hero-subtitle">
             Exercite sua mente. Cultive sua memória.
           </h2>
           
           <p className="text-lg lg:text-xl mb-10 leading-relaxed max-w-3xl text-white/90 drop-shadow-xl text-left" data-testid="hero-description">
-            A Métis é um espaço premium de estímulo cognitivo que combina ciência, cultura e convivência em grupos de até 6 pessoas.
+            A Métis é um espaço premium de estímulo cognitivo que combina ciência, cultura e conhecimento.
           </p>
           
           <div className="flex justify-start">
