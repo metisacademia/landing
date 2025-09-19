@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useLocation } from "wouter";
 
 export default function PricingSection() {
+  const [, setLocation] = useLocation();
+  
   const plans = [
     {
       name: "Mensal",
@@ -35,16 +38,6 @@ export default function PricingSection() {
     }
   ];
 
-  const navigateToCheckout = (plan: string) => {
-    window.location.href = `/checkout?plan=${plan}`;
-  };
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <section id="planos" className="py-20 bg-muted/30">
@@ -54,7 +47,7 @@ export default function PricingSection() {
             Planos & Adesão
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto" data-testid="pricing-description">
-            Pré-matrícula com vantagens exclusivas e prioridade de horários. Escolha o plano ideal para você.
+            Pré-matrícula com vantagens exclusivas e prioridade de horários. Conheça nossos planos e garanta sua vaga.
           </p>
         </div>
 
@@ -94,17 +87,6 @@ export default function PricingSection() {
                   >
                     Economia R$ {plan.savings}
                   </Badge>
-                  <Button 
-                    onClick={() => navigateToCheckout(plan.testId)}
-                    className={`w-full py-3 rounded-lg font-semibold transition-colors ${
-                      plan.isPopular 
-                        ? 'bg-accent text-accent-foreground hover:bg-accent/90' 
-                        : 'bg-primary text-primary-foreground hover:bg-primary/90'
-                    }`}
-                    data-testid={`plan-${plan.testId}-button`}
-                  >
-                    Escolher Plano
-                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -112,7 +94,14 @@ export default function PricingSection() {
         </div>
 
         <div className="text-center mt-12">
-          <p className="text-muted-foreground mb-4" data-testid="guarantee-text">
+          <Button 
+            onClick={() => setLocation('/checkout')}
+            className="bg-yellow-500 text-black px-12 py-6 rounded-lg font-semibold text-xl hover:bg-yellow-400 transition-colors shadow-2xl border-2 border-transparent mb-6"
+            data-testid="button-pre-matricula-pricing"
+          >
+            Pré matrícula R$ 250
+          </Button>
+          <p className="text-muted-foreground" data-testid="guarantee-text">
             Satisfação garantida: se, após a aula experimental, você não perceber valor, devolvemos a pré-matrícula.
           </p>
         </div>
