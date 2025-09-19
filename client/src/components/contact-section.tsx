@@ -95,7 +95,7 @@ export default function ContactSection() {
 
           <Card className="p-1 shadow-lg border-border overflow-hidden" data-testid="contact-map">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.0808400832!2d-34.9108806!3d-8.0478829!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab18a35c2b63c7%3A0x5be9e46c9c07e4ea!2sKronos%20Empresarial!5e0!3m2!1spt!2sbr!4v1647875234567!5m2!1spt!2sbr"
+              src="https://www.google.com/maps?q=-8.0478829,-34.9108806(Kronos%20Empresarial)&hl=pt-BR&z=18&output=embed"
               width="100%"
               height="384"
               style={{ border: 0 }}
