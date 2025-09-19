@@ -56,6 +56,21 @@ export default function CircuitSection() {
             {/* Background circle guide */}
             <div className="absolute inset-8 rounded-full border-2 border-gray-200 opacity-20"></div>
             
+            {/* Room 1 - Bottom Left - Sala da Linguagem (INÍCIO) */}
+            <div className="absolute bottom-0 left-0 w-60 text-center" data-testid="room-1">
+              <div className="flex flex-col items-center">
+                <div className={`w-20 h-20 ${rooms[0].bgColor} rounded-full flex items-center justify-center mb-4`}>
+                  <MessageCircle className={`h-10 w-10 ${rooms[0].iconColor}`} />
+                </div>
+                <h3 className="text-lg font-bold mb-2 leading-tight whitespace-pre-line">
+                  {rooms[0].title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-tight whitespace-pre-line">
+                  {rooms[0].description}
+                </p>
+              </div>
+            </div>
+
             {/* Room 2 - Top Left - Sala da Memória */}
             <div className="absolute top-0 left-0 w-60 text-center" data-testid="room-2">
               <div className="flex flex-col items-center">
@@ -71,38 +86,8 @@ export default function CircuitSection() {
               </div>
             </div>
 
-            {/* Room 4 - Top Right - Sala de Contemplação */}
-            <div className="absolute top-0 right-0 w-60 text-center" data-testid="room-4">
-              <div className="flex flex-col items-center">
-                <div className={`w-20 h-20 ${rooms[3].bgColor} rounded-full flex items-center justify-center mb-4`}>
-                  <Leaf className={`h-10 w-10 ${rooms[3].iconColor}`} />
-                </div>
-                <h3 className="text-lg font-bold mb-2 leading-tight whitespace-pre-line">
-                  {rooms[3].title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-tight whitespace-pre-line">
-                  {rooms[3].description}
-                </p>
-              </div>
-            </div>
-
-            {/* Room 1 - Bottom Left - Sala da Linguagem */}
-            <div className="absolute bottom-0 left-0 w-60 text-center" data-testid="room-1">
-              <div className="flex flex-col items-center">
-                <div className={`w-20 h-20 ${rooms[0].bgColor} rounded-full flex items-center justify-center mb-4`}>
-                  <MessageCircle className={`h-10 w-10 ${rooms[0].iconColor}`} />
-                </div>
-                <h3 className="text-lg font-bold mb-2 leading-tight whitespace-pre-line">
-                  {rooms[0].title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-tight whitespace-pre-line">
-                  {rooms[0].description}
-                </p>
-              </div>
-            </div>
-
-            {/* Room 3 - Bottom Right - Sala de Atividades Executivas */}
-            <div className="absolute bottom-0 right-0 w-60 text-center" data-testid="room-3">
+            {/* Room 3 - Top Right - Sala de Atividades Executivas */}
+            <div className="absolute top-0 right-0 w-60 text-center" data-testid="room-3">
               <div className="flex flex-col items-center">
                 <div className={`w-20 h-20 ${rooms[2].bgColor} rounded-full flex items-center justify-center mb-4`}>
                   <Dumbbell className={`h-10 w-10 ${rooms[2].iconColor}`} />
@@ -116,18 +101,33 @@ export default function CircuitSection() {
               </div>
             </div>
 
-            {/* Flowing Arrows */}
-            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 translate-y-8">
-              <ArrowRight className="h-8 w-8 text-gray-400 rotate-45" />
+            {/* Room 4 - Bottom Right - Sala de Contemplação (FINAL) */}
+            <div className="absolute bottom-0 right-0 w-60 text-center" data-testid="room-4">
+              <div className="flex flex-col items-center">
+                <div className={`w-20 h-20 ${rooms[3].bgColor} rounded-full flex items-center justify-center mb-4`}>
+                  <Leaf className={`h-10 w-10 ${rooms[3].iconColor}`} />
+                </div>
+                <h3 className="text-lg font-bold mb-2 leading-tight whitespace-pre-line">
+                  {rooms[3].title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-tight whitespace-pre-line">
+                  {rooms[3].description}
+                </p>
+              </div>
             </div>
-            <div className="absolute right-20 top-1/2 transform -translate-y-1/2 translate-x-8">
-              <ArrowDown className="h-8 w-8 text-gray-400 rotate-45" />
-            </div>
-            <div className="absolute bottom-20 right-1/2 transform translate-x-1/2 -translate-y-8">
-              <ArrowLeft className="h-8 w-8 text-gray-400 rotate-45" />
-            </div>
+
+            {/* Flowing Arrows - Sequência: Linguagem → Memória → Atividades Executivas → Contemplação */}
+            {/* Arrow 1: Linguagem → Memória (bottom-left to top-left) */}
             <div className="absolute left-20 bottom-1/2 transform translate-y-1/2 -translate-x-8">
-              <ArrowUp className="h-8 w-8 text-gray-400 rotate-45" />
+              <ArrowUp className="h-8 w-8 text-gray-400" />
+            </div>
+            {/* Arrow 2: Memória → Atividades Executivas (top-left to top-right) */}
+            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 translate-y-8">
+              <ArrowRight className="h-8 w-8 text-gray-400" />
+            </div>
+            {/* Arrow 3: Atividades Executivas → Contemplação (top-right to bottom-right) */}
+            <div className="absolute right-20 top-1/2 transform -translate-y-1/2 translate-x-8">
+              <ArrowDown className="h-8 w-8 text-gray-400" />
             </div>
           </div>
         </div>
