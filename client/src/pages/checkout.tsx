@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ArrowLeft, QrCode, FileText, CreditCard } from "lucide-react";
+import { ArrowLeft, Copy, FileText, CreditCard } from "lucide-react";
 
 const FIXED_PRICE = 250;
 
@@ -121,6 +121,22 @@ export default function Checkout() {
 
   const goBack = () => {
     window.location.href = '/';
+  };
+
+  const copyPixCode = async (pixCode: string) => {
+    try {
+      await navigator.clipboard.writeText(pixCode);
+      toast({
+        title: "Código PIX copiado!",
+        description: "Cole no seu banco ou app de pagamento",
+      });
+    } catch (error) {
+      toast({
+        title: "Erro ao copiar",
+        description: "Tente copiar manualmente o código abaixo",
+        variant: "destructive",
+      });
+    }
   };
 
   const isFormComplete = formData.nome && 
@@ -390,18 +406,23 @@ export default function Checkout() {
                   {paymentData.paymentOptions?.pix?.qrCode && (
                     <div className="border rounded-lg p-4">
                       <div className="flex items-center mb-2">
-                        <QrCode className="h-5 w-5 mr-2 text-primary" />
-                        <span className="font-medium">PIX - Pagamento Instantâneo</span>
+                        <Copy className="h-5 w-5 mr-2 text-primary" />
+                        <span className="font-medium">PIX Copia e Cola</span>
                       </div>
                       <p className="text-sm text-muted-foreground mb-3">
-                        Escaneie o QR Code ou copie o código PIX para pagar
+                        Copie o código PIX abaixo e cole no seu banco ou app de pagamento
                       </p>
+                      <div className="bg-muted p-3 rounded-md mb-3">
+                        <p className="text-xs text-muted-foreground mb-1">Código PIX:</p>
+                        <p className="text-sm font-mono break-all">{paymentData.paymentOptions.pix.qrCode}</p>
+                      </div>
                       <Button 
-                        onClick={() => window.open(paymentData.paymentOptions.pix.qrCode, '_blank')}
+                        onClick={() => copyPixCode(paymentData.paymentOptions.pix.qrCode)}
                         className="w-full"
                         data-testid="button-pix"
                       >
-                        Abrir QR Code PIX
+                        <Copy className="h-4 w-4 mr-2" />
+                        Copiar código PIX
                       </Button>
                     </div>
                   )}
@@ -452,18 +473,23 @@ export default function Checkout() {
                   {!paymentData.paymentOptions && paymentData.pixQrCode && (
                     <div className="border rounded-lg p-4">
                       <div className="flex items-center mb-2">
-                        <QrCode className="h-5 w-5 mr-2 text-primary" />
-                        <span className="font-medium">PIX - Pagamento Instantâneo</span>
+                        <Copy className="h-5 w-5 mr-2 text-primary" />
+                        <span className="font-medium">PIX Copia e Cola</span>
                       </div>
                       <p className="text-sm text-muted-foreground mb-3">
-                        Escaneie o QR Code ou copie o código PIX para pagar
+                        Copie o código PIX abaixo e cole no seu banco ou app de pagamento
                       </p>
+                      <div className="bg-muted p-3 rounded-md mb-3">
+                        <p className="text-xs text-muted-foreground mb-1">Código PIX:</p>
+                        <p className="text-sm font-mono break-all">{paymentData.pixQrCode}</p>
+                      </div>
                       <Button 
-                        onClick={() => window.open(paymentData.pixQrCode, '_blank')}
+                        onClick={() => copyPixCode(paymentData.pixQrCode)}
                         className="w-full"
                         data-testid="button-pix"
                       >
-                        Abrir QR Code PIX
+                        <Copy className="h-4 w-4 mr-2" />
+                        Copiar código PIX
                       </Button>
                     </div>
                   )}
