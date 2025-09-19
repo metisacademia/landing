@@ -39,6 +39,7 @@ interface AsaasPayment {
   status: string;
   pixQrCodeUrl?: string;
   bankSlipUrl?: string;
+  invoiceUrl?: string;
 }
 
 async function createAsaasCustomer(nome: string, email: string, cpf: string, telefone?: string): Promise<AsaasCustomer> {
@@ -129,65 +130,72 @@ export async function registerRoutes(app: Express): Promise<Server> {
       dueDate.setDate(dueDate.getDate() + 7);
       const dueDateStr = dueDate.toISOString().split('T')[0];
 
-      // Default to PIX if no payment method specified
-      const paymentMethod = validatedData.paymentMethod || 'PIX';
+      // Create all payment options: PIX, BOLETO, and CREDIT_CARD
+      console.log('Creating payment options for customer:', asaasCustomer.id);
       
-      const asaasPayment = await createAsaasPayment(
-        asaasCustomer.id,
-        Number(validatedData.amount),
-        dueDateStr,
-        paymentMethod
-      );
+      const [pixPayment, boletoPayment, creditCardPayment] = await Promise.all([
+        createAsaasPayment(asaasCustomer.id, Number(validatedData.amount), dueDateStr, 'PIX'),
+        createAsaasPayment(asaasCustomer.id, Number(validatedData.amount), dueDateStr, 'BOLETO'),
+        createAsaasPayment(asaasCustomer.id, Number(validatedData.amount), dueDateStr, 'CREDIT_CARD')
+      ]);
 
-      // Get PIX QR Code or Bank Slip URL based on payment method
+      console.log('Payments created:', {
+        pix: pixPayment.id,
+        boleto: boletoPayment.id,
+        creditCard: creditCardPayment.id
+      });
+
+      // Get PIX QR Code
       let pixQrCode = null;
-      let bankSlipUrl = null;
-
-      if (paymentMethod === 'PIX') {
-        try {
-          const pixResponse = await fetch(`${ASAAS_BASE_URL}/payments/${asaasPayment.id}/pixQrCode`, {
-            headers: ASAAS_HEADERS
-          });
-          if (pixResponse.ok) {
-            const pixData = await pixResponse.json();
-            pixQrCode = pixData.payload || pixData.encodedImage;
-          }
-        } catch (error) {
-          console.error('Erro ao buscar QR Code PIX:', error);
+      let pixPaymentId = pixPayment.id;
+      try {
+        const pixResponse = await fetch(`${ASAAS_BASE_URL}/payments/${pixPayment.id}/pixQrCode`, {
+          headers: ASAAS_HEADERS
+        });
+        if (pixResponse.ok) {
+          const pixData = await pixResponse.json();
+          pixQrCode = pixData.payload || pixData.encodedImage;
         }
-      } else if (paymentMethod === 'BOLETO') {
-        bankSlipUrl = asaasPayment.bankSlipUrl;
-        
-        // Fallback: if bankSlipUrl is empty, try to fetch it from payment details
-        if (!bankSlipUrl) {
-          try {
-            const paymentResponse = await fetch(`${ASAAS_BASE_URL}/payments/${asaasPayment.id}`, {
-              headers: ASAAS_HEADERS
-            });
-            if (paymentResponse.ok) {
-              const paymentData = await paymentResponse.json();
-              bankSlipUrl = paymentData.bankSlipUrl;
-              console.log('Fetched bankSlipUrl from payment details:', bankSlipUrl);
-            }
-          } catch (error) {
-            console.error('Erro ao buscar URL do boleto:', error);
-          }
-        }
+      } catch (error) {
+        console.error('Erro ao buscar QR Code PIX:', error);
       }
 
-      // Update pre-registration with Asaas data
+      // Get BOLETO URL
+      let bankSlipUrl = boletoPayment.bankSlipUrl;
+      let boletoPaymentId = boletoPayment.id;
+
+      // Get Credit Card payment URL (using invoiceUrl from the payment)
+      let creditCardUrl = creditCardPayment.invoiceUrl || null;
+      let creditCardPaymentId = creditCardPayment.id;
+
+      // Update pre-registration with PIX payment data as default
       await storage.updatePreRegistrationPayment(
         preRegistration.id,
-        asaasPayment.id,
+        pixPayment.id,
         "pending",
         asaasCustomer.id,
-        asaasPayment.billingType
+        pixPayment.billingType
       );
 
       res.json({ 
         success: true,
         preRegistrationId: preRegistration.id,
-        paymentId: asaasPayment.id,
+        paymentOptions: {
+          pix: {
+            paymentId: pixPaymentId,
+            qrCode: pixQrCode
+          },
+          boleto: {
+            paymentId: boletoPaymentId,
+            bankSlipUrl: bankSlipUrl
+          },
+          creditCard: {
+            paymentId: creditCardPaymentId,
+            url: creditCardUrl
+          }
+        },
+        // Legacy support
+        paymentId: pixPayment.id,
         pixQrCode: pixQrCode,
         bankSlipUrl: bankSlipUrl
       });

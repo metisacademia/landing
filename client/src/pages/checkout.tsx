@@ -56,7 +56,7 @@ export default function Checkout() {
     diasPreferencia: [],
     observacoes: "",
     termos: false,
-    paymentMethod: "UNDEFINED"
+    paymentMethod: ""
   });
 
   // Fixed price for pre-registration
@@ -388,7 +388,70 @@ export default function Checkout() {
                     Pagamento seguro processado pelo Asaas
                   </div>
                   
-                  {paymentData.pixQrCode && (
+                  {/* PIX Payment Option */}
+                  {paymentData.paymentOptions?.pix?.qrCode && (
+                    <div className="border rounded-lg p-4">
+                      <div className="flex items-center mb-2">
+                        <QrCode className="h-5 w-5 mr-2 text-primary" />
+                        <span className="font-medium">PIX - Pagamento Instantâneo</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Escaneie o QR Code ou copie o código PIX para pagar
+                      </p>
+                      <Button 
+                        onClick={() => window.open(paymentData.paymentOptions.pix.qrCode, '_blank')}
+                        className="w-full"
+                        data-testid="button-pix"
+                      >
+                        Abrir QR Code PIX
+                      </Button>
+                    </div>
+                  )}
+                  
+                  {/* Boleto Payment Option */}
+                  {paymentData.paymentOptions?.boleto?.bankSlipUrl && (
+                    <div className="border rounded-lg p-4">
+                      <div className="flex items-center mb-2">
+                        <FileText className="h-5 w-5 mr-2 text-primary" />
+                        <span className="font-medium">Boleto Bancário</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Pague até o vencimento em qualquer banco ou internet banking
+                      </p>
+                      <Button 
+                        onClick={() => window.open(paymentData.paymentOptions.boleto.bankSlipUrl, '_blank')}
+                        variant="outline"
+                        className="w-full"
+                        data-testid="button-boleto"
+                      >
+                        Abrir Boleto
+                      </Button>
+                    </div>
+                  )}
+
+                  {/* Credit Card Payment Option */}
+                  {paymentData.paymentOptions?.creditCard?.url && (
+                    <div className="border rounded-lg p-4">
+                      <div className="flex items-center mb-2">
+                        <CreditCard className="h-5 w-5 mr-2 text-primary" />
+                        <span className="font-medium">Cartão de Crédito</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Pague com cartão de crédito em até 12x
+                      </p>
+                      <Button 
+                        onClick={() => window.open(paymentData.paymentOptions.creditCard.url, '_blank')}
+                        variant="secondary"
+                        className="w-full"
+                        data-testid="button-credit-card"
+                      >
+                        Pagar com Cartão
+                      </Button>
+                    </div>
+                  )}
+
+                  {/* Legacy support for old API response */}
+                  {!paymentData.paymentOptions && paymentData.pixQrCode && (
                     <div className="border rounded-lg p-4">
                       <div className="flex items-center mb-2">
                         <QrCode className="h-5 w-5 mr-2 text-primary" />
@@ -407,7 +470,7 @@ export default function Checkout() {
                     </div>
                   )}
                   
-                  {paymentData.bankSlipUrl && (
+                  {!paymentData.paymentOptions && paymentData.bankSlipUrl && (
                     <div className="border rounded-lg p-4">
                       <div className="flex items-center mb-2">
                         <FileText className="h-5 w-5 mr-2 text-primary" />

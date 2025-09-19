@@ -42,7 +42,7 @@ export const insertPreRegistrationSchema = createInsertSchema(preRegistrations).
 }).extend({
   cpf: z.string().min(11, "CPF deve ter 11 dígitos").max(14, "CPF inválido"),
   amount: z.number().min(1, "Valor deve ser positivo"),
-  paymentMethod: z.enum(["PIX", "BOLETO"]).optional(),
+  paymentMethod: z.enum(["PIX", "BOLETO", "CREDIT_CARD"]).optional(),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
