@@ -22,7 +22,6 @@ interface FormData {
   diasPreferencia: string[];
   observacoes: string;
   termos: boolean;
-  paymentMethod: string;
 }
 
 function formatCPF(cpf: string): string {
@@ -55,8 +54,7 @@ export default function Checkout() {
     horario: "",
     diasPreferencia: [],
     observacoes: "",
-    termos: false,
-    paymentMethod: ""
+    termos: false
   });
 
   // Fixed price for pre-registration
