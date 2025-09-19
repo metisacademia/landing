@@ -30,8 +30,8 @@ export default function HeroSection() {
           
           
           <h2 className="text-3xl lg:text-5xl font-semibold mb-8 leading-tight text-white drop-shadow-2xl" data-testid="hero-headline">
-            Exercite sua mente.<br />
-            Cultive sua memória.
+            Liberte seu potencial.<br />
+            Exercite sua mente. Cultive sua memória.
           </h2>
           
           <p className="text-lg lg:text-xl mb-10 leading-relaxed max-w-3xl mx-auto text-white/90 drop-shadow-xl" data-testid="hero-description">
