@@ -19,7 +19,7 @@ interface FormData {
   cpf: string;
   idade: string;
   horario: string;
-  diaPreferencia: string;
+  diasPreferencia: string[];
   observacoes: string;
   termos: boolean;
   paymentMethod: string;
@@ -53,7 +53,7 @@ export default function Checkout() {
     cpf: "",
     idade: "",
     horario: "",
-    diaPreferencia: "",
+    diasPreferencia: [],
     observacoes: "",
     termos: false,
     paymentMethod: "UNDEFINED"
@@ -61,7 +61,7 @@ export default function Checkout() {
 
   // Fixed price for pre-registration
 
-  const updateFormData = (field: keyof FormData, value: string | boolean) => {
+  const updateFormData = (field: keyof FormData, value: string | boolean | string[]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -94,7 +94,8 @@ export default function Checkout() {
         idade: parseInt(formData.idade),
         amount: FIXED_PRICE,
         cpf: formData.cpf.replace(/\D/g, ''),
-        telefone: formData.telefone.replace(/\D/g, '')
+        telefone: formData.telefone.replace(/\D/g, ''),
+        diaPreferencia: formData.diasPreferencia.join(', ')
       });
       
       const data = await response.json();
@@ -258,25 +259,37 @@ export default function Checkout() {
               </div>
 
               <div>
-                <Label htmlFor="diaPreferencia">Preferência de dia da semana</Label>
-                <Select 
-                  value={formData.diaPreferencia} 
-                  onValueChange={(value) => updateFormData('diaPreferencia', value)}
-                >
-                  <SelectTrigger data-testid="select-dia">
-                    <SelectValue placeholder="Selecione os dias preferidos" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="segunda">Segunda-feira</SelectItem>
-                    <SelectItem value="terca">Terça-feira</SelectItem>
-                    <SelectItem value="quarta">Quarta-feira</SelectItem>
-                    <SelectItem value="quinta">Quinta-feira</SelectItem>
-                    <SelectItem value="sexta">Sexta-feira</SelectItem>
-                    <SelectItem value="segunda-quarta">Segunda e Quarta</SelectItem>
-                    <SelectItem value="terca-quinta">Terça e Quinta</SelectItem>
-                    <SelectItem value="todos-dias">Todos os dias (segunda a sexta)</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label>Preferência de dias da semana</Label>
+                <div className="grid grid-cols-2 gap-3 mt-2">
+                  {[
+                    { value: 'segunda', label: 'Segunda-feira' },
+                    { value: 'terca', label: 'Terça-feira' },
+                    { value: 'quarta', label: 'Quarta-feira' },
+                    { value: 'quinta', label: 'Quinta-feira' },
+                    { value: 'sexta', label: 'Sexta-feira' }
+                  ].map((dia) => (
+                    <div key={dia.value} className="flex items-center space-x-2">
+                      <Checkbox 
+                        id={dia.value}
+                        checked={formData.diasPreferencia.includes(dia.value)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            updateFormData('diasPreferencia', [...formData.diasPreferencia, dia.value]);
+                          } else {
+                            updateFormData('diasPreferencia', formData.diasPreferencia.filter(d => d !== dia.value));
+                          }
+                        }}
+                        data-testid={`checkbox-${dia.value}`}
+                      />
+                      <Label htmlFor={dia.value} className="text-sm font-normal cursor-pointer">
+                        {dia.label}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Selecione os dias de sua preferência
+                </p>
               </div>
 
               <div>

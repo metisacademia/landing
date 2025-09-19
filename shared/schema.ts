@@ -41,6 +41,7 @@ export const insertPreRegistrationSchema = createInsertSchema(preRegistrations).
   createdAt: true,
 }).extend({
   cpf: z.string().min(11, "CPF deve ter 11 dígitos").max(14, "CPF inválido"),
+  amount: z.number().min(1, "Valor deve ser positivo"),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
