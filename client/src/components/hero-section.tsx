@@ -29,7 +29,7 @@ export default function HeroSection() {
         <div className="max-w-4xl mx-auto text-center text-white">
           
           
-          <h2 className="text-3xl lg:text-5xl font-semibold mb-8 leading-tight text-white drop-shadow-2xl" data-testid="hero-headline">
+          <h2 className="lg:text-5xl font-semibold mb-8 text-white drop-shadow-2xl text-left ml-[300px] mr-[300px] text-[40px]" data-testid="hero-headline">
             Liberte seu potencial.<br />
             Exercite sua mente. Cultive sua memória.
           </h2>
