@@ -95,7 +95,7 @@ export default function ContactSection() {
 
           <Card className="p-1 shadow-lg border-border overflow-hidden" data-testid="contact-map">
             <iframe
-              src="https://www.google.com/maps?q=R.+das+Pernambucanas,+407,+Gra%C3%A7as,+Recife,+PE&hl=pt-BR&z=18&output=embed"
+              src="https://www.google.com/maps?q=R.+das+Pernambucanas,+407,+Gra%C3%A7as,+Recife,+PE+(Kronos+Empresarial)&hl=pt-BR&z=18&output=embed"
               width="100%"
               height="384"
               style={{ border: 0 }}
@@ -103,7 +103,7 @@ export default function ContactSection() {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               className="w-full h-96 rounded-lg"
-              title="Localização da Métis - R. das Pernambucanas, 407, Graças, Recife/PE"
+              title="Localização da Métis - Kronos Empresarial, Graças, Recife/PE"
             />
             <div className="p-4 text-center">
               <p className="text-sm text-muted-foreground">
