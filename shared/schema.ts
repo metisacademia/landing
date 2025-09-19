@@ -14,12 +14,15 @@ export const preRegistrations = pgTable("pre_registrations", {
   nome: text("nome").notNull(),
   email: text("email").notNull(),
   telefone: text("telefone").notNull(),
+  cpf: text("cpf").notNull(),
   idade: integer("idade").notNull(),
   plano: text("plano").notNull(),
   horario: text("horario"),
   observacoes: text("observacoes"),
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
-  stripePaymentIntentId: text("stripe_payment_intent_id"),
+  asaasCustomerId: text("asaas_customer_id"),
+  asaasPaymentId: text("asaas_payment_id"),
+  paymentMethod: text("payment_method"), // PIX, BOLETO, CREDIT_CARD
   paymentStatus: text("payment_status").notNull().default("pending"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
@@ -31,9 +34,12 @@ export const insertUserSchema = createInsertSchema(users).pick({
 
 export const insertPreRegistrationSchema = createInsertSchema(preRegistrations).omit({
   id: true,
-  stripePaymentIntentId: true,
+  asaasCustomerId: true,
+  asaasPaymentId: true,
   paymentStatus: true,
   createdAt: true,
+}).extend({
+  cpf: z.string().min(11, "CPF deve ter 11 dígitos").max(14, "CPF inválido"),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;

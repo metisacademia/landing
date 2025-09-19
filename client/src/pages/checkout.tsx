@@ -1,5 +1,3 @@
-import { useStripe, Elements, PaymentElement, useElements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 import { useEffect, useState } from 'react';
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -10,12 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ArrowLeft, Lock } from "lucide-react";
-
-if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
-  throw new Error('Missing required Stripe key: VITE_STRIPE_PUBLIC_KEY');
-}
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+import { ArrowLeft, QrCode, FileText, CreditCard } from "lucide-react";
 
 const plans = {
   mensal: { name: "Mensal", price: 1145, originalPrice: 1300 },
@@ -28,103 +21,47 @@ interface FormData {
   nome: string;
   email: string;
   telefone: string;
+  cpf: string;
   idade: string;
   plano: string;
   horario: string;
   observacoes: string;
   termos: boolean;
+  paymentMethod: string;
 }
 
-const CheckoutForm = ({ formData }: { formData: FormData }) => {
-  const stripe = useStripe();
-  const elements = useElements();
-  const { toast } = useToast();
-  const [processing, setProcessing] = useState(false);
+function formatCPF(cpf: string): string {
+  const numbers = cpf.replace(/\D/g, '');
+  if (numbers.length <= 11) {
+    return numbers.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  }
+  return numbers.slice(0, 11).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+}
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-
-    setProcessing(true);
-
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/checkout/success`,
-      },
-    });
-
-    if (error) {
-      toast({
-        title: "Erro no pagamento",
-        description: error.message,
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Pagamento realizado com sucesso!",
-        description: "Sua pré-matrícula foi confirmada. Entraremos em contato em breve.",
-      });
-    }
-
-    setProcessing(false);
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="p-4 border border-input rounded-lg bg-muted/10">
-        <Label className="block text-sm font-medium text-foreground mb-2">
-          Informações do cartão
-        </Label>
-        <div id="card-element" className="p-3 bg-background border border-input rounded">
-          <PaymentElement />
-        </div>
-      </div>
-
-      <Button 
-        type="submit" 
-        disabled={!stripe || processing}
-        className="w-full bg-accent text-accent-foreground py-4 rounded-lg font-semibold text-lg hover:bg-accent/90 transition-colors disabled:opacity-50"
-        data-testid="button-finalizar-pagamento"
-      >
-        {processing ? (
-          <div className="flex items-center">
-            <div className="animate-spin w-5 h-5 border-2 border-accent-foreground border-t-transparent rounded-full mr-2" />
-            Processando...
-          </div>
-        ) : (
-          <div className="flex items-center justify-center">
-            <Lock className="h-5 w-5 mr-2" />
-            Finalizar Pré-matrícula
-          </div>
-        )}
-      </Button>
-
-      <p className="text-center text-sm text-muted-foreground">
-        <Lock className="h-4 w-4 inline mr-1" />
-        Pagamento seguro processado pelo Stripe. Seus dados estão protegidos.
-      </p>
-    </form>
-  );
-};
+function formatPhone(phone: string): string {
+  const numbers = phone.replace(/\D/g, '');
+  if (numbers.length <= 11) {
+    return numbers.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+  }
+  return numbers.slice(0, 11).replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+}
 
 export default function Checkout() {
-  const [clientSecret, setClientSecret] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [paymentData, setPaymentData] = useState<any>(null);
   const { toast } = useToast();
   
   const [formData, setFormData] = useState<FormData>({
     nome: "",
     email: "",
     telefone: "",
+    cpf: "",
     idade: "",
     plano: new URLSearchParams(window.location.search).get('plan') || "semestral",
     horario: "",
     observacoes: "",
-    termos: false
+    termos: false,
+    paymentMethod: "UNDEFINED"
   });
 
   const selectedPlan = plans[formData.plano as keyof typeof plans] || plans.semestral;
@@ -133,29 +70,56 @@ export default function Checkout() {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  useEffect(() => {
-    if (formData.nome && formData.email && formData.telefone && formData.idade && formData.termos) {
-      createPreRegistration();
-    }
-  }, [formData]);
+  const handleCPFChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatCPF(e.target.value);
+    updateFormData('cpf', formatted);
+  };
 
-  const createPreRegistration = async () => {
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhone(e.target.value);
+    updateFormData('telefone', formatted);
+  };
+
+  const submitPreRegistration = async () => {
+    if (!isFormComplete) {
+      toast({
+        title: "Formulário incompleto",
+        description: "Por favor, preencha todos os campos obrigatórios.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    
     try {
       const response = await apiRequest("POST", "/api/create-pre-registration", {
         ...formData,
         idade: parseInt(formData.idade),
-        amount: selectedPlan.price
+        amount: selectedPlan.price,
+        cpf: formData.cpf.replace(/\D/g, ''),
+        telefone: formData.telefone.replace(/\D/g, '')
       });
       
       const data = await response.json();
-      setClientSecret(data.clientSecret);
-      setLoading(false);
+      
+      if (data.success) {
+        setPaymentData(data);
+        toast({
+          title: "Pré-matrícula criada com sucesso!",
+          description: "Agora escolha sua forma de pagamento abaixo.",
+        });
+      } else {
+        throw new Error(data.message || 'Erro ao processar pré-matrícula');
+      }
     } catch (error: any) {
+      console.error('Error:', error);
       toast({
         title: "Erro ao processar pré-matrícula",
         description: error.message,
         variant: "destructive",
       });
+    } finally {
       setLoading(false);
     }
   };
@@ -164,18 +128,12 @@ export default function Checkout() {
     window.location.href = '/';
   };
 
-  const isFormComplete = formData.nome && formData.email && formData.telefone && formData.idade && formData.termos;
-
-  if (loading && isFormComplete) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-center">
-          <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4" />
-          <p className="text-muted-foreground">Preparando seu pagamento...</p>
-        </div>
-      </div>
-    );
-  }
+  const isFormComplete = formData.nome && 
+                       formData.email && 
+                       formData.telefone && 
+                       formData.cpf && 
+                       formData.idade && 
+                       formData.termos;
 
   return (
     <div className="min-h-screen bg-background py-8">
@@ -208,7 +166,7 @@ export default function Checkout() {
             <CardContent className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <Label htmlFor="nome">Nome Completo</Label>
+                  <Label htmlFor="nome">Nome Completo *</Label>
                   <Input 
                     id="nome" 
                     type="text"
@@ -219,7 +177,7 @@ export default function Checkout() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="email">E-mail</Label>
+                  <Label htmlFor="email">E-mail *</Label>
                   <Input 
                     id="email" 
                     type="email"
@@ -233,28 +191,42 @@ export default function Checkout() {
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <Label htmlFor="telefone">Telefone/WhatsApp</Label>
+                  <Label htmlFor="telefone">Telefone/WhatsApp *</Label>
                   <Input 
                     id="telefone" 
                     type="tel"
                     value={formData.telefone}
-                    onChange={(e) => updateFormData('telefone', e.target.value)}
+                    onChange={handlePhoneChange}
+                    placeholder="(81) 99999-9999"
                     required
                     data-testid="input-telefone"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="idade">Idade</Label>
+                  <Label htmlFor="cpf">CPF *</Label>
                   <Input 
-                    id="idade" 
-                    type="number"
-                    min="18"
-                    value={formData.idade}
-                    onChange={(e) => updateFormData('idade', e.target.value)}
+                    id="cpf" 
+                    type="text"
+                    value={formData.cpf}
+                    onChange={handleCPFChange}
+                    placeholder="000.000.000-00"
                     required
-                    data-testid="input-idade"
+                    data-testid="input-cpf"
                   />
                 </div>
+              </div>
+
+              <div>
+                <Label htmlFor="idade">Idade *</Label>
+                <Input 
+                  id="idade" 
+                  type="number"
+                  min="18"
+                  value={formData.idade}
+                  onChange={(e) => updateFormData('idade', e.target.value)}
+                  required
+                  data-testid="input-idade"
+                />
               </div>
 
               <div>
@@ -314,7 +286,7 @@ export default function Checkout() {
                   data-testid="checkbox-termos"
                 />
                 <Label htmlFor="termos" className="text-sm">
-                  Concordo com os <a href="#" className="text-primary hover:underline">termos de uso</a> e <a href="#" className="text-primary hover:underline">política de privacidade</a>
+                  Concordo com os <a href="#" className="text-primary hover:underline">termos de uso</a> e <a href="#" className="text-primary hover:underline">política de privacidade</a> *
                 </Label>
               </div>
             </CardContent>
@@ -349,27 +321,91 @@ export default function Checkout() {
               </CardContent>
             </Card>
 
-            {/* Payment Form */}
-            {isFormComplete && clientSecret && (
-              <Card className="shadow-lg border-border" data-testid="payment-form">
-                <CardHeader>
-                  <CardTitle>Pagamento</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Elements stripe={stripePromise} options={{ clientSecret }}>
-                    <CheckoutForm formData={formData} />
-                  </Elements>
+            {/* Payment Options */}
+            {!paymentData ? (
+              <Card className={`shadow-lg border-border ${!isFormComplete ? 'bg-muted/50' : ''}`} data-testid="payment-placeholder">
+                <CardContent className="p-8 text-center">
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-lg">Finalizar Pré-matrícula</h3>
+                    <p className="text-muted-foreground">
+                      {!isFormComplete 
+                        ? "Complete as informações pessoais para continuar" 
+                        : "Clique no botão abaixo para gerar suas opções de pagamento"
+                      }
+                    </p>
+                    <Button 
+                      onClick={submitPreRegistration}
+                      disabled={!isFormComplete || loading}
+                      className="w-full bg-accent text-accent-foreground py-4 rounded-lg font-semibold text-lg hover:bg-accent/90 transition-colors disabled:opacity-50"
+                      data-testid="button-gerar-pagamento"
+                    >
+                      {loading ? (
+                        <div className="flex items-center">
+                          <div className="animate-spin w-5 h-5 border-2 border-accent-foreground border-t-transparent rounded-full mr-2" />
+                          Processando...
+                        </div>
+                      ) : (
+                        "Gerar Opções de Pagamento"
+                      )}
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
-            )}
-
-            {!isFormComplete && (
-              <Card className="shadow-lg border-border bg-muted/50" data-testid="payment-placeholder">
-                <CardContent className="p-8 text-center">
-                  <Lock className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">
-                    Complete as informações pessoais para continuar com o pagamento
-                  </p>
+            ) : (
+              <Card className="shadow-lg border-border" data-testid="payment-options">
+                <CardHeader>
+                  <CardTitle>Escolha sua forma de pagamento</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="text-sm text-muted-foreground mb-4">
+                    Pagamento seguro processado pelo Asaas
+                  </div>
+                  
+                  {paymentData.pixQrCode && (
+                    <div className="border rounded-lg p-4">
+                      <div className="flex items-center mb-2">
+                        <QrCode className="h-5 w-5 mr-2 text-primary" />
+                        <span className="font-medium">PIX - Pagamento Instantâneo</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Escaneie o QR Code ou copie o código PIX para pagar
+                      </p>
+                      <Button 
+                        onClick={() => window.open(paymentData.pixQrCode, '_blank')}
+                        className="w-full"
+                        data-testid="button-pix"
+                      >
+                        Abrir QR Code PIX
+                      </Button>
+                    </div>
+                  )}
+                  
+                  {paymentData.bankSlipUrl && (
+                    <div className="border rounded-lg p-4">
+                      <div className="flex items-center mb-2">
+                        <FileText className="h-5 w-5 mr-2 text-primary" />
+                        <span className="font-medium">Boleto Bancário</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Pague até o vencimento em qualquer banco ou internet banking
+                      </p>
+                      <Button 
+                        onClick={() => window.open(paymentData.bankSlipUrl, '_blank')}
+                        variant="outline"
+                        className="w-full"
+                        data-testid="button-boleto"
+                      >
+                        Abrir Boleto
+                      </Button>
+                    </div>
+                  )}
+                  
+                  <div className="text-center mt-6 p-4 bg-accent/10 rounded-lg">
+                    <p className="text-sm text-muted-foreground">
+                      Após o pagamento, você receberá a confirmação por e-mail e WhatsApp. 
+                      Nossa equipe entrará em contato para agendar sua aula experimental.
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
             )}

@@ -17,7 +17,7 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   createPreRegistration(preReg: InsertPreRegistration): Promise<PreRegistration>;
   getPreRegistration(id: string): Promise<PreRegistration | undefined>;
-  updatePreRegistrationPayment(id: string, paymentIntentId: string, status: string): Promise<PreRegistration>;
+  updatePreRegistrationPayment(id: string, paymentId: string, status: string, customerId?: string, paymentMethod?: string): Promise<PreRegistration>;
   getAllPreRegistrations(): Promise<PreRegistration[]>;
 }
 
@@ -51,12 +51,22 @@ export class DatabaseStorage implements IStorage {
     return result[0];
   }
 
-  async updatePreRegistrationPayment(id: string, paymentIntentId: string, status: string): Promise<PreRegistration> {
+  async updatePreRegistrationPayment(id: string, paymentId: string, status: string, customerId?: string, paymentMethod?: string): Promise<PreRegistration> {
+    const updateData: any = { 
+      asaasPaymentId: paymentId, 
+      paymentStatus: status 
+    };
+    
+    if (customerId) {
+      updateData.asaasCustomerId = customerId;
+    }
+    
+    if (paymentMethod) {
+      updateData.paymentMethod = paymentMethod;
+    }
+    
     const result = await db.update(preRegistrations)
-      .set({ 
-        stripePaymentIntentId: paymentIntentId, 
-        paymentStatus: status 
-      })
+      .set(updateData)
       .where(eq(preRegistrations.id, id))
       .returning();
     
