@@ -13,47 +13,50 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground relative overflow-hidden">
-      <div className="absolute inset-0 bg-black/10"></div>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <div className="mb-6">
-              <h1 className="text-5xl lg:text-6xl font-bold mb-4" data-testid="hero-title">Métis</h1>
-              <p className="text-xl opacity-90" data-testid="hero-subtitle">academia da mente</p>
-            </div>
-            <h2 className="text-3xl lg:text-4xl font-semibold mb-6 leading-tight" data-testid="hero-headline">
-              Exercite sua mente.<br />
-              Cultive sua memória.
-            </h2>
-            <p className="text-lg mb-8 opacity-90 leading-relaxed" data-testid="hero-description">
-              A Métis é um espaço premium de estímulo cognitivo que combina ciência, cultura e convivência em grupos de até 6 pessoas.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                onClick={navigateToCheckout}
-                className="bg-accent text-accent-foreground px-8 py-4 rounded-lg font-semibold text-lg hover:bg-accent/90 transition-colors shadow-lg"
-                data-testid="button-pre-matricula"
-              >
-                Garanta sua vaga com a pré-matrícula
-              </Button>
-              <Button 
-                variant="outline"
-                onClick={() => scrollToSection('contato')}
-                className="border-2 border-primary-foreground text-primary-foreground px-8 py-4 rounded-lg font-semibold hover:bg-primary-foreground hover:text-primary transition-colors"
-                data-testid="button-aula-experimental"
-              >
-                Aula Experimental
-              </Button>
-            </div>
+    <section 
+      className="relative overflow-hidden min-h-screen flex items-center"
+      style={{
+        backgroundImage: 'url(/images/hero-background.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black/50"></div>
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 z-10">
+        <div className="max-w-4xl mx-auto text-center text-white">
+          <div className="mb-8">
+            <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-white drop-shadow-2xl" data-testid="hero-title">Métis</h1>
+            <p className="text-2xl lg:text-3xl font-light mb-4 text-white/90 drop-shadow-xl" data-testid="hero-subtitle">academia da mente</p>
           </div>
-          <div className="relative">
-            <img 
-              src="/images/metis-logo.jpg" 
-              alt="Métis academia da mente logo" 
-              className="rounded-2xl shadow-2xl w-full h-auto"
-              data-testid="hero-image"
-            />
+          
+          <h2 className="text-3xl lg:text-5xl font-semibold mb-8 leading-tight text-white drop-shadow-2xl" data-testid="hero-headline">
+            Exercite sua mente.<br />
+            Cultive sua memória.
+          </h2>
+          
+          <p className="text-lg lg:text-xl mb-10 leading-relaxed max-w-3xl mx-auto text-white/90 drop-shadow-xl" data-testid="hero-description">
+            A Métis é um espaço premium de estímulo cognitivo que combina ciência, cultura e convivência em grupos de até 6 pessoas.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <Button 
+              onClick={navigateToCheckout}
+              className="bg-accent text-accent-foreground px-10 py-5 rounded-lg font-semibold text-xl hover:bg-accent/90 transition-colors shadow-2xl border-2 border-transparent"
+              data-testid="button-pre-matricula"
+            >
+              Garanta sua vaga com a pré-matrícula
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={() => scrollToSection('contato')}
+              className="border-2 border-white text-white px-10 py-5 rounded-lg font-semibold text-xl hover:bg-white hover:text-black transition-colors shadow-2xl backdrop-blur-sm"
+              data-testid="button-aula-experimental"
+            >
+              Aula Experimental
+            </Button>
           </div>
         </div>
       </div>
