@@ -4,17 +4,22 @@ import { storage } from "./storage";
 import { insertPreRegistrationSchema } from "@shared/schema";
 import { z } from "zod";
 
-if (!process.env.ASAAS_API_KEY) {
-  throw new Error('Missing required Asaas secret: ASAAS_API_KEY');
+const ASAAS_API_KEY = process.env.NODE_ENV === 'production' 
+  ? process.env.ASAAS_API_KEY
+  : process.env.ASAAS_SANDBOX_API_KEY || process.env.ASAAS_API_KEY;
+
+if (!ASAAS_API_KEY) {
+  throw new Error('Missing required Asaas secret: ASAAS_API_KEY or ASAAS_SANDBOX_API_KEY');
 }
 
 const ASAAS_BASE_URL = process.env.NODE_ENV === 'production' 
   ? 'https://api.asaas.com/v3'
-  : 'https://sandbox.asaas.com/v3';
+  : 'https://api-sandbox.asaas.com/v3';
 
 const ASAAS_HEADERS = {
-  'access_token': process.env.ASAAS_API_KEY,
-  'Content-Type': 'application/json'
+  'access_token': ASAAS_API_KEY,
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
 };
 
 interface AsaasCustomer {
@@ -51,44 +56,18 @@ async function createAsaasCustomer(nome: string, email: string, cpf: string, tel
       })
     });
 
-    // Fallback para desenvolvimento - API do Asaas retornando HTML em vez de JSON
-    if (response.headers.get('content-type')?.includes('text/html')) {
-      console.log('API Asaas retornando HTML, usando mock para desenvolvimento');
-      return {
-        id: `cus_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        name: nome,
-        email: email,
-        cpfCnpj: cpf,
-        phone: telefone
-      };
-    }
-
     if (!response.ok) {
       const error = await response.text();
-      console.error('Erro da API Asaas:', error);
-      // Fallback em caso de erro
-      return {
-        id: `cus_mock_${Date.now()}`,
-        name: nome,
-        email: email,
-        cpfCnpj: cpf,
-        phone: telefone
-      };
+      console.error('Erro da API Asaas ao criar cliente:', response.status, error);
+      throw new Error(`Erro ao criar cliente no Asaas: ${error}`);
     }
 
     const data = await response.json();
     console.log('Cliente criado com sucesso:', data);
     return data;
   } catch (error) {
-    console.error('Erro na função createAsaasCustomer, usando mock:', error);
-    // Fallback em caso de erro
-    return {
-      id: `cus_fallback_${Date.now()}`,
-      name: nome,
-      email: email,
-      cpfCnpj: cpf,
-      phone: telefone
-    };
+    console.error('Erro na função createAsaasCustomer:', error);
+    throw error;
   }
 }
 
@@ -96,7 +75,7 @@ async function createAsaasPayment(
   customerId: string, 
   value: number, 
   dueDate: string, 
-  billingType: string = 'UNDEFINED'
+  billingType: string
 ): Promise<AsaasPayment> {
   try {
     console.log('Tentando criar pagamento Asaas:', { customerId, value, dueDate, billingType });
@@ -113,39 +92,18 @@ async function createAsaasPayment(
       })
     });
 
-    // Fallback para desenvolvimento - API do Asaas retornando HTML
-    if (response.headers.get('content-type')?.includes('text/html') || !response.ok) {
-      console.log('API Asaas com problemas, usando mock para desenvolvimento');
-      const paymentId = `pay_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      return {
-        id: paymentId,
-        customer: customerId,
-        value: value,
-        dueDate: dueDate,
-        billingType: billingType,
-        status: 'pending',
-        pixQrCodeUrl: billingType === 'PIX' ? `https://mock-pix-url.com/${paymentId}` : undefined,
-        bankSlipUrl: billingType === 'BOLETO' ? `https://mock-boleto-url.com/${paymentId}` : undefined
-      };
+    if (!response.ok) {
+      const error = await response.text();
+      console.error('Erro da API Asaas ao criar pagamento:', response.status, error);
+      throw new Error(`Erro ao criar pagamento no Asaas: ${error}`);
     }
 
     const data = await response.json();
     console.log('Pagamento criado com sucesso:', data);
     return data;
   } catch (error) {
-    console.error('Erro na função createAsaasPayment, usando mock:', error);
-    // Fallback em caso de erro
-    const paymentId = `pay_fallback_${Date.now()}`;
-    return {
-      id: paymentId,
-      customer: customerId,
-      value: value,
-      dueDate: dueDate,
-      billingType: billingType,
-      status: 'pending',
-      pixQrCodeUrl: billingType === 'PIX' ? `https://mock-pix-url.com/${paymentId}` : undefined,
-      bankSlipUrl: billingType === 'BOLETO' ? `https://mock-boleto-url.com/${paymentId}` : undefined
-    };
+    console.error('Erro na função createAsaasPayment:', error);
+    throw error;
   }
 }
 
@@ -175,8 +133,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
         asaasCustomer.id,
         Number(validatedData.amount),
         dueDateStr,
-        validatedData.paymentMethod || 'UNDEFINED'
+        validatedData.paymentMethod
       );
+
+      // Get PIX QR Code or Bank Slip URL based on payment method
+      let pixQrCode = null;
+      let bankSlipUrl = null;
+
+      if (validatedData.paymentMethod === 'PIX') {
+        try {
+          const pixResponse = await fetch(`${ASAAS_BASE_URL}/payments/${asaasPayment.id}/pixQrCode`, {
+            headers: ASAAS_HEADERS
+          });
+          if (pixResponse.ok) {
+            const pixData = await pixResponse.json();
+            pixQrCode = pixData.payload || pixData.encodedImage;
+          }
+        } catch (error) {
+          console.error('Erro ao buscar QR Code PIX:', error);
+        }
+      } else if (validatedData.paymentMethod === 'BOLETO') {
+        bankSlipUrl = asaasPayment.bankSlipUrl;
+        
+        // Fallback: if bankSlipUrl is empty, try to fetch it from payment details
+        if (!bankSlipUrl) {
+          try {
+            const paymentResponse = await fetch(`${ASAAS_BASE_URL}/payments/${asaasPayment.id}`, {
+              headers: ASAAS_HEADERS
+            });
+            if (paymentResponse.ok) {
+              const paymentData = await paymentResponse.json();
+              bankSlipUrl = paymentData.bankSlipUrl;
+              console.log('Fetched bankSlipUrl from payment details:', bankSlipUrl);
+            }
+          } catch (error) {
+            console.error('Erro ao buscar URL do boleto:', error);
+          }
+        }
+      }
 
       // Update pre-registration with Asaas data
       await storage.updatePreRegistrationPayment(
@@ -191,15 +185,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         success: true,
         preRegistrationId: preRegistration.id,
         paymentId: asaasPayment.id,
-        pixQrCode: asaasPayment.pixQrCodeUrl,
-        bankSlipUrl: asaasPayment.bankSlipUrl
+        pixQrCode: pixQrCode,
+        bankSlipUrl: bankSlipUrl
       });
     } catch (error: any) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Dados inválidos", errors: error.errors });
       } else {
         console.error('Erro ao processar pré-matrícula:', error);
-        res.status(500).json({ message: "Erro ao processar pré-matrícula: " + error.message });
+        res.status(500).json({ message: "Erro interno do servidor. Tente novamente." });
       }
     }
   });
@@ -235,14 +229,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Webhook to handle payment confirmation
+  // Webhook to handle payment confirmation (secured)
   app.post("/api/asaas-webhook", async (req, res) => {
     try {
+      // Critical: require webhook secret in production
+      const webhookSecret = process.env.ASAAS_WEBHOOK_SECRET;
+      if (!webhookSecret) {
+        console.error('ASAAS_WEBHOOK_SECRET não configurado');
+        return res.status(500).json({ error: 'Server configuration error' });
+      }
+
+      const receivedSecret = req.headers['x-webhook-secret'];
+      
+      if (receivedSecret !== webhookSecret) {
+        console.error('Webhook authentication failed - invalid secret');
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+
       const { event, payment } = req.body;
 
       console.log('Asaas webhook received:', event, payment?.id);
 
       if (event === 'PAYMENT_RECEIVED' || event === 'PAYMENT_CONFIRMED') {
+        if (!payment?.id) {
+          console.error('Invalid webhook payload - missing payment ID');
+          return res.status(400).json({ error: 'Invalid payload' });
+        }
+
+        // Verify payment status directly with Asaas API before updating
+        const verificationResponse = await fetch(`${ASAAS_BASE_URL}/payments/${payment.id}`, {
+          headers: ASAAS_HEADERS
+        });
+
+        if (!verificationResponse.ok) {
+          console.error('Failed to verify payment status with Asaas');
+          return res.status(500).json({ error: 'Payment verification failed' });
+        }
+
+        const verifiedPayment = await verificationResponse.json();
+        
+        // Only update if payment is actually received/confirmed
+        if (verifiedPayment.status !== 'RECEIVED' && verifiedPayment.status !== 'CONFIRMED') {
+          console.log(`Payment ${payment.id} verification failed - status: ${verifiedPayment.status}`);
+          return res.status(400).json({ error: 'Payment not confirmed' });
+        }
+
         // Find pre-registration by payment ID
         const allPreRegs = await storage.getAllPreRegistrations();
         const preReg = allPreRegs.find(p => p.asaasPaymentId === payment.id);
@@ -254,13 +285,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
             "paid"
           );
           console.log(`Payment confirmed for pre-registration ${preReg.id}`);
+        } else {
+          console.log(`No pre-registration found for payment ${payment.id}`);
         }
+      } else {
+        console.log(`Unhandled webhook event: ${event}`);
       }
 
       res.json({ received: true });
     } catch (error: any) {
       console.error('Webhook error:', error);
-      res.status(500).json({ message: error.message });
+      res.status(500).json({ error: 'Internal server error' });
     }
   });
 
