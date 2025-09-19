@@ -1,51 +1,42 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { MessageCircle, Brain, Sword, Leaf } from "lucide-react";
+import { MessageCircle, Brain, Dumbbell, Leaf, ArrowDown, ArrowUp, ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function CircuitSection() {
   const rooms = [
     {
       id: 1,
-      title: "Linguagem",
-      subtitle: '"Salão das Palavras"',
+      title: "Sala da\nLinguagem", 
+      description: "Atividades que\ndesenvolvem e expandem\nvocabulário, interpretação e\nexpressão escrita e verbal.",
+      bgColor: "bg-slate-800",
+      iconColor: "text-white",
       icon: MessageCircle,
-      iconColor: "text-blue-600",
-      bgColor: "bg-blue-100",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=300",
-      alt: "Cozy library reading room",
-      description: "Leitura guiada de trechos breves, discussão de ideias, analogias e vocabulário ativo para fortalecer suas habilidades de comunicação e expressão."
+      position: "bottom-left"
     },
     {
       id: 2,
-      title: "Memória",
-      subtitle: '"Oficina de Evocação"',
+      title: "Sala da\nMemória",
+      description: "Estímulo e\ndesenvolvimento da\nmemória e expansão\nde conhecimentos\nculturais.",
+      bgColor: "bg-red-900",
+      iconColor: "text-white", 
       icon: Brain,
-      iconColor: "text-purple-600",
-      bgColor: "bg-purple-100",
-      image: "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=300",
-      alt: "Modern workspace with learning materials",
-      description: "Estratégias de associação (palácio da memória, listas úteis), cartas de treino e estímulos sensoriais para potencializar sua capacidade de retenção."
+      position: "top-left"
     },
     {
       id: 3,
-      title: "Funções Executivas",
-      subtitle: '"Estúdio de Decisão"',
-      icon: Sword,
-      iconColor: "text-green-600",
-      bgColor: "bg-green-100",
-      image: "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=300",
-      alt: "Strategic planning workspace",
-      description: "Planejamento leve de mini-projetos, quebra-cabeças táticos, flexibilidade e mudança de estratégia para aprimorar seu processo decisório."
+      title: "Sala de\nAtividades\nExecutivas",
+      description: "Integração corpo-mente,\ncom estímulo da atenção,\nplanejamento e resolução\nde problemas.",
+      bgColor: "bg-yellow-500",
+      iconColor: "text-white",
+      icon: Dumbbell,
+      position: "bottom-right"
     },
     {
       id: 4,
-      title: "Contemplação",
-      subtitle: '"Orvalho"',
+      title: "Sala de\nContemplação",
+      description: "Estado contemplativo\nativo: consolidação do\naprendizado.",
+      bgColor: "bg-gray-500",
+      iconColor: "text-white",
       icon: Leaf,
-      iconColor: "text-amber-600",
-      bgColor: "bg-amber-100",
-      image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=300",
-      alt: "Peaceful meditation and art space",
-      description: "Apreciação de artes, música e respiração guiada para reduzir estresse e consolidar aprendizados em um ambiente de total tranquilidade."
+      position: "top-right"
     }
   ];
 
@@ -59,34 +50,110 @@ export default function CircuitSection() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {rooms.map((room) => {
-            const IconComponent = room.icon;
-            return (
-              <Card key={room.id} className="shadow-lg border-border" data-testid={`room-${room.id}`}>
-                <CardContent className="p-8">
-                  <div className="flex items-center mb-6">
-                    <div className={`w-12 h-12 ${room.bgColor} rounded-lg flex items-center justify-center mr-4`}>
-                      <IconComponent className={`h-6 w-6 ${room.iconColor}`} />
+        {/* Circular Flow Diagram - Desktop */}
+        <div className="hidden md:block">
+          <div className="relative mx-auto aspect-square max-w-[40rem] h-[640px]">
+            {/* Background circle guide */}
+            <div className="absolute inset-8 rounded-full border-2 border-gray-200 opacity-20"></div>
+            
+            {/* Room 2 - Top Left - Sala da Memória */}
+            <div className="absolute top-0 left-0 w-60 text-center" data-testid="room-2">
+              <div className="flex flex-col items-center">
+                <div className={`w-20 h-20 ${rooms[1].bgColor} rounded-full flex items-center justify-center mb-4`}>
+                  <Brain className={`h-10 w-10 ${rooms[1].iconColor}`} />
+                </div>
+                <h3 className="text-lg font-bold mb-2 leading-tight whitespace-pre-line">
+                  {rooms[1].title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-tight whitespace-pre-line">
+                  {rooms[1].description}
+                </p>
+              </div>
+            </div>
+
+            {/* Room 4 - Top Right - Sala de Contemplação */}
+            <div className="absolute top-0 right-0 w-60 text-center" data-testid="room-4">
+              <div className="flex flex-col items-center">
+                <div className={`w-20 h-20 ${rooms[3].bgColor} rounded-full flex items-center justify-center mb-4`}>
+                  <Leaf className={`h-10 w-10 ${rooms[3].iconColor}`} />
+                </div>
+                <h3 className="text-lg font-bold mb-2 leading-tight whitespace-pre-line">
+                  {rooms[3].title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-tight whitespace-pre-line">
+                  {rooms[3].description}
+                </p>
+              </div>
+            </div>
+
+            {/* Room 1 - Bottom Left - Sala da Linguagem */}
+            <div className="absolute bottom-0 left-0 w-60 text-center" data-testid="room-1">
+              <div className="flex flex-col items-center">
+                <div className={`w-20 h-20 ${rooms[0].bgColor} rounded-full flex items-center justify-center mb-4`}>
+                  <MessageCircle className={`h-10 w-10 ${rooms[0].iconColor}`} />
+                </div>
+                <h3 className="text-lg font-bold mb-2 leading-tight whitespace-pre-line">
+                  {rooms[0].title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-tight whitespace-pre-line">
+                  {rooms[0].description}
+                </p>
+              </div>
+            </div>
+
+            {/* Room 3 - Bottom Right - Sala de Atividades Executivas */}
+            <div className="absolute bottom-0 right-0 w-60 text-center" data-testid="room-3">
+              <div className="flex flex-col items-center">
+                <div className={`w-20 h-20 ${rooms[2].bgColor} rounded-full flex items-center justify-center mb-4`}>
+                  <Dumbbell className={`h-10 w-10 ${rooms[2].iconColor}`} />
+                </div>
+                <h3 className="text-lg font-bold mb-2 leading-tight whitespace-pre-line">
+                  {rooms[2].title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-tight whitespace-pre-line">
+                  {rooms[2].description}
+                </p>
+              </div>
+            </div>
+
+            {/* Flowing Arrows */}
+            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 translate-y-8">
+              <ArrowRight className="h-8 w-8 text-gray-400 rotate-45" />
+            </div>
+            <div className="absolute right-20 top-1/2 transform -translate-y-1/2 translate-x-8">
+              <ArrowDown className="h-8 w-8 text-gray-400 rotate-45" />
+            </div>
+            <div className="absolute bottom-20 right-1/2 transform translate-x-1/2 -translate-y-8">
+              <ArrowLeft className="h-8 w-8 text-gray-400 rotate-45" />
+            </div>
+            <div className="absolute left-20 bottom-1/2 transform translate-y-1/2 -translate-x-8">
+              <ArrowUp className="h-8 w-8 text-gray-400 rotate-45" />
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Layout - Grid */}
+        <div className="block md:hidden">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            {rooms.map((room) => {
+              const IconComponent = room.icon;
+              return (
+                <div key={room.id} className="text-center p-6 border border-border rounded-lg" data-testid={`room-${room.id}`}>
+                  <div className="flex flex-col items-center">
+                    <div className={`w-20 h-20 ${room.bgColor} rounded-full flex items-center justify-center mb-4`}>
+                      <IconComponent className={`h-10 w-10 ${room.iconColor}`} />
                     </div>
-                    <div>
-                      <h3 className="text-2xl font-semibold">{room.id}. {room.title}</h3>
-                      <p className="text-accent font-medium">{room.subtitle}</p>
-                    </div>
+                    <h3 className="text-lg font-bold mb-2 leading-tight whitespace-pre-line">
+                      {room.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-tight whitespace-pre-line">
+                      {room.description}
+                    </p>
                   </div>
-                  <img 
-                    src={room.image} 
-                    alt={room.alt} 
-                    className="rounded-lg mb-4 w-full h-48 object-cover"
-                    data-testid={`room-${room.id}-image`}
-                  />
-                  <p className="text-muted-foreground" data-testid={`room-${room.id}-description`}>
-                    {room.description}
-                  </p>
-                </CardContent>
-              </Card>
-            );
-          })}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
