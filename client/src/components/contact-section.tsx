@@ -1,0 +1,112 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Phone, Mail, MapPin } from "lucide-react";
+
+export default function ContactSection() {
+  const navigateToCheckout = () => {
+    window.location.href = '/checkout';
+  };
+
+  return (
+    <section id="contato" className="py-20 bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-foreground mb-6" data-testid="contact-title">
+            Visite a Métis
+          </h2>
+          <p className="text-xl text-muted-foreground" data-testid="contact-description">
+            Agende sua visita, conheça as salas e faça sua pré-matrícula.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-12">
+          <div>
+            <div className="space-y-8">
+              <div className="flex items-start" data-testid="contact-whatsapp">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                  <Phone className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">WhatsApp</h3>
+                  <p className="text-muted-foreground mb-2">Para agendamentos e dúvidas</p>
+                  <a 
+                    href="https://wa.me/5581991032141" 
+                    className="text-primary hover:underline font-medium"
+                    data-testid="link-whatsapp"
+                  >
+                    (81) 99103-2141
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start" data-testid="contact-email">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                  <Mail className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">E-mail</h3>
+                  <p className="text-muted-foreground mb-2">Atendimento e informações</p>
+                  <a 
+                    href="mailto:atendimento@metis.com.br" 
+                    className="text-primary hover:underline font-medium"
+                    data-testid="link-email"
+                  >
+                    atendimento@metis.com.br
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start" data-testid="contact-address">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                  <MapPin className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">Endereço</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Kronos Empresarial<br />
+                    R. das Pernambucanas, 407, Sala 1203<br />
+                    Graças, Recife/PE<br />
+                    CEP 52011-010
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button 
+                  onClick={navigateToCheckout}
+                  className="bg-accent text-accent-foreground px-8 py-4 rounded-lg font-semibold hover:bg-accent/90 transition-colors"
+                  data-testid="button-final-pre-matricula"
+                >
+                  Garantir minha vaga na pré-matrícula
+                </Button>
+                <Button 
+                  variant="outline"
+                  onClick={() => window.open('https://wa.me/5581991032141', '_blank')}
+                  className="border-2 border-primary text-primary px-8 py-4 rounded-lg font-semibold hover:bg-primary hover:text-primary-foreground transition-colors"
+                  data-testid="button-agendar-visita"
+                >
+                  Agendar Visita
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <Card className="p-1 shadow-lg border-border overflow-hidden" data-testid="contact-map">
+            <img 
+              src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
+              alt="Map location of Métis in Recife" 
+              className="w-full h-96 object-cover rounded-lg"
+            />
+            <div className="p-4 text-center">
+              <p className="text-sm text-muted-foreground">
+                Localização no coração do bairro das Graças, com fácil acesso e estacionamento.
+              </p>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </section>
+  );
+}
