@@ -10,12 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowLeft, QrCode, FileText, CreditCard } from "lucide-react";
 
-const plans = {
-  mensal: { name: "Mensal", price: 1145, originalPrice: 1300 },
-  trimestral: { name: "Trimestral", price: 990, originalPrice: 1090 },
-  semestral: { name: "Semestral", price: 890, originalPrice: 990 },
-  anual: { name: "Anual", price: 790, originalPrice: 890 }
-};
+const FIXED_PRICE = 250;
 
 interface FormData {
   nome: string;
@@ -23,8 +18,8 @@ interface FormData {
   telefone: string;
   cpf: string;
   idade: string;
-  plano: string;
   horario: string;
+  diaPreferencia: string;
   observacoes: string;
   termos: boolean;
   paymentMethod: string;
@@ -57,14 +52,14 @@ export default function Checkout() {
     telefone: "",
     cpf: "",
     idade: "",
-    plano: new URLSearchParams(window.location.search).get('plan') || "semestral",
     horario: "",
+    diaPreferencia: "",
     observacoes: "",
     termos: false,
     paymentMethod: "UNDEFINED"
   });
 
-  const selectedPlan = plans[formData.plano as keyof typeof plans] || plans.semestral;
+  // Fixed price for pre-registration
 
   const updateFormData = (field: keyof FormData, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -95,8 +90,9 @@ export default function Checkout() {
     try {
       const response = await apiRequest("POST", "/api/create-pre-registration", {
         ...formData,
+        plano: "Pré-matrícula",
         idade: parseInt(formData.idade),
-        amount: selectedPlan.price,
+        amount: FIXED_PRICE,
         cpf: formData.cpf.replace(/\D/g, ''),
         telefone: formData.telefone.replace(/\D/g, '')
       });
@@ -230,21 +226,17 @@ export default function Checkout() {
               </div>
 
               <div>
-                <Label htmlFor="plano">Selecione seu plano</Label>
-                <Select 
-                  value={formData.plano} 
-                  onValueChange={(value) => updateFormData('plano', value)}
-                >
-                  <SelectTrigger data-testid="select-plano">
-                    <SelectValue placeholder="Escolha um plano" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="mensal">Mensal - R$ 1.145/mês</SelectItem>
-                    <SelectItem value="trimestral">Trimestral - R$ 990/mês</SelectItem>
-                    <SelectItem value="semestral">Semestral - R$ 890/mês</SelectItem>
-                    <SelectItem value="anual">Anual - R$ 790/mês</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label>Valor da Pré-matrícula</Label>
+                <div className="p-4 bg-accent/10 border-2 border-accent/20 rounded-lg" data-testid="prematricula-valor">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-accent">
+                      Pré-matrícula R$ 250
+                    </div>
+                    <div className="text-sm text-muted-foreground mt-1">
+                      Valor único para garantir sua vaga
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div>
@@ -261,6 +253,28 @@ export default function Checkout() {
                     <SelectItem value="tarde">Tarde (14h às 18h)</SelectItem>
                     <SelectItem value="noite">Noite (18h às 21h)</SelectItem>
                     <SelectItem value="flexivel">Flexível</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="diaPreferencia">Preferência de dia da semana</Label>
+                <Select 
+                  value={formData.diaPreferencia} 
+                  onValueChange={(value) => updateFormData('diaPreferencia', value)}
+                >
+                  <SelectTrigger data-testid="select-dia">
+                    <SelectValue placeholder="Selecione os dias preferidos" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="segunda">Segunda-feira</SelectItem>
+                    <SelectItem value="terca">Terça-feira</SelectItem>
+                    <SelectItem value="quarta">Quarta-feira</SelectItem>
+                    <SelectItem value="quinta">Quinta-feira</SelectItem>
+                    <SelectItem value="sexta">Sexta-feira</SelectItem>
+                    <SelectItem value="segunda-quarta">Segunda e Quarta</SelectItem>
+                    <SelectItem value="terca-quinta">Terça e Quinta</SelectItem>
+                    <SelectItem value="todos-dias">Todos os dias (segunda a sexta)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -297,24 +311,24 @@ export default function Checkout() {
             {/* Plan Summary */}
             <Card className="shadow-lg border-border" data-testid="plan-summary">
               <CardHeader>
-                <CardTitle>Resumo do Plano</CardTitle>
+                <CardTitle>Resumo da Pré-matrícula</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <span className="font-semibold">{selectedPlan.name}</span>
+                    <span className="font-semibold">Pré-matrícula Métis</span>
                     <div className="text-right">
-                      <div className="text-sm line-through text-muted-foreground">
-                        R$ {selectedPlan.originalPrice}
-                      </div>
                       <div className="text-lg font-bold text-primary">
-                        R$ {selectedPlan.price}/mês
+                        R$ {FIXED_PRICE}
                       </div>
                     </div>
                   </div>
                   <div className="text-center py-4 bg-accent/10 rounded-lg">
                     <p className="text-accent font-medium">
-                      Economia de R$ {selectedPlan.originalPrice - selectedPlan.price} por mês
+                      ✨ Academia da Mente - Circuito Cognitivo
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      4 salas especializadas • Grupos de até 6 pessoas
                     </p>
                   </div>
                 </div>

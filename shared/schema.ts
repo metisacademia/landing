@@ -18,6 +18,7 @@ export const preRegistrations = pgTable("pre_registrations", {
   idade: integer("idade").notNull(),
   plano: text("plano").notNull(),
   horario: text("horario"),
+  diaPreferencia: text("dia_preferencia"),
   observacoes: text("observacoes"),
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
   asaasCustomerId: text("asaas_customer_id"),
