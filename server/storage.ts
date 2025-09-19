@@ -1,5 +1,15 @@
-import { type User, type InsertUser, type PreRegistration, type InsertPreRegistration } from "@shared/schema";
+import { type User, type InsertUser, type PreRegistration, type InsertPreRegistration, users, preRegistrations } from "@shared/schema";
+import { drizzle } from "drizzle-orm/neon-http";
+import { neon } from "@neondatabase/serverless";
+import { eq } from "drizzle-orm";
 import { randomUUID } from "crypto";
+
+if (!process.env.DATABASE_URL) {
+  throw new Error('DATABASE_URL environment variable is required');
+}
+
+const sql = neon(process.env.DATABASE_URL);
+const db = drizzle(sql);
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -8,68 +18,58 @@ export interface IStorage {
   createPreRegistration(preReg: InsertPreRegistration): Promise<PreRegistration>;
   getPreRegistration(id: string): Promise<PreRegistration | undefined>;
   updatePreRegistrationPayment(id: string, paymentIntentId: string, status: string): Promise<PreRegistration>;
+  getAllPreRegistrations(): Promise<PreRegistration[]>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-  private preRegistrations: Map<string, PreRegistration>;
-
-  constructor() {
-    this.users = new Map();
-    this.preRegistrations = new Map();
-  }
-
+export class DatabaseStorage implements IStorage {
   async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+    const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
+    return result[0];
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    const result = await db.select().from(users).where(eq(users.username, username)).limit(1);
+    return result[0];
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+    const result = await db.insert(users).values(insertUser).returning();
+    return result[0];
   }
 
   async createPreRegistration(insertPreReg: InsertPreRegistration): Promise<PreRegistration> {
-    const id = randomUUID();
-    const preReg: PreRegistration = {
+    const result = await db.insert(preRegistrations).values({
       ...insertPreReg,
-      id,
       horario: insertPreReg.horario || null,
       observacoes: insertPreReg.observacoes || null,
-      stripePaymentIntentId: null,
-      paymentStatus: "pending",
-      createdAt: new Date(),
-    };
-    this.preRegistrations.set(id, preReg);
-    return preReg;
+    }).returning();
+    return result[0];
   }
 
   async getPreRegistration(id: string): Promise<PreRegistration | undefined> {
-    return this.preRegistrations.get(id);
+    const result = await db.select().from(preRegistrations).where(eq(preRegistrations.id, id)).limit(1);
+    return result[0];
   }
 
   async updatePreRegistrationPayment(id: string, paymentIntentId: string, status: string): Promise<PreRegistration> {
-    const preReg = this.preRegistrations.get(id);
-    if (!preReg) {
+    const result = await db.update(preRegistrations)
+      .set({ 
+        stripePaymentIntentId: paymentIntentId, 
+        paymentStatus: status 
+      })
+      .where(eq(preRegistrations.id, id))
+      .returning();
+    
+    if (result.length === 0) {
       throw new Error("Pre-registration not found");
     }
     
-    const updated: PreRegistration = {
-      ...preReg,
-      stripePaymentIntentId: paymentIntentId,
-      paymentStatus: status,
-    };
-    
-    this.preRegistrations.set(id, updated);
-    return updated;
+    return result[0];
+  }
+
+  async getAllPreRegistrations(): Promise<PreRegistration[]> {
+    return await db.select().from(preRegistrations);
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
