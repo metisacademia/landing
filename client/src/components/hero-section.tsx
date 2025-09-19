@@ -33,7 +33,7 @@ export default function HeroSection() {
             Liberte seu potencial.
           </h1>
           
-          <h2 className="text-2xl lg:text-3xl font-medium mb-8 text-white drop-shadow-xl text-left" data-testid="hero-subtitle">
+          <h2 className="text-2xl lg:text-3xl font-medium text-white drop-shadow-xl text-left mt-[8px] mb-[8px]" data-testid="hero-subtitle">
             Exercite sua mente. Cultive sua memória.
           </h2>
           
