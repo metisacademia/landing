@@ -16,7 +16,7 @@ export default function HeroSection() {
     <section 
       className="relative overflow-hidden min-h-screen flex items-center"
       style={{
-        backgroundImage: 'url(/images/hero-background.png)',
+        backgroundImage: `url('/images/hero-background.png?v=${Date.now()}')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
@@ -41,21 +41,13 @@ export default function HeroSection() {
             A Métis é um espaço premium de estímulo cognitivo que combina ciência, cultura e convivência em grupos de até 6 pessoas.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <div className="flex justify-center">
             <Button 
               onClick={navigateToCheckout}
-              className="bg-accent text-accent-foreground px-10 py-5 rounded-lg font-semibold text-xl hover:bg-accent/90 transition-colors shadow-2xl border-2 border-transparent"
+              className="bg-accent text-accent-foreground px-12 py-6 rounded-lg font-semibold text-xl hover:bg-accent/90 transition-colors shadow-2xl border-2 border-transparent"
               data-testid="button-pre-matricula"
             >
               Garanta sua vaga com a pré-matrícula
-            </Button>
-            <Button 
-              variant="outline"
-              onClick={() => scrollToSection('contato')}
-              className="border-2 border-white text-white px-10 py-5 rounded-lg font-semibold text-xl hover:bg-white hover:text-black transition-colors shadow-2xl backdrop-blur-sm"
-              data-testid="button-aula-experimental"
-            >
-              Aula Experimental
             </Button>
           </div>
         </div>
