@@ -115,14 +115,6 @@ export default function PricingSection() {
           <p className="text-muted-foreground mb-4" data-testid="guarantee-text">
             Satisfação garantida: se, após a aula experimental, você não perceber valor, devolvemos a pré-matrícula.
           </p>
-          <Button 
-            variant="secondary"
-            onClick={() => scrollToSection('contato')}
-            className="bg-secondary text-secondary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-secondary/80 transition-colors"
-            data-testid="button-aula-experimental"
-          >
-            Agendar Aula Experimental
-          </Button>
         </div>
       </div>
     </section>
