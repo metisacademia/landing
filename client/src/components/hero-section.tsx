@@ -27,9 +27,7 @@ export default function HeroSection() {
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 z-10">
         <div className="max-w-4xl mx-auto text-center text-white">
-          <div className="mb-8">
-            <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-white drop-shadow-2xl" data-testid="hero-title">Métis</h1>
-          </div>
+          
           
           <h2 className="text-3xl lg:text-5xl font-semibold mb-8 leading-tight text-white drop-shadow-2xl" data-testid="hero-headline">
             Exercite sua mente.<br />
