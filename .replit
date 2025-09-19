@@ -14,6 +14,10 @@ run = ["npm", "run", "start"]
 localPort = 5000
 externalPort = 80
 
+[[ports]]
+localPort = 38705
+externalPort = 3000
+
 [env]
 PORT = "5000"
 
@@ -40,3 +44,6 @@ author = "agent"
 task = "shell.exec"
 args = "npm run dev"
 waitForPort = 5000
+
+[objectStorage]
+defaultBucketID = "replit-objstore-55d67531-d7fe-473b-a319-c7159eca8256"
