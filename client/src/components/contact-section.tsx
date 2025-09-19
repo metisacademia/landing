@@ -95,7 +95,7 @@ export default function ContactSection() {
 
           <Card className="p-1 shadow-lg border-border overflow-hidden" data-testid="contact-map">
             <iframe
-              src="https://www.google.com/maps?q=R.+das+Pernambucanas,+407,+Gra%C3%A7as,+Recife,+PE+(Kronos+Empresarial)&hl=pt-BR&z=18&output=embed"
+              src="https://www.google.com/maps?q=-8.0478,-34.9109+(Kronos+Empresarial+-+R.+das+Pernambucanas,+407)&hl=pt-BR&z=18&output=embed"
               width="100%"
               height="384"
               style={{ border: 0 }}
