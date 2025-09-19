@@ -129,18 +129,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       dueDate.setDate(dueDate.getDate() + 7);
       const dueDateStr = dueDate.toISOString().split('T')[0];
 
+      // Default to PIX if no payment method specified
+      const paymentMethod = validatedData.paymentMethod || 'PIX';
+      
       const asaasPayment = await createAsaasPayment(
         asaasCustomer.id,
         Number(validatedData.amount),
         dueDateStr,
-        validatedData.paymentMethod
+        paymentMethod
       );
 
       // Get PIX QR Code or Bank Slip URL based on payment method
       let pixQrCode = null;
       let bankSlipUrl = null;
 
-      if (validatedData.paymentMethod === 'PIX') {
+      if (paymentMethod === 'PIX') {
         try {
           const pixResponse = await fetch(`${ASAAS_BASE_URL}/payments/${asaasPayment.id}/pixQrCode`, {
             headers: ASAAS_HEADERS
@@ -152,7 +155,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         } catch (error) {
           console.error('Erro ao buscar QR Code PIX:', error);
         }
-      } else if (validatedData.paymentMethod === 'BOLETO') {
+      } else if (paymentMethod === 'BOLETO') {
         bankSlipUrl = asaasPayment.bankSlipUrl;
         
         // Fallback: if bankSlipUrl is empty, try to fetch it from payment details
