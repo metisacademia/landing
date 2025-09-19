@@ -6,39 +6,10 @@ hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
 channel = "stable-24_05"
 
 [deployment]
-deploymentTarget = "static"
+deploymentTarget = "cloudrun"
 build = ["npm", "run", "build"]
 publicDir = "dist"
-
-[[deployment.responseHeaders]]
-path = "/*"
-name = "Content-Security-Policy"
-value = "default-src 'self'; img-src 'self' https: data:; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
-
-[[deployment.responseHeaders]]
-path = "/*"
-name = "X-Content-Type-Options"
-value = "nosniff"
-
-[[deployment.responseHeaders]]
-path = "/*"
-name = "X-Frame-Options"
-value = "DENY"
-
-[[deployment.responseHeaders]]
-path = "/*"
-name = "Referrer-Policy"
-value = "strict-origin-when-cross-origin"
-
-[[deployment.responseHeaders]]
-path = "/*"
-name = "Permissions-Policy"
-value = "geolocation=(), camera=(), microphone=()"
-
-[[deployment.responseHeaders]]
-path = "/*"
-name = "Cross-Origin-Resource-Policy"
-value = "same-origin"
+run = ["sh", "-c", "npm start"]
 
 [[ports]]
 localPort = 5000
