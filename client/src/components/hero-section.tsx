@@ -49,8 +49,8 @@ export default function HeroSection() {
           </div>
           <div className="relative">
             <img 
-              src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
-              alt="Modern meditation and wellness space" 
+              src="/images/metis-logo.jpg" 
+              alt="Métis academia da mente logo" 
               className="rounded-2xl shadow-2xl w-full h-auto"
               data-testid="hero-image"
             />
