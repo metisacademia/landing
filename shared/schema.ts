@@ -22,8 +22,10 @@ export const preRegistrations = pgTable("pre_registrations", {
   observacoes: text("observacoes"),
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
   asaasCustomerId: text("asaas_customer_id"),
-  asaasPaymentId: text("asaas_payment_id"),
-  paymentMethod: text("payment_method"), // PIX, BOLETO, CREDIT_CARD
+  asaasPixPaymentId: text("asaas_pix_payment_id"),
+  asaasBoletoPaymentId: text("asaas_boleto_payment_id"),
+  asaasCreditCardPaymentId: text("asaas_creditcard_payment_id"),
+  paymentMethod: text("payment_method"), // PIX, BOLETO, CREDIT_CARD - method that was actually paid
   paymentStatus: text("payment_status").notNull().default("pending"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
@@ -36,7 +38,9 @@ export const insertUserSchema = createInsertSchema(users).pick({
 export const insertPreRegistrationSchema = createInsertSchema(preRegistrations).omit({
   id: true,
   asaasCustomerId: true,
-  asaasPaymentId: true,
+  asaasPixPaymentId: true,
+  asaasBoletoPaymentId: true,
+  asaasCreditCardPaymentId: true,
   paymentStatus: true,
   createdAt: true,
 }).extend({

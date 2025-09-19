@@ -168,13 +168,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let creditCardUrl = creditCardPayment.invoiceUrl || null;
       let creditCardPaymentId = creditCardPayment.id;
 
-      // Update pre-registration with PIX payment data as default
-      await storage.updatePreRegistrationPayment(
+      // Update pre-registration with all payment IDs
+      await storage.updatePreRegistrationWithAllPayments(
         preRegistration.id,
         pixPayment.id,
-        "pending",
-        asaasCustomer.id,
-        pixPayment.billingType
+        boletoPayment.id,
+        creditCardPayment.id,
+        asaasCustomer.id
       );
 
       res.json({ 
@@ -285,15 +285,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
           return res.status(400).json({ error: 'Payment not confirmed' });
         }
 
-        // Find pre-registration by payment ID
-        const allPreRegs = await storage.getAllPreRegistrations();
-        const preReg = allPreRegs.find(p => p.asaasPaymentId === payment.id);
+        // Find pre-registration by any payment ID (PIX, BOLETO, or CREDIT_CARD)
+        const preReg = await storage.getPreRegistrationByAnyPaymentId(payment.id);
         
         if (preReg) {
           await storage.updatePreRegistrationPayment(
             preReg.id,
             payment.id,
-            "paid"
+            "paid",
+            undefined,
+            payment.billingType // Set the payment method that was actually used
           );
           console.log(`Payment confirmed for pre-registration ${preReg.id}`);
         } else {

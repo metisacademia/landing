@@ -17,7 +17,9 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   createPreRegistration(preReg: InsertPreRegistration): Promise<PreRegistration>;
   getPreRegistration(id: string): Promise<PreRegistration | undefined>;
+  updatePreRegistrationWithAllPayments(id: string, pixPaymentId: string, boletoPaymentId: string, creditCardPaymentId: string, customerId: string): Promise<PreRegistration>;
   updatePreRegistrationPayment(id: string, paymentId: string, status: string, customerId?: string, paymentMethod?: string): Promise<PreRegistration>;
+  getPreRegistrationByAnyPaymentId(paymentId: string): Promise<PreRegistration | undefined>;
   getAllPreRegistrations(): Promise<PreRegistration[]>;
 }
 
@@ -40,6 +42,7 @@ export class DatabaseStorage implements IStorage {
   async createPreRegistration(insertPreReg: InsertPreRegistration): Promise<PreRegistration> {
     const result = await db.insert(preRegistrations).values({
       ...insertPreReg,
+      amount: insertPreReg.amount.toString(), // Convert number to string for decimal field
       horario: insertPreReg.horario || null,
       observacoes: insertPreReg.observacoes || null,
     }).returning();
@@ -51,9 +54,26 @@ export class DatabaseStorage implements IStorage {
     return result[0];
   }
 
+  async updatePreRegistrationWithAllPayments(id: string, pixPaymentId: string, boletoPaymentId: string, creditCardPaymentId: string, customerId: string): Promise<PreRegistration> {
+    const result = await db.update(preRegistrations)
+      .set({
+        asaasPixPaymentId: pixPaymentId,
+        asaasBoletoPaymentId: boletoPaymentId,
+        asaasCreditCardPaymentId: creditCardPaymentId,
+        asaasCustomerId: customerId,
+      })
+      .where(eq(preRegistrations.id, id))
+      .returning();
+    
+    if (result.length === 0) {
+      throw new Error("Pre-registration not found");
+    }
+    
+    return result[0];
+  }
+
   async updatePreRegistrationPayment(id: string, paymentId: string, status: string, customerId?: string, paymentMethod?: string): Promise<PreRegistration> {
     const updateData: any = { 
-      asaasPaymentId: paymentId, 
       paymentStatus: status 
     };
     
@@ -75,6 +95,35 @@ export class DatabaseStorage implements IStorage {
     }
     
     return result[0];
+  }
+
+  async getPreRegistrationByAnyPaymentId(paymentId: string): Promise<PreRegistration | undefined> {
+    // Search for pre-registration by any of the three payment IDs
+    const result = await db.select().from(preRegistrations).where(
+      eq(preRegistrations.asaasPixPaymentId, paymentId)
+    ).limit(1);
+
+    if (result.length > 0) {
+      return result[0];
+    }
+
+    const result2 = await db.select().from(preRegistrations).where(
+      eq(preRegistrations.asaasBoletoPaymentId, paymentId)
+    ).limit(1);
+
+    if (result2.length > 0) {
+      return result2[0];
+    }
+
+    const result3 = await db.select().from(preRegistrations).where(
+      eq(preRegistrations.asaasCreditCardPaymentId, paymentId)
+    ).limit(1);
+
+    if (result3.length > 0) {
+      return result3[0];
+    }
+
+    return undefined;
   }
 
   async getAllPreRegistrations(): Promise<PreRegistration[]> {

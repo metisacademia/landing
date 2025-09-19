@@ -40,10 +40,12 @@ Preferred communication style: Simple, everyday language.
 - **Security**: CSRF protection and secure session configuration
 
 ### Payment Integration
-- **Provider**: Asaas payment gateway (Brazilian payment processor)
-- **Methods**: PIX and BOLETO payment options
+- **Provider**: Asaas payment gateway (Brazilian payment processor) - ONLY payment system
+- **Methods**: PIX, BOLETO, and CREDIT_CARD payment options (all three generated simultaneously)
 - **Environment**: Sandbox and production API support
-- **Flow**: Customer creation → Payment generation → Status tracking
+- **Flow**: Customer creation → Multiple payment options generation → Status tracking
+- **Fixed Price**: R$ 250 for pre-registration with 7-day due date
+- **Note**: Previous Stripe integration was completely removed from codebase (September 2025)
 
 ### Project Structure
 - `/client` - React frontend application with components, pages, and hooks
@@ -83,3 +85,12 @@ Preferred communication style: Simple, everyday language.
 - **Zod**: Runtime schema validation for form data and API payloads
 - **React Hook Form**: Performant form handling with validation integration
 - **Drizzle Zod**: Automatic schema generation from database definitions
+
+## Known Issues & Cleanup
+
+### Stripe Integration Cleanup (September 2025)
+- **Status**: Stripe integration completely removed from codebase
+- **Remaining**: Environment secrets `VITE_STRIPE_PUBLIC_KEY` and `STRIPE_SECRET_KEY` still exist but are unused
+- **Impact**: These unused secrets may cause testing systems to request Stripe testing credentials
+- **Resolution**: Manual removal of these environment secrets is recommended but not required for functionality
+- **Confirmation**: System tested and confirmed to work 100% with Asaas payment gateway only
