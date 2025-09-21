@@ -34,7 +34,7 @@ export default function ContactSection() {
                     className="text-primary hover:underline font-medium"
                     data-testid="link-whatsapp"
                   >
-                    (81) 99103-2141
+                    (81) 99103-2142
                   </a>
                 </div>
               </div>
