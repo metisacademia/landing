@@ -135,29 +135,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
         validatedData.telefone
       );
 
+      // Only create Asaas customer - payments will be created on-demand
+      console.log('Asaas customer created:', asaasCustomer.id);
+      
+      // Update pre-registration with customer ID only
+      await storage.updatePreRegistrationWithCustomerId(
+        preRegistration.id,
+        asaasCustomer.id
+      );
+
+      res.json({ 
+        success: true,
+        preRegistrationId: preRegistration.id,
+        customerId: asaasCustomer.id,
+        message: "Pré-matrícula criada com sucesso! Escolha sua forma de pagamento."
+      });
+    } catch (error: any) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Dados inválidos", errors: error.errors });
+      } else {
+        console.error('Erro ao processar pré-matrícula:', error);
+        res.status(500).json({ message: "Erro interno do servidor. Tente novamente." });
+      }
+    }
+  });
+
+  // Create PIX payment on-demand
+  app.post("/api/create-pix-payment/:preRegistrationId", async (req, res) => {
+    try {
+      const preRegistration = await storage.getPreRegistration(req.params.preRegistrationId);
+      if (!preRegistration) {
+        return res.status(404).json({ message: "Pré-matrícula não encontrada" });
+      }
+
+      if (!preRegistration.asaasCustomerId) {
+        return res.status(400).json({ message: "Cliente Asaas não encontrado" });
+      }
+
       // Create payment with 7 days from now as due date
       const dueDate = new Date();
       dueDate.setDate(dueDate.getDate() + 7);
       const dueDateStr = dueDate.toISOString().split('T')[0];
 
-      // Create all payment options: PIX, BOLETO, and CREDIT_CARD
-      console.log('Creating payment options for customer:', asaasCustomer.id);
-      
-      const [pixPayment, boletoPayment, creditCardPayment] = await Promise.all([
-        createAsaasPayment(asaasCustomer.id, Number(validatedData.amount), dueDateStr, 'PIX'),
-        createAsaasPayment(asaasCustomer.id, Number(validatedData.amount), dueDateStr, 'BOLETO'),
-        createAsaasPayment(asaasCustomer.id, Number(validatedData.amount), dueDateStr, 'CREDIT_CARD')
-      ]);
-
-      console.log('Payments created:', {
-        pix: pixPayment.id,
-        boleto: boletoPayment.id,
-        creditCard: creditCardPayment.id
-      });
+      // Create PIX payment
+      const pixPayment = await createAsaasPayment(
+        preRegistration.asaasCustomerId,
+        Number(preRegistration.amount),
+        dueDateStr,
+        'PIX'
+      );
 
       // Get PIX QR Code
       let pixQrCode = null;
-      let pixPaymentId = pixPayment.id;
       try {
         const pixResponse = await fetch(`${ASAAS_BASE_URL}/payments/${pixPayment.id}/pixQrCode`, {
           headers: ASAAS_HEADERS
@@ -170,52 +199,110 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.error('Erro ao buscar QR Code PIX:', error);
       }
 
-      // Get BOLETO URL
-      let bankSlipUrl = boletoPayment.bankSlipUrl;
-      let boletoPaymentId = boletoPayment.id;
-
-      // Get Credit Card payment URL (using invoiceUrl from the payment)
-      let creditCardUrl = creditCardPayment.invoiceUrl || null;
-      let creditCardPaymentId = creditCardPayment.id;
-
-      // Update pre-registration with all payment IDs
-      await storage.updatePreRegistrationWithAllPayments(
+      // Update pre-registration with PIX payment ID
+      await storage.updatePreRegistrationWithSpecificPayment(
         preRegistration.id,
         pixPayment.id,
-        boletoPayment.id,
-        creditCardPayment.id,
-        asaasCustomer.id
+        'pix'
       );
 
-      res.json({ 
+      res.json({
         success: true,
-        preRegistrationId: preRegistration.id,
-        paymentOptions: {
-          pix: {
-            paymentId: pixPaymentId,
-            qrCode: pixQrCode
-          },
-          boleto: {
-            paymentId: boletoPaymentId,
-            bankSlipUrl: bankSlipUrl
-          },
-          creditCard: {
-            paymentId: creditCardPaymentId,
-            url: creditCardUrl
-          }
-        },
-        // Legacy support
+        paymentType: 'PIX',
         paymentId: pixPayment.id,
-        pixQrCode: pixQrCode,
-        bankSlipUrl: bankSlipUrl
+        qrCode: pixQrCode
       });
     } catch (error: any) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({ message: "Dados inválidos", errors: error.errors });
-      } else {
-        console.error('Erro ao processar pré-matrícula:', error);
-        res.status(500).json({ message: "Erro interno do servidor. Tente novamente." });
+      console.error('Erro ao criar pagamento PIX:', error);
+      res.status(500).json({ message: "Erro ao criar pagamento PIX. Tente novamente." });
+    }
+  });
+
+  // Create BOLETO payment on-demand
+  app.post("/api/create-boleto-payment/:preRegistrationId", async (req, res) => {
+    try {
+      const preRegistration = await storage.getPreRegistration(req.params.preRegistrationId);
+      if (!preRegistration) {
+        return res.status(404).json({ message: "Pré-matrícula não encontrada" });
       }
+
+      if (!preRegistration.asaasCustomerId) {
+        return res.status(400).json({ message: "Cliente Asaas não encontrado" });
+      }
+
+      // Create payment with 7 days from now as due date
+      const dueDate = new Date();
+      dueDate.setDate(dueDate.getDate() + 7);
+      const dueDateStr = dueDate.toISOString().split('T')[0];
+
+      // Create BOLETO payment
+      const boletoPayment = await createAsaasPayment(
+        preRegistration.asaasCustomerId,
+        Number(preRegistration.amount),
+        dueDateStr,
+        'BOLETO'
+      );
+
+      // Update pre-registration with BOLETO payment ID
+      await storage.updatePreRegistrationWithSpecificPayment(
+        preRegistration.id,
+        boletoPayment.id,
+        'boleto'
+      );
+
+      res.json({
+        success: true,
+        paymentType: 'BOLETO',
+        paymentId: boletoPayment.id,
+        bankSlipUrl: boletoPayment.bankSlipUrl
+      });
+    } catch (error: any) {
+      console.error('Erro ao criar pagamento BOLETO:', error);
+      res.status(500).json({ message: "Erro ao criar pagamento BOLETO. Tente novamente." });
+    }
+  });
+
+  // Create CREDIT CARD payment on-demand
+  app.post("/api/create-creditcard-payment/:preRegistrationId", async (req, res) => {
+    try {
+      const preRegistration = await storage.getPreRegistration(req.params.preRegistrationId);
+      if (!preRegistration) {
+        return res.status(404).json({ message: "Pré-matrícula não encontrada" });
+      }
+
+      if (!preRegistration.asaasCustomerId) {
+        return res.status(400).json({ message: "Cliente Asaas não encontrado" });
+      }
+
+      // Create payment with 7 days from now as due date
+      const dueDate = new Date();
+      dueDate.setDate(dueDate.getDate() + 7);
+      const dueDateStr = dueDate.toISOString().split('T')[0];
+
+      // Create CREDIT CARD payment
+      const creditCardPayment = await createAsaasPayment(
+        preRegistration.asaasCustomerId,
+        Number(preRegistration.amount),
+        dueDateStr,
+        'CREDIT_CARD'
+      );
+
+      // Update pre-registration with CREDIT CARD payment ID
+      await storage.updatePreRegistrationWithSpecificPayment(
+        preRegistration.id,
+        creditCardPayment.id,
+        'creditcard'
+      );
+
+      res.json({
+        success: true,
+        paymentType: 'CREDIT_CARD',
+        paymentId: creditCardPayment.id,
+        url: creditCardPayment.invoiceUrl
+      });
+    } catch (error: any) {
+      console.error('Erro ao criar pagamento CARTÃO:', error);
+      res.status(500).json({ message: "Erro ao criar pagamento com cartão. Tente novamente." });
     }
   });
 

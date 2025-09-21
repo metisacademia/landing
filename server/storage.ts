@@ -18,6 +18,8 @@ export interface IStorage {
   createPreRegistration(preReg: InsertPreRegistration): Promise<PreRegistration>;
   getPreRegistration(id: string): Promise<PreRegistration | undefined>;
   updatePreRegistrationWithAllPayments(id: string, pixPaymentId: string, boletoPaymentId: string, creditCardPaymentId: string, customerId: string): Promise<PreRegistration>;
+  updatePreRegistrationWithCustomerId(id: string, customerId: string): Promise<PreRegistration>;
+  updatePreRegistrationWithSpecificPayment(id: string, paymentId: string, paymentType: 'pix' | 'boleto' | 'creditcard'): Promise<PreRegistration>;
   updatePreRegistrationPayment(id: string, paymentId: string, status: string, customerId?: string, paymentMethod?: string): Promise<PreRegistration>;
   getPreRegistrationByAnyPaymentId(paymentId: string): Promise<PreRegistration | undefined>;
   getAllPreRegistrations(): Promise<PreRegistration[]>;
@@ -62,6 +64,44 @@ export class DatabaseStorage implements IStorage {
         asaasCreditCardPaymentId: creditCardPaymentId,
         asaasCustomerId: customerId,
       })
+      .where(eq(preRegistrations.id, id))
+      .returning();
+    
+    if (result.length === 0) {
+      throw new Error("Pre-registration not found");
+    }
+    
+    return result[0];
+  }
+
+  async updatePreRegistrationWithCustomerId(id: string, customerId: string): Promise<PreRegistration> {
+    const result = await db.update(preRegistrations)
+      .set({
+        asaasCustomerId: customerId,
+      })
+      .where(eq(preRegistrations.id, id))
+      .returning();
+    
+    if (result.length === 0) {
+      throw new Error("Pre-registration not found");
+    }
+    
+    return result[0];
+  }
+
+  async updatePreRegistrationWithSpecificPayment(id: string, paymentId: string, paymentType: 'pix' | 'boleto' | 'creditcard'): Promise<PreRegistration> {
+    let updateData: any = {};
+    
+    if (paymentType === 'pix') {
+      updateData.asaasPixPaymentId = paymentId;
+    } else if (paymentType === 'boleto') {
+      updateData.asaasBoletoPaymentId = paymentId;
+    } else if (paymentType === 'creditcard') {
+      updateData.asaasCreditCardPaymentId = paymentId;
+    }
+    
+    const result = await db.update(preRegistrations)
+      .set(updateData)
       .where(eq(preRegistrations.id, id))
       .returning();
     

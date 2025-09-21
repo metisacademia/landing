@@ -42,7 +42,9 @@ function formatPhone(phone: string): string {
 
 export default function Checkout() {
   const [loading, setLoading] = useState(false);
+  const [preRegistrationId, setPreRegistrationId] = useState<string | null>(null);
   const [paymentData, setPaymentData] = useState<any>(null);
+  const [paymentLoading, setPaymentLoading] = useState<{ [key: string]: boolean }>({});
   const { toast } = useToast();
   
   const [formData, setFormData] = useState<FormData>({
@@ -99,10 +101,10 @@ export default function Checkout() {
       const data = await response.json();
       
       if (data.success) {
-        setPaymentData(data);
+        setPreRegistrationId(data.preRegistrationId);
         toast({
           title: "Pré-matrícula criada com sucesso!",
-          description: "Agora escolha sua forma de pagamento abaixo.",
+          description: data.message,
         });
       } else {
         throw new Error(data.message || 'Erro ao processar pré-matrícula');
@@ -116,6 +118,49 @@ export default function Checkout() {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const createPayment = async (paymentType: 'pix' | 'boleto' | 'creditcard') => {
+    if (!preRegistrationId) return;
+
+    setPaymentLoading({ ...paymentLoading, [paymentType]: true });
+    
+    try {
+      let endpoint = '';
+      switch (paymentType) {
+        case 'pix':
+          endpoint = `/api/create-pix-payment/${preRegistrationId}`;
+          break;
+        case 'boleto':
+          endpoint = `/api/create-boleto-payment/${preRegistrationId}`;
+          break;
+        case 'creditcard':
+          endpoint = `/api/create-creditcard-payment/${preRegistrationId}`;
+          break;
+      }
+
+      const response = await apiRequest("POST", endpoint, {});
+      const data = await response.json();
+      
+      if (data.success) {
+        setPaymentData(data);
+        toast({
+          title: "Pagamento criado com sucesso!",
+          description: `Pagamento via ${data.paymentType} foi gerado.`,
+        });
+      } else {
+        throw new Error(data.message || 'Erro ao criar pagamento');
+      }
+    } catch (error: any) {
+      console.error(`Error creating ${paymentType} payment:`, error);
+      toast({
+        title: "Erro ao criar pagamento",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setPaymentLoading({ ...paymentLoading, [paymentType]: false });
     }
   };
 
@@ -363,7 +408,7 @@ export default function Checkout() {
             </Card>
 
             {/* Payment Options */}
-            {!paymentData ? (
+            {!preRegistrationId ? (
               <Card className={`shadow-lg border-border ${!isFormComplete ? 'bg-muted/50' : ''}`} data-testid="payment-placeholder">
                 <CardContent className="p-8 text-center">
                   <div className="space-y-4">
@@ -371,14 +416,14 @@ export default function Checkout() {
                     <p className="text-muted-foreground">
                       {!isFormComplete 
                         ? "Complete as informações pessoais para continuar" 
-                        : "Clique no botão abaixo para gerar suas opções de pagamento"
+                        : "Clique no botão abaixo para criar sua pré-matrícula"
                       }
                     </p>
                     <Button 
                       onClick={submitPreRegistration}
                       disabled={!isFormComplete || loading}
                       className="w-full bg-accent text-accent-foreground py-4 rounded-lg font-semibold text-lg hover:bg-accent/90 transition-colors disabled:opacity-50"
-                      data-testid="button-gerar-pagamento"
+                      data-testid="button-criar-prematricula"
                     >
                       {loading ? (
                         <div className="flex items-center">
@@ -386,40 +431,144 @@ export default function Checkout() {
                           Processando...
                         </div>
                       ) : (
-                        "Gerar Opções de Pagamento"
+                        "Criar Pré-matrícula"
                       )}
                     </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : !paymentData ? (
+              <Card className="shadow-lg border-border" data-testid="payment-methods">
+                <CardHeader>
+                  <CardTitle>Escolha sua forma de pagamento</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="text-sm text-muted-foreground mb-4">
+                    Pagamento seguro processado pelo Asaas • Selecione abaixo para gerar sua cobrança
+                  </div>
+                  
+                  {/* PIX Payment Button */}
+                  <div className="border rounded-lg p-4 hover:border-primary/50 transition-colors">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <Copy className="h-6 w-6 mr-3 text-primary" />
+                        <div>
+                          <div className="font-medium">PIX</div>
+                          <div className="text-sm text-muted-foreground">Pagamento instantâneo</div>
+                        </div>
+                      </div>
+                      <Button 
+                        onClick={() => createPayment('pix')}
+                        disabled={paymentLoading.pix}
+                        className="bg-green-600 hover:bg-green-700 text-white"
+                        data-testid="button-pix"
+                      >
+                        {paymentLoading.pix ? (
+                          <div className="flex items-center">
+                            <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2" />
+                            Gerando...
+                          </div>
+                        ) : (
+                          "Pagar com PIX"
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Boleto Payment Button */}
+                  <div className="border rounded-lg p-4 hover:border-primary/50 transition-colors">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <FileText className="h-6 w-6 mr-3 text-primary" />
+                        <div>
+                          <div className="font-medium">Boleto Bancário</div>
+                          <div className="text-sm text-muted-foreground">Vencimento em 7 dias</div>
+                        </div>
+                      </div>
+                      <Button 
+                        onClick={() => createPayment('boleto')}
+                        disabled={paymentLoading.boleto}
+                        variant="outline"
+                        className="border-orange-500 text-orange-600 hover:bg-orange-50"
+                        data-testid="button-boleto"
+                      >
+                        {paymentLoading.boleto ? (
+                          <div className="flex items-center">
+                            <div className="animate-spin w-4 h-4 border-2 border-orange-600 border-t-transparent rounded-full mr-2" />
+                            Gerando...
+                          </div>
+                        ) : (
+                          "Gerar Boleto"
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Credit Card Payment Button */}
+                  <div className="border rounded-lg p-4 hover:border-primary/50 transition-colors">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <CreditCard className="h-6 w-6 mr-3 text-primary" />
+                        <div>
+                          <div className="font-medium">Cartão de Crédito</div>
+                          <div className="text-sm text-muted-foreground">Parcelamento até 12x</div>
+                        </div>
+                      </div>
+                      <Button 
+                        onClick={() => createPayment('creditcard')}
+                        disabled={paymentLoading.creditcard}
+                        variant="secondary"
+                        className="bg-blue-600 text-white hover:bg-blue-700"
+                        data-testid="button-credit-card"
+                      >
+                        {paymentLoading.creditcard ? (
+                          <div className="flex items-center">
+                            <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2" />
+                            Gerando...
+                          </div>
+                        ) : (
+                          "Pagar com Cartão"
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="text-center mt-6 p-4 bg-accent/10 rounded-lg">
+                    <p className="text-sm text-muted-foreground">
+                      ⚡ Nova otimização: Gere apenas a cobrança do método que deseja usar.<br/>
+                      Isso mantém o sistema organizado e facilita o controle administrativo.
+                    </p>
                   </div>
                 </CardContent>
               </Card>
             ) : (
               <Card className="shadow-lg border-border" data-testid="payment-options">
                 <CardHeader>
-                  <CardTitle>Escolha sua forma de pagamento</CardTitle>
+                  <CardTitle>✅ Pagamento Gerado - {paymentData.paymentType}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="text-sm text-muted-foreground mb-4">
-                    Pagamento seguro processado pelo Asaas
+                    Pagamento seguro processado pelo Asaas • ID: {paymentData.paymentId}
                   </div>
                   
                   {/* PIX Payment Option */}
-                  {paymentData.paymentOptions?.pix?.qrCode && (
-                    <div className="border rounded-lg p-4">
+                  {paymentData.paymentType === 'PIX' && paymentData.qrCode && (
+                    <div className="border rounded-lg p-4 bg-green-50">
                       <div className="flex items-center mb-2">
-                        <Copy className="h-5 w-5 mr-2 text-primary" />
-                        <span className="font-medium">PIX Copia e Cola</span>
+                        <Copy className="h-5 w-5 mr-2 text-green-600" />
+                        <span className="font-medium text-green-800">PIX Copia e Cola</span>
                       </div>
                       <p className="text-sm text-muted-foreground mb-3">
                         Copie o código PIX abaixo e cole no seu banco ou app de pagamento
                       </p>
-                      <div className="bg-muted p-3 rounded-md mb-3">
+                      <div className="bg-white p-3 rounded-md mb-3 border">
                         <p className="text-xs text-muted-foreground mb-1">Código PIX:</p>
-                        <p className="text-sm font-mono break-all">{paymentData.paymentOptions.pix.qrCode}</p>
+                        <p className="text-sm font-mono break-all">{paymentData.qrCode}</p>
                       </div>
                       <Button 
-                        onClick={() => copyPixCode(paymentData.paymentOptions.pix.qrCode)}
-                        className="w-full"
-                        data-testid="button-pix"
+                        onClick={() => copyPixCode(paymentData.qrCode)}
+                        className="w-full bg-green-600 hover:bg-green-700"
+                        data-testid="button-copy-pix"
                       >
                         <Copy className="h-4 w-4 mr-2" />
                         Copiar código PIX
@@ -428,88 +577,43 @@ export default function Checkout() {
                   )}
                   
                   {/* Boleto Payment Option */}
-                  {paymentData.paymentOptions?.boleto?.bankSlipUrl && (
-                    <div className="border rounded-lg p-4">
+                  {paymentData.paymentType === 'BOLETO' && paymentData.bankSlipUrl && (
+                    <div className="border rounded-lg p-4 bg-orange-50">
                       <div className="flex items-center mb-2">
-                        <FileText className="h-5 w-5 mr-2 text-primary" />
-                        <span className="font-medium">Boleto Bancário</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        Pague até o vencimento em qualquer banco ou internet banking
-                      </p>
-                      <Button 
-                        onClick={() => window.open(paymentData.paymentOptions.boleto.bankSlipUrl, '_blank')}
-                        variant="outline"
-                        className="w-full"
-                        data-testid="button-boleto"
-                      >
-                        Abrir Boleto
-                      </Button>
-                    </div>
-                  )}
-
-                  {/* Credit Card Payment Option */}
-                  {paymentData.paymentOptions?.creditCard?.url && (
-                    <div className="border rounded-lg p-4">
-                      <div className="flex items-center mb-2">
-                        <CreditCard className="h-5 w-5 mr-2 text-primary" />
-                        <span className="font-medium">Cartão de Crédito</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        Pague com cartão de crédito em até 12x
-                      </p>
-                      <Button 
-                        onClick={() => window.open(paymentData.paymentOptions.creditCard.url, '_blank')}
-                        variant="secondary"
-                        className="w-full"
-                        data-testid="button-credit-card"
-                      >
-                        Pagar com Cartão
-                      </Button>
-                    </div>
-                  )}
-
-                  {/* Legacy support for old API response */}
-                  {!paymentData.paymentOptions && paymentData.pixQrCode && (
-                    <div className="border rounded-lg p-4">
-                      <div className="flex items-center mb-2">
-                        <Copy className="h-5 w-5 mr-2 text-primary" />
-                        <span className="font-medium">PIX Copia e Cola</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        Copie o código PIX abaixo e cole no seu banco ou app de pagamento
-                      </p>
-                      <div className="bg-muted p-3 rounded-md mb-3">
-                        <p className="text-xs text-muted-foreground mb-1">Código PIX:</p>
-                        <p className="text-sm font-mono break-all">{paymentData.pixQrCode}</p>
-                      </div>
-                      <Button 
-                        onClick={() => copyPixCode(paymentData.pixQrCode)}
-                        className="w-full"
-                        data-testid="button-pix"
-                      >
-                        <Copy className="h-4 w-4 mr-2" />
-                        Copiar código PIX
-                      </Button>
-                    </div>
-                  )}
-                  
-                  {!paymentData.paymentOptions && paymentData.bankSlipUrl && (
-                    <div className="border rounded-lg p-4">
-                      <div className="flex items-center mb-2">
-                        <FileText className="h-5 w-5 mr-2 text-primary" />
-                        <span className="font-medium">Boleto Bancário</span>
+                        <FileText className="h-5 w-5 mr-2 text-orange-600" />
+                        <span className="font-medium text-orange-800">Boleto Bancário</span>
                       </div>
                       <p className="text-sm text-muted-foreground mb-3">
                         Pague até o vencimento em qualquer banco ou internet banking
                       </p>
                       <Button 
                         onClick={() => window.open(paymentData.bankSlipUrl, '_blank')}
-                        variant="outline"
-                        className="w-full"
-                        data-testid="button-boleto"
+                        className="w-full bg-orange-600 hover:bg-orange-700 text-white"
+                        data-testid="button-open-boleto"
                       >
+                        <FileText className="h-4 w-4 mr-2" />
                         Abrir Boleto
+                      </Button>
+                    </div>
+                  )}
+
+                  {/* Credit Card Payment Option */}
+                  {paymentData.paymentType === 'CREDIT_CARD' && paymentData.url && (
+                    <div className="border rounded-lg p-4 bg-blue-50">
+                      <div className="flex items-center mb-2">
+                        <CreditCard className="h-5 w-5 mr-2 text-blue-600" />
+                        <span className="font-medium text-blue-800">Cartão de Crédito</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Pague com cartão de crédito em até 12x
+                      </p>
+                      <Button 
+                        onClick={() => window.open(paymentData.url, '_blank')}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                        data-testid="button-pay-credit-card"
+                      >
+                        <CreditCard className="h-4 w-4 mr-2" />
+                        Pagar com Cartão
                       </Button>
                     </div>
                   )}
@@ -519,6 +623,17 @@ export default function Checkout() {
                       Após o pagamento, você receberá a confirmação por e-mail e WhatsApp. 
                       Nossa equipe entrará em contato para agendar sua aula experimental.
                     </p>
+                  </div>
+
+                  <div className="flex justify-center mt-4">
+                    <Button 
+                      onClick={() => setPaymentData(null)}
+                      variant="outline"
+                      size="sm"
+                      data-testid="button-generate-another"
+                    >
+                      Gerar outro método de pagamento
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
