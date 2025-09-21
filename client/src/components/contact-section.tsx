@@ -30,7 +30,7 @@ export default function ContactSection() {
                   <h3 className="text-lg font-semibold mb-2">WhatsApp</h3>
                   <p className="text-muted-foreground mb-2">Para agendamentos e dúvidas</p>
                   <a 
-                    href="https://wa.me/5581991032141" 
+                    href="https://wa.me/5581991032142" 
                     className="text-primary hover:underline font-medium"
                     data-testid="link-whatsapp"
                   >
@@ -83,7 +83,7 @@ export default function ContactSection() {
                 </Button>
                 <Button 
                   variant="outline"
-                  onClick={() => window.open('https://wa.me/5581991032141', '_blank')}
+                  onClick={() => window.open('https://wa.me/5581991032142', '_blank')}
                   className="border-2 border-primary text-primary px-8 py-4 rounded-lg font-semibold hover:bg-primary hover:text-primary-foreground transition-colors"
                   data-testid="button-agendar-visita"
                 >
