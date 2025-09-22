@@ -339,72 +339,202 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Webhook to handle payment confirmation (secured)
   app.post("/api/asaas-webhook", async (req, res) => {
+    const timestamp = new Date().toISOString();
+    console.log(`\n🔔 [WEBHOOK ${timestamp}] Recebendo notificação do Asaas...`);
+    
     try {
       // Critical: require webhook secret in production
       const webhookSecret = process.env.ASAAS_WEBHOOK_SECRET;
       if (!webhookSecret) {
-        console.error('ASAAS_WEBHOOK_SECRET não configurado');
+        console.error('❌ [WEBHOOK] ASAAS_WEBHOOK_SECRET não configurado');
         return res.status(500).json({ error: 'Server configuration error' });
       }
 
       const receivedSecret = req.headers['x-webhook-secret'];
+      console.log(`🔐 [WEBHOOK] Secret recebido: ${receivedSecret ? '[PRESENTE]' : '[AUSENTE]'}`);
       
       if (receivedSecret !== webhookSecret) {
-        console.error('Webhook authentication failed - invalid secret');
+        console.error('❌ [WEBHOOK] Autenticação falhou - secret inválido');
+        console.error(`Expected: ${webhookSecret.substring(0, 10)}...`);
+        console.error(`Received: ${String(receivedSecret).substring(0, 10)}...`);
         return res.status(401).json({ error: 'Unauthorized' });
       }
 
       const { event, payment } = req.body;
-
-      console.log('Asaas webhook received:', event, payment?.id);
+      console.log(`📋 [WEBHOOK] Dados recebidos:`, {
+        event,
+        paymentId: payment?.id,
+        paymentStatus: payment?.status,
+        billingType: payment?.billingType,
+        fullPayload: req.body
+      });
 
       if (event === 'PAYMENT_RECEIVED' || event === 'PAYMENT_CONFIRMED') {
         if (!payment?.id) {
-          console.error('Invalid webhook payload - missing payment ID');
+          console.error('❌ [WEBHOOK] Payload inválido - Payment ID ausente');
           return res.status(400).json({ error: 'Invalid payload' });
         }
 
+        console.log(`🔍 [WEBHOOK] Verificando pagamento ${payment.id} no Asaas...`);
+        
         // Verify payment status directly with Asaas API before updating
         const verificationResponse = await fetch(`${ASAAS_BASE_URL}/payments/${payment.id}`, {
           headers: ASAAS_HEADERS
         });
 
         if (!verificationResponse.ok) {
-          console.error('Failed to verify payment status with Asaas');
+          console.error(`❌ [WEBHOOK] Falha na verificação com Asaas - Status: ${verificationResponse.status}`);
           return res.status(500).json({ error: 'Payment verification failed' });
         }
 
         const verifiedPayment = await verificationResponse.json();
+        console.log(`✅ [WEBHOOK] Pagamento verificado no Asaas:`, {
+          id: verifiedPayment.id,
+          status: verifiedPayment.status,
+          billingType: verifiedPayment.billingType,
+          value: verifiedPayment.value
+        });
         
         // Only update if payment is actually received/confirmed
         if (verifiedPayment.status !== 'RECEIVED' && verifiedPayment.status !== 'CONFIRMED') {
-          console.log(`Payment ${payment.id} verification failed - status: ${verifiedPayment.status}`);
+          console.log(`⚠️ [WEBHOOK] Status não confirmado - ${verifiedPayment.status}`);
           return res.status(400).json({ error: 'Payment not confirmed' });
         }
 
         // Find pre-registration by any payment ID (PIX, BOLETO, or CREDIT_CARD)
+        console.log(`🔍 [WEBHOOK] Buscando pré-matrícula com payment ID: ${payment.id}`);
         const preReg = await storage.getPreRegistrationByAnyPaymentId(payment.id);
         
         if (preReg) {
+          console.log(`✅ [WEBHOOK] Pré-matrícula encontrada:`, {
+            id: preReg.id,
+            nome: preReg.nome,
+            currentStatus: preReg.paymentStatus,
+            pixPaymentId: preReg.asaasPixPaymentId,
+            boletoPaymentId: preReg.asaasBoletoPaymentId,
+            creditCardPaymentId: preReg.asaasCreditCardPaymentId
+          });
+          
           await storage.updatePreRegistrationPayment(
             preReg.id,
             payment.id,
             "paid",
             undefined,
-            payment.billingType // Set the payment method that was actually used
+            verifiedPayment.billingType
           );
-          console.log(`Payment confirmed for pre-registration ${preReg.id}`);
+          console.log(`🎉 [WEBHOOK] Pagamento confirmado para pré-matrícula ${preReg.id} - Método: ${verifiedPayment.billingType}`);
         } else {
-          console.log(`No pre-registration found for payment ${payment.id}`);
+          console.error(`❌ [WEBHOOK] Pré-matrícula não encontrada para payment ${payment.id}`);
+          
+          // Log all current pre-registrations for debug
+          const allPreRegs = await storage.getAllPreRegistrations();
+          console.log(`🔍 [DEBUG] Total pré-matrículas no banco: ${allPreRegs.length}`);
+          allPreRegs.slice(-5).forEach(pr => {
+            console.log(`   - ID: ${pr.id}, PIX: ${pr.asaasPixPaymentId}, BOLETO: ${pr.asaasBoletoPaymentId}, CARD: ${pr.asaasCreditCardPaymentId}`);
+          });
         }
       } else {
-        console.log(`Unhandled webhook event: ${event}`);
+        console.log(`ℹ️ [WEBHOOK] Evento não processado: ${event}`);
       }
 
+      console.log(`✅ [WEBHOOK] Processamento concluído\n`);
       res.json({ received: true });
     } catch (error: any) {
-      console.error('Webhook error:', error);
+      console.error('💥 [WEBHOOK] Erro durante processamento:', error);
       res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+  // Debug endpoint to test webhook manually
+  app.post("/api/debug/test-webhook", async (req, res) => {
+    try {
+      const { paymentId, event = 'PAYMENT_RECEIVED', billingType = 'PIX' } = req.body;
+      
+      if (!paymentId) {
+        return res.status(400).json({ error: 'paymentId é obrigatório' });
+      }
+
+      console.log(`\n🧪 [DEBUG WEBHOOK] Testando webhook para payment: ${paymentId}`);
+      
+      // Simulate webhook payload
+      const webhookPayload = {
+        event,
+        payment: {
+          id: paymentId,
+          status: 'RECEIVED',
+          billingType
+        }
+      };
+
+      // Make internal request to webhook endpoint
+      const webhookResponse = await fetch(`http://localhost:5000/api/asaas-webhook`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-webhook-secret': process.env.ASAAS_WEBHOOK_SECRET || ''
+        },
+        body: JSON.stringify(webhookPayload)
+      });
+
+      const result = await webhookResponse.json();
+      
+      res.json({
+        success: true,
+        webhookStatus: webhookResponse.status,
+        webhookResponse: result,
+        testedPayload: webhookPayload
+      });
+    } catch (error: any) {
+      console.error('🧪 [DEBUG WEBHOOK] Erro:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Debug endpoint to check payment and pre-registration status
+  app.get("/api/debug/payment/:paymentId", async (req, res) => {
+    try {
+      const paymentId = req.params.paymentId;
+      
+      console.log(`\n🔍 [DEBUG] Verificando status do payment: ${paymentId}`);
+      
+      // Check in database
+      const preReg = await storage.getPreRegistrationByAnyPaymentId(paymentId);
+      
+      // Check in Asaas
+      let asaasPayment = null;
+      try {
+        const response = await fetch(`${ASAAS_BASE_URL}/payments/${paymentId}`, {
+          headers: ASAAS_HEADERS
+        });
+        if (response.ok) {
+          asaasPayment = await response.json();
+        }
+      } catch (error) {
+        console.log('Erro ao buscar no Asaas:', error);
+      }
+      
+      res.json({
+        paymentId,
+        foundInDatabase: !!preReg,
+        preRegistration: preReg ? {
+          id: preReg.id,
+          nome: preReg.nome,
+          paymentStatus: preReg.paymentStatus,
+          paymentMethod: preReg.paymentMethod,
+          asaasPixPaymentId: preReg.asaasPixPaymentId,
+          asaasBoletoPaymentId: preReg.asaasBoletoPaymentId,
+          asaasCreditCardPaymentId: preReg.asaasCreditCardPaymentId
+        } : null,
+        asaasPayment: asaasPayment ? {
+          id: asaasPayment.id,
+          status: asaasPayment.status,
+          billingType: asaasPayment.billingType,
+          value: asaasPayment.value
+        } : null
+      });
+    } catch (error: any) {
+      console.error('🔍 [DEBUG] Erro:', error);
+      res.status(500).json({ error: error.message });
     }
   });
 
