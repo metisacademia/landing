@@ -22,6 +22,14 @@ interface FormData {
   diasPreferencia: string[];
   observacoes: string;
   termos: boolean;
+  // Campos de endereço obrigatórios para nota fiscal
+  postalCode: string;
+  addressNumber: string;
+  complement: string;
+  // Campos preenchidos automaticamente pelo ViaCEP
+  address: string;
+  city: string;
+  province: string;
 }
 
 function formatCPF(cpf: string): string {
@@ -40,6 +48,24 @@ function formatPhone(phone: string): string {
   return numbers.slice(0, 11).replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
 }
 
+function formatCEP(cep: string): string {
+  const numbers = cep.replace(/\D/g, '');
+  if (numbers.length <= 8) {
+    return numbers.replace(/(\d{5})(\d{3})/, '$1-$2');
+  }
+  return numbers.slice(0, 8).replace(/(\d{5})(\d{3})/, '$1-$2');
+}
+
+interface ViaCEPResponse {
+  cep: string;
+  logradouro: string;
+  complemento: string;
+  bairro: string;
+  localidade: string;
+  uf: string;
+  erro?: boolean;
+}
+
 export default function Checkout() {
   const [loading, setLoading] = useState(false);
   const [preRegistrationId, setPreRegistrationId] = useState<string | null>(null);
@@ -56,7 +82,14 @@ export default function Checkout() {
     horario: "",
     diasPreferencia: [],
     observacoes: "",
-    termos: false
+    termos: false,
+    // Campos de endereço
+    postalCode: "",
+    addressNumber: "",
+    complement: "",
+    address: "",
+    city: "",
+    province: ""
   });
 
   // Fixed price for pre-registration
@@ -73,6 +106,63 @@ export default function Checkout() {
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhone(e.target.value);
     updateFormData('telefone', formatted);
+  };
+
+  const handleCEPChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatCEP(e.target.value);
+    updateFormData('postalCode', formatted);
+
+    // Auto-buscar endereço quando CEP completo (8 dígitos)
+    const numbers = formatted.replace(/\D/g, '');
+    if (numbers.length === 8) {
+      await fetchAddressByCEP(numbers);
+    } else {
+      // Limpar campos de endereço se CEP incompleto
+      updateFormData('address', '');
+      updateFormData('city', '');
+      updateFormData('province', '');
+    }
+  };
+
+  const fetchAddressByCEP = async (cep: string) => {
+    try {
+      console.log('🔍 [ViaCEP] Buscando endereço para CEP:', cep);
+      
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const data: ViaCEPResponse = await response.json();
+
+      if (data.erro) {
+        toast({
+          title: "CEP não encontrado",
+          description: "Verifique se o CEP está correto.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Preencher automaticamente os campos de endereço
+      updateFormData('address', data.logradouro);
+      updateFormData('city', data.localidade);
+      updateFormData('province', data.bairro);
+
+      console.log('✅ [ViaCEP] Endereço encontrado:', {
+        logradouro: data.logradouro,
+        cidade: data.localidade,
+        bairro: data.bairro
+      });
+
+      toast({
+        title: "Endereço encontrado!",
+        description: `${data.logradouro}, ${data.bairro} - ${data.localidade}`,
+      });
+    } catch (error) {
+      console.error('❌ [ViaCEP] Erro ao buscar endereço:', error);
+      toast({
+        title: "Erro ao buscar endereço",
+        description: "Tente novamente ou digite o endereço manualmente.",
+        variant: "destructive",
+      });
+    }
   };
 
   const submitPreRegistration = async () => {
@@ -189,6 +279,8 @@ export default function Checkout() {
                        formData.telefone && 
                        formData.cpf && 
                        formData.idade && 
+                       formData.postalCode && 
+                       formData.addressNumber && 
                        formData.termos;
 
   return (
@@ -283,6 +375,84 @@ export default function Checkout() {
                   required
                   data-testid="input-idade"
                 />
+              </div>
+
+              {/* Seção de Endereço */}
+              <div className="border-t pt-6">
+                <h3 className="text-lg font-medium mb-4">📍 Endereço para Nota Fiscal</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Necessário para emissão automática da nota fiscal após o pagamento
+                </p>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <Label htmlFor="postalCode">CEP *</Label>
+                    <Input 
+                      id="postalCode" 
+                      type="text"
+                      value={formData.postalCode}
+                      onChange={handleCEPChange}
+                      placeholder="00000-000"
+                      maxLength={9}
+                      required
+                      data-testid="input-cep"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Digite o CEP para buscar o endereço automaticamente
+                    </p>
+                  </div>
+                  <div>
+                    <Label htmlFor="addressNumber">Número *</Label>
+                    <Input 
+                      id="addressNumber" 
+                      type="text"
+                      value={formData.addressNumber}
+                      onChange={(e) => updateFormData('addressNumber', e.target.value)}
+                      placeholder="123"
+                      required
+                      data-testid="input-numero"
+                    />
+                  </div>
+                </div>
+
+                {/* Campos preenchidos automaticamente pelo ViaCEP */}
+                {formData.address && (
+                  <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <div className="flex items-center mb-3">
+                      <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                      <span className="text-sm font-medium text-green-800">Endereço encontrado automaticamente</span>
+                    </div>
+                    <div className="grid md:grid-cols-3 gap-4 text-sm">
+                      <div>
+                        <label className="font-medium text-green-700">Logradouro:</label>
+                        <p className="text-green-800">{formData.address}</p>
+                      </div>
+                      <div>
+                        <label className="font-medium text-green-700">Bairro:</label>
+                        <p className="text-green-800">{formData.province}</p>
+                      </div>
+                      <div>
+                        <label className="font-medium text-green-700">Cidade:</label>
+                        <p className="text-green-800">{formData.city}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div>
+                  <Label htmlFor="complement">Complemento (opcional)</Label>
+                  <Input 
+                    id="complement" 
+                    type="text"
+                    value={formData.complement}
+                    onChange={(e) => updateFormData('complement', e.target.value)}
+                    placeholder="Apartamento, bloco, sala..."
+                    data-testid="input-complemento"
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Ex: Apto 101, Bloco B, Sala 205
+                  </p>
+                </div>
               </div>
 
               <div>

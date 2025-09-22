@@ -38,6 +38,12 @@ interface AsaasCustomer {
   email: string;
   cpfCnpj: string;
   phone?: string;
+  postalCode?: string;
+  addressNumber?: string;
+  complement?: string;
+  address?: string;
+  city?: string;
+  province?: string;
 }
 
 interface AsaasPayment {
@@ -52,19 +58,39 @@ interface AsaasPayment {
   invoiceUrl?: string;
 }
 
-async function createAsaasCustomer(nome: string, email: string, cpf: string, telefone?: string): Promise<AsaasCustomer> {
+async function createAsaasCustomer(
+  nome: string, 
+  email: string, 
+  cpf: string, 
+  telefone?: string, 
+  postalCode?: string, 
+  addressNumber?: string, 
+  complement?: string
+): Promise<AsaasCustomer> {
   try {
-    console.log('Tentando criar cliente Asaas:', { nome, email, cpf });
+    console.log('Tentando criar cliente Asaas:', { nome, email, cpf, postalCode, addressNumber });
+    
+    const customerData: any = {
+      name: nome,
+      email: email,
+      cpfCnpj: cpf,
+      phone: telefone
+    };
+    
+    // Adicionar dados de endereço se fornecidos (obrigatórios para nota fiscal)
+    if (postalCode && addressNumber) {
+      customerData.postalCode = postalCode;
+      customerData.addressNumber = addressNumber;
+      if (complement) {
+        customerData.complement = complement;
+      }
+      console.log('🏠 [ASAAS] Criando cliente com endereço para nota fiscal automática');
+    }
     
     const response = await fetch(`${ASAAS_BASE_URL}/customers`, {
       method: 'POST',
       headers: ASAAS_HEADERS,
-      body: JSON.stringify({
-        name: nome,
-        email: email,
-        cpfCnpj: cpf,
-        phone: telefone
-      })
+      body: JSON.stringify(customerData)
     });
 
     if (!response.ok) {
@@ -127,12 +153,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Create pre-registration record
       const preRegistration = await storage.createPreRegistration(validatedData);
       
-      // Create Asaas customer
+      // Create Asaas customer with address data for automatic invoice generation
       const asaasCustomer = await createAsaasCustomer(
         validatedData.nome,
         validatedData.email,
         validatedData.cpf,
-        validatedData.telefone
+        validatedData.telefone,
+        validatedData.postalCode,
+        validatedData.addressNumber,
+        validatedData.complement
       );
 
       // Only create Asaas customer - payments will be created on-demand
