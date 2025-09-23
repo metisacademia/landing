@@ -7,6 +7,10 @@ export default function FAQSection() {
 
   const faqs = [
     {
+      question: "Quando a academia inaugura?",
+      answer: "A inauguração está prevista para Novembro/2025. Entraremos em contato com todos os pré-matriculados para agendamento das primeiras turmas. A pré-matrícula garante sua prioridade de vaga."
+    },
+    {
       question: "Preciso de encaminhamento médico?",
       answer: "Não é obrigatório. A Métis é um programa de estímulo cognitivo preventivo, aberto a qualquer pessoa interessada em cuidar da saúde mental e cognitiva."
     },

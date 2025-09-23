@@ -96,11 +96,16 @@ export default function PricingSection() {
         <div className="text-center mt-12">
           <Button 
             onClick={() => setLocation('/checkout')}
-            className="bg-yellow-500 text-black px-12 py-6 rounded-lg font-semibold text-xl hover:bg-yellow-400 transition-colors shadow-2xl border-2 border-transparent mb-6"
+            className="bg-yellow-500 text-black px-12 py-6 rounded-lg font-semibold text-xl hover:bg-yellow-400 transition-colors shadow-2xl border-2 border-transparent mb-4"
             data-testid="button-pre-matricula-pricing"
           >
             Pré matrícula R$ 250
           </Button>
+          <div className="mb-6 p-4 bg-accent/10 border border-accent/20 rounded-lg max-w-md mx-auto" data-testid="text-inauguracao-eta-pricing">
+            <p className="text-accent font-medium text-base">
+              As atividades iniciam em Novembro/2025. A pré‑matrícula garante prioridade de vaga.
+            </p>
+          </div>
           <p className="text-muted-foreground" data-testid="guarantee-text">
             Satisfação garantida: se, após a aula experimental, você não perceber valor, devolvemos a pré-matrícula.
           </p>

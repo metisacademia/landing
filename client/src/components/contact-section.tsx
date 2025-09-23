@@ -17,6 +17,11 @@ export default function ContactSection() {
           <p className="text-xl text-muted-foreground" data-testid="contact-description">
             Agende sua visita, conheça as salas e faça sua pré-matrícula.
           </p>
+          <div className="mt-4" data-testid="text-inauguracao-eta-contact">
+            <p className="text-sm text-muted-foreground bg-muted/30 inline-block px-4 py-2 rounded-lg">
+              📅 Estamos em fase de implantação. Inauguração prevista: Novembro/2025.
+            </p>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
