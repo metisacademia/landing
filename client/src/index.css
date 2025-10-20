@@ -1,71 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Brand Colors - Baseadas no Manual de Marca Métis */
-  /* Prussian Blue (Cor primária azul marinho) #173b5a */
-  --prussian-blue: hsl(204, 60%, 22%);
-  /* Earth Yellow (Cor de assinatura - dourado) #cda465 */
-  --earth-yellow: hsl(36, 54%, 60%);
-  /* Linen (Off-white para fundos) #f8f1e7 */
-  --linen: hsl(36, 44%, 93%);
-  /* Buff (Secundária) #ce9976 */
-  --buff: hsl(24, 49%, 64%);
-  /* Chamoisee (Secundária) #aa7552 */
-  --chamoisee: hsl(19, 36%, 49%);
-  /* Ultra Violet (Secundária) #323256 */
-  --ultra-violet: hsl(240, 27%, 27%);
-  /* Oxford Blue (Secundária) #0b0b28 */
-  --oxford-blue: hsl(240, 59%, 10%);
-  /* Platinum (Secundária) #dddcdb */
-  --platinum: hsl(30, 6%, 86%);
-
-  /* Design System Variables */
-  --background: var(--linen);
-  --foreground: var(--prussian-blue);
+  --background: hsl(220, 15%, 97%);
+  --foreground: hsl(220, 10%, 15%);
   --card: hsl(0, 0%, 100%);
-  --card-foreground: var(--prussian-blue);
+  --card-foreground: hsl(220, 10%, 15%);
   --popover: hsl(0, 0%, 100%);
-  --popover-foreground: var(--prussian-blue);
-  --primary: var(--prussian-blue);
+  --popover-foreground: hsl(220, 10%, 15%);
+  --primary: hsl(228, 71%, 30%);
   --primary-foreground: hsl(0, 0%, 98%);
-  --secondary: var(--platinum);
-  --secondary-foreground: var(--prussian-blue);
-  --muted: var(--platinum);
-  --muted-foreground: var(--chamoisee);
-  --accent: var(--earth-yellow);
-  --accent-foreground: var(--prussian-blue);
+  --secondary: hsl(220, 14%, 95%);
+  --secondary-foreground: hsl(220, 10%, 15%);
+  --muted: hsl(220, 14%, 95%);
+  --muted-foreground: hsl(220, 8%, 45%);
+  --accent: hsl(43, 96%, 56%);
+  --accent-foreground: hsl(220, 10%, 15%);
   --destructive: hsl(0, 72%, 51%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --border: hsl(204, 20%, 85%);
-  --input: hsl(204, 20%, 85%);
-  --ring: var(--prussian-blue);
+  --border: hsl(220, 13%, 91%);
+  --input: hsl(220, 13%, 91%);
+  --ring: hsl(228, 71%, 30%);
   --radius: 0.75rem;
-  --font-sans: 'Atkinson Hyperlegible Next', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .dark {
-  --background: var(--oxford-blue);
-  --foreground: var(--linen);
-  --card: var(--ultra-violet);
-  --card-foreground: var(--linen);
-  --popover: var(--ultra-violet);
-  --popover-foreground: var(--linen);
-  --primary: var(--earth-yellow);
-  --primary-foreground: var(--oxford-blue);
-  --secondary: var(--chamoisee);
-  --secondary-foreground: var(--linen);
-  --muted: var(--ultra-violet);
-  --muted-foreground: var(--buff);
-  --accent: var(--earth-yellow);
-  --accent-foreground: var(--oxford-blue);
+  --background: hsl(220, 15%, 8%);
+  --foreground: hsl(220, 15%, 92%);
+  --card: hsl(220, 15%, 10%);
+  --card-foreground: hsl(220, 15%, 92%);
+  --popover: hsl(220, 15%, 10%);
+  --popover-foreground: hsl(220, 15%, 92%);
+  --primary: hsl(228, 71%, 45%);
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(220, 15%, 15%);
+  --secondary-foreground: hsl(220, 15%, 92%);
+  --muted: hsl(220, 15%, 15%);
+  --muted-foreground: hsl(220, 15%, 65%);
+  --accent: hsl(43, 96%, 56%);
+  --accent-foreground: hsl(220, 15%, 8%);
   --destructive: hsl(0, 72%, 51%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --border: hsl(240, 20%, 25%);
-  --input: hsl(240, 20%, 25%);
-  --ring: var(--earth-yellow);
+  --border: hsl(220, 15%, 20%);
+  --input: hsl(220, 15%, 20%);
+  --ring: hsl(228, 71%, 45%);
 }
 
 @layer base {

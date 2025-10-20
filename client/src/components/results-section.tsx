@@ -5,43 +5,43 @@ export default function ResultsSection() {
   const results = [
     {
       icon: UserCheck,
-      bgColor: "bg-primary/10",
-      iconColor: "text-primary",
+      bgColor: "bg-blue-100",
+      iconColor: "text-blue-600",
       title: "Memória Aprimorada",
       description: "Lembrar nomes, compromissos e detalhes do dia a dia com maior facilidade."
     },
     {
       icon: Eye,
-      bgColor: "bg-accent/10",
-      iconColor: "text-accent",
+      bgColor: "bg-green-100",
+      iconColor: "text-green-600",
       title: "Foco Intensificado",
       description: "Mais foco para leitura, conversas e atividades que exigem concentração."
     },
     {
       icon: CheckSquare,
-      bgColor: "bg-primary/10",
-      iconColor: "text-primary",
+      bgColor: "bg-purple-100",
+      iconColor: "text-purple-600",
       title: "Planejamento Eficaz",
       description: "Planejamento leve de rotinas e decisões mais assertivas no cotidiano."
     },
     {
       icon: Heart,
-      bgColor: "bg-accent/10",
-      iconColor: "text-accent",
+      bgColor: "bg-amber-100",
+      iconColor: "text-amber-600",
       title: "Redução do Estresse",
       description: "Menor tensão através de contemplação, arte e práticas de relaxamento."
     },
     {
       icon: MessageSquare,
-      bgColor: "bg-primary/10",
-      iconColor: "text-primary",
+      bgColor: "bg-indigo-100",
+      iconColor: "text-indigo-600",
       title: "Engajamento Social",
       description: "Conexões significativas em um ambiente elegante e acolhedor."
     },
     {
       icon: Shield,
-      bgColor: "bg-accent/10",
-      iconColor: "text-accent",
+      bgColor: "bg-rose-100",
+      iconColor: "text-rose-600",
       title: "Prevenção Cognitiva",
       description: "Fortalecimento da reserva cognitiva com base em evidências científicas."
     }

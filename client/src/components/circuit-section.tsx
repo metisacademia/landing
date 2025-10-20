@@ -6,8 +6,8 @@ export default function CircuitSection() {
       id: 1,
       title: "Sala da\nLinguagem", 
       description: "Atividades que\ndesenvolvem e expandem\nvocabulário, interpretação e\nexpressão escrita e verbal.",
-      bgColor: "bg-primary",
-      iconColor: "text-primary-foreground",
+      bgColor: "bg-slate-800",
+      iconColor: "text-white",
       icon: MessageCircle,
       position: "bottom-left"
     },
@@ -15,7 +15,7 @@ export default function CircuitSection() {
       id: 2,
       title: "Sala da\nMemória",
       description: "Estímulo e\ndesenvolvimento da\nmemória e expansão\nde conhecimentos\nculturais.",
-      bgColor: "bg-[#aa7552]",
+      bgColor: "bg-red-900",
       iconColor: "text-white", 
       icon: Brain,
       position: "top-left"
@@ -24,8 +24,8 @@ export default function CircuitSection() {
       id: 3,
       title: "Sala de\nAtividades\nExecutivas",
       description: "Integração corpo-mente,\ncom estímulo da atenção,\nplanejamento e resolução\nde problemas.",
-      bgColor: "bg-accent",
-      iconColor: "text-accent-foreground",
+      bgColor: "bg-yellow-500",
+      iconColor: "text-white",
       icon: Dumbbell,
       position: "bottom-right"
     },
@@ -33,7 +33,7 @@ export default function CircuitSection() {
       id: 4,
       title: "Sala de\nContemplação",
       description: "Estado contemplativo\nativo: consolidação do\naprendizado.",
-      bgColor: "bg-[#323256]",
+      bgColor: "bg-gray-500",
       iconColor: "text-white",
       icon: Leaf,
       position: "top-right"
