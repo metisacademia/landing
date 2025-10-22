@@ -23,12 +23,12 @@ export default function HeroSection() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-32 z-10">
         <div className="max-w-4xl text-left text-white sm:ml-8">
           
-          <div className="flex items-center gap-4 mb-6">
+          {/* Logo Métis */}
+          <div className="mb-6 sm:mb-8" data-testid="metis-logo">
             <img 
               src="/images/metis-logo-icon.jpg" 
-              alt="Métis Logo" 
-              className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain"
-              data-testid="metis-logo"
+              alt="Logo Métis" 
+              className="h-24 sm:h-32 md:h-40 lg:h-48 w-auto"
             />
           </div>
           
@@ -57,7 +57,7 @@ export default function HeroSection() {
           <div className="flex justify-start">
             <Button 
               onClick={navigateToCheckout}
-              className="bg-yellow-500 text-black px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 lg:px-12 lg:py-6 rounded-lg font-semibold text-sm sm:text-base md:text-lg lg:text-xl hover:bg-yellow-400 transition-colors shadow-2xl border-2 border-transparent"
+              className="bg-accent text-accent-foreground px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 lg:px-12 lg:py-6 rounded-lg font-semibold text-sm sm:text-base md:text-lg lg:text-xl hover:bg-accent/90 transition-colors shadow-2xl border-2 border-transparent"
               data-testid="button-pre-matricula"
             >
               <span className="sm:hidden">Pré-matrícula</span>
