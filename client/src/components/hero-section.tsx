@@ -23,11 +23,16 @@ export default function HeroSection() {
       }}
     >
       {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/50"></div>
+      <div className="absolute inset-0 bg-[#173b5a]/95"></div>
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-32 z-10">
         <div className="max-w-4xl text-left text-white sm:ml-8">
           
+          <img 
+            src="/images/metis-logo-icon.jpg" 
+            alt="Métis Logo" 
+            className="w-20 sm:w-24 md:w-28 mb-4 sm:mb-6"
+          />
           
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-3 sm:mb-4 text-white drop-shadow-2xl text-left" data-testid="hero-main-title">
             Liberte seu potencial.

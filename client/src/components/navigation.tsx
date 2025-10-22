@@ -19,7 +19,7 @@ export default function Navigation() {
 
   return (
     <nav className="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#173b5a]">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <div className="text-2xl font-bold text-primary" data-testid="logo">Métis</div>
@@ -57,7 +57,7 @@ export default function Navigation() {
             </button>
             <Button 
               onClick={navigateToCheckout}
-              className="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+              className="px-4 py-2 rounded-lg hover:bg-[#fbbd23]/90 transition-colors text-[#22252a] bg-[#fbbd23]"
               data-testid="nav-pre-matricula"
             >
               Pré-matrícula
@@ -106,7 +106,7 @@ export default function Navigation() {
               </button>
               <Button 
                 onClick={navigateToCheckout}
-                className="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors mt-4 w-fit"
+                className="px-4 py-2 rounded-lg hover:bg-[#fbbd23]/90 transition-colors mt-4 w-fit text-[#22252a] bg-[#fbbd23]"
                 data-testid="mobile-nav-pre-matricula"
               >
                 Pré-matrícula
