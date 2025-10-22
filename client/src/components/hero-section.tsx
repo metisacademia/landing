@@ -16,18 +16,21 @@ export default function HeroSection() {
     <section 
       className="relative overflow-hidden min-h-screen flex items-center"
       style={{
-        backgroundImage: `url('/images/new-hero-background.png?v=${Date.now()}')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundColor: '#173b5a'
       }}
     >
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/50"></div>
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-32 z-10">
         <div className="max-w-4xl text-left text-white sm:ml-8">
           
+          <div className="flex items-center gap-4 mb-6">
+            <img 
+              src="/images/metis-logo-icon.jpg" 
+              alt="Métis Logo" 
+              className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain"
+              data-testid="metis-logo"
+            />
+          </div>
           
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-3 sm:mb-4 text-white drop-shadow-2xl text-left" data-testid="hero-main-title">
             Liberte seu potencial.
@@ -54,7 +57,7 @@ export default function HeroSection() {
           <div className="flex justify-start">
             <Button 
               onClick={navigateToCheckout}
-              className="bg-accent text-accent-foreground px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 lg:px-12 lg:py-6 rounded-lg font-semibold text-sm sm:text-base md:text-lg lg:text-xl hover:bg-accent/90 transition-colors shadow-2xl border-2 border-transparent"
+              className="bg-yellow-500 text-black px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 lg:px-12 lg:py-6 rounded-lg font-semibold text-sm sm:text-base md:text-lg lg:text-xl hover:bg-yellow-400 transition-colors shadow-2xl border-2 border-transparent"
               data-testid="button-pre-matricula"
             >
               <span className="sm:hidden">Pré-matrícula</span>
