@@ -23,7 +23,7 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <img 
-              src="/images/metis-logo.jpg?v=3" 
+              src="/images/logo-metis-bg-color.jpg" 
               alt="Métis - Academia da Mente" 
               className="h-12 w-auto"
               data-testid="nav-logo-image"
