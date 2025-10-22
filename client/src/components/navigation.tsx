@@ -18,8 +18,8 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#173b5a] text-[#f8f1e7]">
+    <nav className="bg-[#173b5a] backdrop-blur-sm border-b border-border sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-[#f8f1e7]">
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center">
             <img 
