@@ -21,9 +21,17 @@ export default function Navigation() {
     <nav className="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#173b5a]">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
-            <div className="text-2xl font-bold text-[#cda465]" data-testid="logo">Métis</div>
-            <span className="ml-2 text-sm text-[#cda465]">academia da mente</span>
+          <div className="flex items-center gap-3">
+            <img 
+              src="/images/metis-logo.jpg" 
+              alt="Métis Logo" 
+              className="w-10 h-10 sm:w-12 sm:h-12"
+              data-testid="nav-logo-image"
+            />
+            <div className="flex flex-col">
+              <div className="text-xl sm:text-2xl font-bold text-[#cda465]" data-testid="logo">Métis</div>
+              <span className="text-xs sm:text-sm text-[#cda465]">academia da mente</span>
+            </div>
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
