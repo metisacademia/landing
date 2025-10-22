@@ -14,7 +14,12 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <div className="mb-4">
-              <h3 className="text-2xl font-bold" data-testid="footer-logo">Métis</h3>
+              <img 
+                src="/images/logo-metis.jpg?v=2" 
+                alt="Métis - Academia da Mente" 
+                className="h-12"
+                data-testid="footer-logo"
+              />
             </div>
             <p className="text-primary-foreground/80 leading-relaxed mb-4" data-testid="footer-description">
               Espaço premium de estímulo cognitivo que combina ciência, cultura e convivência para exercitar sua mente e cultivar sua memória.
