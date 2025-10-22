@@ -20,12 +20,12 @@ export default function Navigation() {
   return (
     <nav className="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#173b5a] text-[#f8f1e7]">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-40">
           <div className="flex items-center">
             <img 
               src="/images/logo-metis-bg-color.jpg?v=5" 
               alt="Métis - Academia da Mente" 
-              className="h-12 w-auto"
+              className="h-36 w-auto"
               data-testid="nav-logo-image"
             />
           </div>
