@@ -77,7 +77,7 @@ export default function CircuitSection() {
       <div className="w-full relative bg-[#173b5a]">
         {/* Imagem de Fundo */}
         <img 
-          src="/images/salas-circuito.png" 
+          src="/images/circuito-4-salas.jpg" 
           alt="Circuito das 4 Salas - Linguagem, Memória, Atividades Executivas e Contemplação" 
           className="w-full h-auto object-cover"
           style={{ backgroundColor: '#173b5a' }}
@@ -141,9 +141,11 @@ export default function CircuitSection() {
                     <p className="text-sm text-muted-foreground mt-1">{selectedRoom.subtitle}</p>
                   </div>
                 </div>
-                <DialogDescription className="text-base leading-relaxed text-foreground/80 space-y-4">
-                  <p className="font-medium text-lg">{selectedRoom.description}</p>
-                  <p>{selectedRoom.detailedDescription}</p>
+                <DialogDescription className="text-base leading-relaxed text-foreground/80">
+                  <div className="space-y-4">
+                    <div className="font-medium text-lg">{selectedRoom.description}</div>
+                    <div>{selectedRoom.detailedDescription}</div>
+                  </div>
                 </DialogDescription>
               </DialogHeader>
             </>
