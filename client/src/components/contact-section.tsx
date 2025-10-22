@@ -100,7 +100,7 @@ export default function ContactSection() {
 
           <Card className="p-1 shadow-lg border-border overflow-hidden" data-testid="contact-map">
             <iframe
-              src="https://www.google.com/maps?q=-8.0508354,-34.9014247+(Kronos+Empresarial+-+R.+das+Pernambucanas,+407)&hl=pt-BR&z=18&output=embed"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.3616453890694!2d-34.90382162408836!3d-8.050835480762887!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab18bc401b8f85%3A0x7eb5e3fc5c8e3d0f!2sKronos%20Empresarial!5e0!3m2!1spt-BR!2sbr!4v1729627104000!5m2!1spt-BR!2sbr"
               width="100%"
               height="384"
               style={{ border: 0 }}
