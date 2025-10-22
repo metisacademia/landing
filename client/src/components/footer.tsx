@@ -96,7 +96,9 @@ export default function Footer() {
               </li>
               <li className="flex items-center" data-testid="footer-email">
                 <Mail className="h-4 w-4 mr-2" />
-                atendimento@metis.com.br
+                <a href="mailto:atendimento@metis.com.br" className="hover:text-primary-foreground transition-colors">
+                  atendimento@metis.com.br
+                </a>
               </li>
               <li className="flex items-center" data-testid="footer-location">
                 <MapPin className="h-4 w-4 mr-2" />
