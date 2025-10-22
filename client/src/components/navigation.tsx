@@ -68,13 +68,21 @@ export default function Navigation() {
             </Button>
           </div>
           
-          <button 
-            className="md:hidden"
-            onClick={() => setIsOpen(!isOpen)}
-            data-testid="mobile-menu-toggle"
-          >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            <Button 
+              onClick={navigateToCheckout}
+              className="px-3 py-2 rounded-lg hover:bg-[#fbbd23]/90 transition-colors text-[#22252a] bg-[#fbbd23] text-sm"
+              data-testid="mobile-nav-pre-matricula-header"
+            >
+              Pré-matrícula
+            </Button>
+            <button 
+              onClick={() => setIsOpen(!isOpen)}
+              data-testid="mobile-menu-toggle"
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
         
         {isOpen && (
