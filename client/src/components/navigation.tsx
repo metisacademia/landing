@@ -22,35 +22,35 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#173b5a]">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <div className="text-2xl font-bold text-primary" data-testid="logo">Métis</div>
-            <span className="ml-2 text-sm text-muted-foreground">academia da mente</span>
+            <div className="text-2xl font-bold text-[#cda465]" data-testid="logo">Métis</div>
+            <span className="ml-2 text-sm text-[#cda465]">academia da mente</span>
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
             <button 
               onClick={() => scrollToSection('sobre')}
-              className="text-foreground hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors text-[#cda465]"
               data-testid="nav-sobre"
             >
               Sobre
             </button>
             <button 
               onClick={() => scrollToSection('como-funciona')}
-              className="text-foreground hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors text-[#cda465]"
               data-testid="nav-como-funciona"
             >
               Como Funciona
             </button>
             <button 
               onClick={() => scrollToSection('planos')}
-              className="text-foreground hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors text-[#cda465]"
               data-testid="nav-planos"
             >
               Planos
             </button>
             <button 
               onClick={() => scrollToSection('contato')}
-              className="text-foreground hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors text-[#cda465]"
               data-testid="nav-contato"
             >
               Contato
@@ -78,28 +78,28 @@ export default function Navigation() {
             <div className="flex flex-col space-y-3">
               <button 
                 onClick={() => scrollToSection('sobre')}
-                className="text-foreground hover:text-primary transition-colors text-left"
+                className="hover:text-primary transition-colors text-left text-[#cda465]"
                 data-testid="mobile-nav-sobre"
               >
                 Sobre
               </button>
               <button 
                 onClick={() => scrollToSection('como-funciona')}
-                className="text-foreground hover:text-primary transition-colors text-left"
+                className="hover:text-primary transition-colors text-left text-[#cda465]"
                 data-testid="mobile-nav-como-funciona"
               >
                 Como Funciona
               </button>
               <button 
                 onClick={() => scrollToSection('planos')}
-                className="text-foreground hover:text-primary transition-colors text-left"
+                className="hover:text-primary transition-colors text-left text-[#cda465]"
                 data-testid="mobile-nav-planos"
               >
                 Planos
               </button>
               <button 
                 onClick={() => scrollToSection('contato')}
-                className="text-foreground hover:text-primary transition-colors text-left"
+                className="hover:text-primary transition-colors text-left text-[#cda465]"
                 data-testid="mobile-nav-contato"
               >
                 Contato
