@@ -29,28 +29,28 @@ export default function Navigation() {
           <div className="hidden md:flex items-center space-x-8">
             <button 
               onClick={() => scrollToSection('sobre')}
-              className="hover:text-primary transition-colors text-[#cda465]"
+              className="hover:text-primary transition-colors text-[#f8f1e7]"
               data-testid="nav-sobre"
             >
               Sobre
             </button>
             <button 
               onClick={() => scrollToSection('como-funciona')}
-              className="hover:text-primary transition-colors text-[#cda465]"
+              className="hover:text-primary transition-colors text-[#f8f1e7]"
               data-testid="nav-como-funciona"
             >
               Como Funciona
             </button>
             <button 
               onClick={() => scrollToSection('planos')}
-              className="hover:text-primary transition-colors text-[#cda465]"
+              className="hover:text-primary transition-colors text-[#f8f1e7]"
               data-testid="nav-planos"
             >
               Planos
             </button>
             <button 
               onClick={() => scrollToSection('contato')}
-              className="hover:text-primary transition-colors text-[#cda465]"
+              className="hover:text-primary transition-colors text-[#f8f1e7]"
               data-testid="nav-contato"
             >
               Contato
@@ -78,28 +78,28 @@ export default function Navigation() {
             <div className="flex flex-col space-y-3">
               <button 
                 onClick={() => scrollToSection('sobre')}
-                className="hover:text-primary transition-colors text-left text-[#cda465]"
+                className="hover:text-primary transition-colors text-left text-[#f8f1e7]"
                 data-testid="mobile-nav-sobre"
               >
                 Sobre
               </button>
               <button 
                 onClick={() => scrollToSection('como-funciona')}
-                className="hover:text-primary transition-colors text-left text-[#cda465]"
+                className="hover:text-primary transition-colors text-left text-[#f8f1e7]"
                 data-testid="mobile-nav-como-funciona"
               >
                 Como Funciona
               </button>
               <button 
                 onClick={() => scrollToSection('planos')}
-                className="hover:text-primary transition-colors text-left text-[#cda465]"
+                className="hover:text-primary transition-colors text-left text-[#f8f1e7]"
                 data-testid="mobile-nav-planos"
               >
                 Planos
               </button>
               <button 
                 onClick={() => scrollToSection('contato')}
-                className="hover:text-primary transition-colors text-left text-[#cda465]"
+                className="hover:text-primary transition-colors text-left text-[#f8f1e7]"
                 data-testid="mobile-nav-contato"
               >
                 Contato
