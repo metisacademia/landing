@@ -138,16 +138,16 @@ export default function CircuitSection() {
                     <DialogTitle className="text-2xl font-bold text-foreground">
                       {selectedRoom.title}
                     </DialogTitle>
-                    <p className="text-sm text-muted-foreground mt-1">{selectedRoom.subtitle}</p>
+                    <DialogDescription className="text-sm mt-1">
+                      {selectedRoom.subtitle}
+                    </DialogDescription>
                   </div>
                 </div>
-                <DialogDescription className="text-base leading-relaxed text-foreground/80">
-                  <div className="space-y-4">
-                    <div className="font-medium text-lg">{selectedRoom.description}</div>
-                    <div>{selectedRoom.detailedDescription}</div>
-                  </div>
-                </DialogDescription>
               </DialogHeader>
+              <div className="space-y-4 text-base leading-relaxed text-foreground/80 mt-4">
+                <div className="font-medium text-lg">{selectedRoom.description}</div>
+                <div>{selectedRoom.detailedDescription}</div>
+              </div>
             </>
           )}
         </DialogContent>
