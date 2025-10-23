@@ -76,10 +76,6 @@ export default function AboutSection() {
                   <Check className="h-5 w-5 text-accent mt-1 mr-3 flex-shrink-0" />
                   Equipe multidisciplinar especializada
                 </li>
-                <li className="flex items-start">
-                  <Check className="h-5 w-5 text-accent mt-1 mr-3 flex-shrink-0" />
-                  Plano pessoal domiciliar (10-15 min/dia)
-                </li>
               </ul>
             </CardContent>
           </Card>
