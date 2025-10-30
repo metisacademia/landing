@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Linkedin, Phone, Mail, MapPin } from "lucide-react";
+import { Instagram, Phone, Mail, MapPin } from "lucide-react";
 
 export default function Footer() {
   const scrollToSection = (id: string) => {
@@ -26,25 +26,13 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4">
               <a 
-                href="#" 
-                className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-                data-testid="social-facebook"
-              >
-                <Facebook className="h-6 w-6" />
-              </a>
-              <a 
-                href="#" 
+                href="https://www.instagram.com/metisacademiabr/" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                 data-testid="social-instagram"
               >
                 <Instagram className="h-6 w-6" />
-              </a>
-              <a 
-                href="#" 
-                className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-                data-testid="social-linkedin"
-              >
-                <Linkedin className="h-6 w-6" />
               </a>
             </div>
           </div>
