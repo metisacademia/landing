@@ -35,16 +35,6 @@ export default function HeroSection() {
             Exercite sua mente. Cultive sua memória.
           </h2>
           
-          {/* Badge de inauguração */}
-          <div className="mb-4 sm:mb-6" data-testid="text-inauguracao-eta-hero">
-            <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 text-white/95">
-              <svg className="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <span className="text-sm sm:text-base font-medium">Previsão de inauguração: Novembro/2025</span>
-            </div>
-          </div>
-          
           <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-6 sm:mb-8 md:mb-10 leading-relaxed max-w-3xl text-white/90 drop-shadow-xl text-left" data-testid="hero-description">
             A Métis é um espaço premium de estímulo cognitivo que combina ciência, cultura e conhecimento.
           </p>
