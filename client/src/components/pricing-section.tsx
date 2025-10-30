@@ -82,7 +82,7 @@ export default function PricingSection() {
                   </div>
                   <Badge 
                     variant="secondary"
-                    className="bg-accent/10 text-accent mb-6"
+                    className="bg-accent/10 mb-6 text-[#cda465]"
                     data-testid={`plan-${plan.testId}-savings`}
                   >
                     Economia R$ {plan.savings}
