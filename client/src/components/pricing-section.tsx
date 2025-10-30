@@ -55,7 +55,7 @@ export default function PricingSection() {
           {plans.map((plan, index) => (
             <Card 
               key={plan.name}
-              className={`shadow-lg ${plan.isPopular ? 'border-2 border-accent' : 'border-border'} relative`}
+              className={`shadow-lg ${plan.isPopular ? 'border-2 border-[#cda465]' : 'border-border'} relative`}
               data-testid={`plan-${plan.testId}`}
             >
               {plan.isPopular && (
