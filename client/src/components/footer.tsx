@@ -113,9 +113,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center">
-          <p className="text-primary-foreground/80" data-testid="footer-copyright">
-            © 2024 Métis - Academia da Mente. Todos os direitos reservados.
-          </p>
+          <p className="text-primary-foreground/80" data-testid="footer-copyright">© 2025 Métis - Academia da Mente. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
