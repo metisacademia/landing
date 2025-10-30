@@ -81,7 +81,7 @@ export default function ContactSection() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   onClick={navigateToCheckout}
-                  className="bg-accent text-accent-foreground px-8 py-4 rounded-lg font-semibold hover:bg-accent/90 transition-colors"
+                  className="text-accent-foreground px-8 py-4 rounded-lg font-semibold hover:bg-accent/90 transition-colors bg-[#cda465]"
                   data-testid="button-final-pre-matricula"
                 >
                   Garantir minha vaga na pré-matrícula
