@@ -42,7 +42,7 @@ export default function HeroSection() {
           <div className="flex justify-start">
             <Button 
               onClick={navigateToCheckout}
-              className="bg-[#cda465] text-[#173b5a] px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 lg:px-12 lg:py-6 rounded-lg font-semibold text-sm sm:text-base md:text-lg lg:text-xl hover:bg-accent/90 transition-colors shadow-2xl border-2 border-transparent"
+              className="bg-accent text-accent-foreground px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 lg:px-12 lg:py-6 rounded-lg font-semibold text-sm sm:text-base md:text-lg lg:text-xl hover:bg-accent/90 transition-colors shadow-2xl border-2 border-transparent"
               data-testid="button-pre-matricula"
             >
               <span className="sm:hidden">Pré-matrícula</span>
