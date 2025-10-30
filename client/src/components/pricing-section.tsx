@@ -96,7 +96,7 @@ export default function PricingSection() {
         <div className="text-center mt-12">
           <Button 
             onClick={() => setLocation('/checkout')}
-            className="bg-yellow-500 text-black px-12 py-6 rounded-lg font-semibold text-xl hover:bg-yellow-400 transition-colors shadow-2xl border-2 border-transparent mb-4"
+            className="px-12 py-6 rounded-lg font-semibold text-xl hover:bg-yellow-400 transition-colors shadow-2xl border-2 border-transparent mb-4 bg-[#cda465] text-[#0b0b28]"
             data-testid="button-pre-matricula-pricing"
           >
             Pré-matrícula R$ 250
