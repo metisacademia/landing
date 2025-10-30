@@ -60,7 +60,7 @@ export default function PricingSection() {
             >
               {plan.isPopular && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-accent text-accent-foreground px-4 py-1 text-sm font-medium">
+                  <Badge className="px-4 py-1 text-sm font-medium bg-[#cda465] text-[#0b0b28]">
                     Mais Popular
                   </Badge>
                 </div>
