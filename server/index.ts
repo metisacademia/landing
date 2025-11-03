@@ -3,6 +3,9 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import path from "path";
 import session from "express-session";
+import createMemoryStore from "memorystore";
+
+const MemoryStore = createMemoryStore(session);
 
 const app = express();
 app.use(express.json());
@@ -14,10 +17,14 @@ app.use(
     secret: process.env.SESSION_SECRET || "metis-admin-secret-key-change-in-production",
     resave: false,
     saveUninitialized: false,
+    store: new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
     cookie: {
-      secure: process.env.NODE_ENV === "production",
+      secure: false, // Set to false for development (HTTP)
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      sameSite: 'lax'
     },
   })
 );
