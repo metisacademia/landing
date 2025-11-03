@@ -593,6 +593,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             console.error('Erro ao salvar sessão:', err);
             return res.status(500).json({ message: "Erro ao criar sessão" });
           }
+          console.log('✅ Login - Session saved with ID:', req.sessionID);
+          console.log('✅ Login - Session data:', req.session);
           res.json({ success: true, message: "Login realizado com sucesso" });
         });
       } else {
@@ -614,6 +616,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.get("/api/admin/check-auth", (req, res) => {
+    console.log('🔍 check-auth - Session ID:', req.sessionID);
+    console.log('🔍 check-auth - Session data:', req.session);
+    console.log('🔍 check-auth - Cookie header:', req.headers.cookie);
+    
     if (req.session?.isAdmin) {
       res.json({ isAuthenticated: true });
     } else {
