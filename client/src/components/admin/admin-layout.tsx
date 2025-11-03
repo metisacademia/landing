@@ -102,9 +102,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               const isActive = location === item.path;
               return (
                 <Link key={item.path} href={item.path}>
-                  <a
+                  <div
                     className={cn(
-                      "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors",
+                      "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors cursor-pointer",
                       isActive
                         ? "bg-[#173b5a] text-white"
                         : "text-gray-700 hover:bg-gray-100"
@@ -113,7 +113,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                   >
                     <Icon className="h-5 w-5" />
                     <span className="font-medium">{item.label}</span>
-                  </a>
+                  </div>
                 </Link>
               );
             })}
