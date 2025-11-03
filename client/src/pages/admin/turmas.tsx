@@ -75,8 +75,8 @@ interface TurmaWithCount extends Turma {
 
 export default function Turmas() {
   const { toast } = useToast();
-  const [filterTurno, setFilterTurno] = useState("");
-  const [filterSala, setFilterSala] = useState("");
+  const [filterTurno, setFilterTurno] = useState("all");
+  const [filterSala, setFilterSala] = useState("all");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingTurma, setEditingTurma] = useState<Turma | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -96,7 +96,7 @@ export default function Turmas() {
       sala: "",
       turno: "",
       horario: "",
-      moderadorId: "",
+      moderadorId: "none",
       capacidadeTotal: 0,
       observacoes: "",
     },
@@ -168,7 +168,8 @@ export default function Turmas() {
   const onSubmit = (data: TurmaForm) => {
     const formData = {
       ...data,
-      capacidadeTotal: Number(data.capacidadeTotal)
+      capacidadeTotal: Number(data.capacidadeTotal),
+      moderadorId: data.moderadorId === "none" ? undefined : data.moderadorId
     };
     if (editingTurma) {
       updateMutation.mutate({ id: editingTurma.id, data: formData });
@@ -184,7 +185,7 @@ export default function Turmas() {
       sala: turma.sala,
       turno: turma.turno,
       horario: turma.horario,
-      moderadorId: turma.moderadorId || "",
+      moderadorId: turma.moderadorId || "none",
       capacidadeTotal: turma.capacidadeTotal,
       observacoes: turma.observacoes || "",
     });
@@ -198,8 +199,8 @@ export default function Turmas() {
   };
 
   const filteredTurmas = turmas?.filter((turma) => {
-    if (filterTurno && turma.turno !== filterTurno) return false;
-    if (filterSala && turma.sala !== filterSala) return false;
+    if (filterTurno && filterTurno !== "all" && turma.turno !== filterTurno) return false;
+    if (filterSala && filterSala !== "all" && turma.sala !== filterSala) return false;
     return true;
   });
 
@@ -331,7 +332,7 @@ export default function Turmas() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                <SelectItem value="">Sem moderador</SelectItem>
+                                <SelectItem value="none">Sem moderador</SelectItem>
                                 {moderadores?.map((mod) => (
                                   <SelectItem key={mod.id} value={mod.id}>
                                     {mod.nome}
@@ -402,7 +403,7 @@ export default function Turmas() {
                 <SelectValue placeholder="Filtrar por turno" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todos os turnos</SelectItem>
+                <SelectItem value="all">Todos os turnos</SelectItem>
                 {turnos.map((turno) => (
                   <SelectItem key={turno} value={turno}>
                     {turno.charAt(0).toUpperCase() + turno.slice(1)}
@@ -415,7 +416,7 @@ export default function Turmas() {
                 <SelectValue placeholder="Filtrar por sala" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todas as salas</SelectItem>
+                <SelectItem value="all">Todas as salas</SelectItem>
                 {salas.map((sala) => (
                   <SelectItem key={sala} value={sala}>
                     {sala}
@@ -423,12 +424,12 @@ export default function Turmas() {
                 ))}
               </SelectContent>
             </Select>
-            {(filterTurno || filterSala) && (
+            {((filterTurno && filterTurno !== "all") || (filterSala && filterSala !== "all")) && (
               <Button
                 variant="outline"
                 onClick={() => {
-                  setFilterTurno("");
-                  setFilterSala("");
+                  setFilterTurno("all");
+                  setFilterSala("all");
                 }}
               >
                 Limpar filtros
