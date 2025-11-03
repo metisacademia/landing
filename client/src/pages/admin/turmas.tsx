@@ -224,6 +224,7 @@ export default function Turmas() {
                 <Button
                   data-testid="button-new-turma"
                   className="bg-[#173b5a] hover:bg-[#173b5a]/90"
+                  onClick={() => setIsDialogOpen(true)}
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Nova Turma

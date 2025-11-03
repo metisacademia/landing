@@ -102,7 +102,7 @@ export default function Alunos() {
       telefone: "",
       email: "",
       turnoPreferido: "",
-      turmaId: "",
+      turmaId: "none",
     },
   });
 
@@ -178,7 +178,8 @@ export default function Alunos() {
   const onSubmit = (data: AlunoForm) => {
     const formData = {
       ...data,
-      idade: Number(data.idade)
+      idade: Number(data.idade),
+      turmaId: data.turmaId === "none" ? undefined : data.turmaId
     };
     if (editingAluno) {
       updateMutation.mutate({ id: editingAluno.id, data: formData });
@@ -195,7 +196,7 @@ export default function Alunos() {
       telefone: aluno.telefone,
       email: aluno.email,
       turnoPreferido: aluno.turnoPreferido,
-      turmaId: aluno.turmaId || "",
+      turmaId: aluno.turmaId || "none",
     });
     setIsDialogOpen(true);
   };
@@ -281,6 +282,7 @@ export default function Alunos() {
                   <Button
                     data-testid="button-new-aluno"
                     className="bg-[#173b5a] hover:bg-[#173b5a]/90"
+                    onClick={() => setIsDialogOpen(true)}
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Novo Aluno
@@ -388,7 +390,7 @@ export default function Alunos() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                <SelectItem value="">Sem turma</SelectItem>
+                                <SelectItem value="none">Sem turma</SelectItem>
                                 {turmas?.map((turma) => {
                                   const cheia = (turma.alunosCount || 0) >= turma.capacidadeTotal;
                                   return (

@@ -250,6 +250,7 @@ export default function Moderadores() {
                   <Button
                     data-testid="button-new-moderador"
                     className="bg-[#173b5a] hover:bg-[#173b5a]/90"
+                    onClick={() => setIsDialogOpen(true)}
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Novo Moderador
