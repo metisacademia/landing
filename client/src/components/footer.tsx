@@ -1,4 +1,5 @@
 import { Instagram, Phone, Mail, MapPin } from "lucide-react";
+import { Link } from "wouter";
 
 export default function Footer() {
   const scrollToSection = (id: string) => {
@@ -101,7 +102,9 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center">
-          <p className="text-primary-foreground/80" data-testid="footer-copyright">© 2025 Métis - Academia da Mente. Todos os direitos reservados.</p>
+          <p className="text-primary-foreground/80" data-testid="footer-copyright">
+            <Link href="/admin/login" className="hover:text-primary-foreground transition-colors cursor-pointer">©</Link> 2025 Métis - Academia da Mente. Todos os direitos reservados.
+          </p>
         </div>
       </div>
     </footer>

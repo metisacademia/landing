@@ -72,3 +72,65 @@ export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type PreRegistration = typeof preRegistrations.$inferSelect;
 export type InsertPreRegistration = z.infer<typeof insertPreRegistrationSchema>;
+
+// Admin Dashboard Tables
+export const moderadores = pgTable("moderadores", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  nome: text("nome").notNull(),
+  email: text("email").notNull(),
+  telefone: text("telefone").notNull(),
+  salaPrincipal: text("sala_principal").notNull(),
+  cargaHorariaSemanal: integer("carga_horaria_semanal").notNull(),
+});
+
+export const turmas = pgTable("turmas", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  nome: text("nome").notNull(),
+  sala: text("sala").notNull(),
+  turno: text("turno").notNull(),
+  horario: text("horario").notNull(),
+  moderadorId: varchar("moderador_id").references(() => moderadores.id),
+  capacidadeTotal: integer("capacidade_total").notNull(),
+  observacoes: text("observacoes"),
+});
+
+export const alunos = pgTable("alunos", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  nome: text("nome").notNull(),
+  idade: integer("idade").notNull(),
+  telefone: text("telefone").notNull(),
+  email: text("email").notNull(),
+  turnoPreferido: text("turno_preferido").notNull(),
+  turmaId: varchar("turma_id").references(() => turmas.id),
+});
+
+// Insert schemas
+export const insertModeradorSchema = createInsertSchema(moderadores).omit({
+  id: true,
+}).extend({
+  email: z.string().email("E-mail inválido"),
+  telefone: z.string().min(10, "Telefone deve ter no mínimo 10 dígitos"),
+  cargaHorariaSemanal: z.number().min(1, "Carga horária deve ser positiva"),
+});
+
+export const insertTurmaSchema = createInsertSchema(turmas).omit({
+  id: true,
+}).extend({
+  capacidadeTotal: z.number().min(1, "Capacidade deve ser no mínimo 1"),
+});
+
+export const insertAlunoSchema = createInsertSchema(alunos).omit({
+  id: true,
+}).extend({
+  email: z.string().email("E-mail inválido"),
+  telefone: z.string().min(10, "Telefone deve ter no mínimo 10 dígitos"),
+  idade: z.number().min(1, "Idade deve ser positiva"),
+});
+
+// Types
+export type Moderador = typeof moderadores.$inferSelect;
+export type InsertModerador = z.infer<typeof insertModeradorSchema>;
+export type Turma = typeof turmas.$inferSelect;
+export type InsertTurma = z.infer<typeof insertTurmaSchema>;
+export type Aluno = typeof alunos.$inferSelect;
+export type InsertAluno = z.infer<typeof insertAlunoSchema>;

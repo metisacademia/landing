@@ -2,10 +2,32 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import path from "path";
+import session from "express-session";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Configure session for admin authentication
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "metis-admin-secret-key-change-in-production",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    },
+  })
+);
+
+// Extend Express session type
+declare module "express-session" {
+  interface SessionData {
+    isAdmin: boolean;
+  }
+}
 
 app.use((req, res, next) => {
   const start = Date.now();

@@ -1,15 +1,31 @@
-import { type User, type InsertUser, type PreRegistration, type InsertPreRegistration, users, preRegistrations } from "@shared/schema";
+import { 
+  type User, 
+  type InsertUser, 
+  type PreRegistration, 
+  type InsertPreRegistration,
+  type Moderador,
+  type InsertModerador,
+  type Turma,
+  type InsertTurma,
+  type Aluno,
+  type InsertAluno,
+  users, 
+  preRegistrations,
+  moderadores,
+  turmas,
+  alunos
+} from "@shared/schema";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
-import { eq } from "drizzle-orm";
+import { eq, like, sql } from "drizzle-orm";
 import { randomUUID } from "crypto";
 
 if (!process.env.DATABASE_URL) {
   throw new Error('DATABASE_URL environment variable is required');
 }
 
-const sql = neon(process.env.DATABASE_URL);
-const db = drizzle(sql);
+const sqlClient = neon(process.env.DATABASE_URL);
+const db = drizzle(sqlClient);
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -23,6 +39,32 @@ export interface IStorage {
   updatePreRegistrationPayment(id: string, paymentId: string, status: string, customerId?: string, paymentMethod?: string): Promise<PreRegistration>;
   getPreRegistrationByAnyPaymentId(paymentId: string): Promise<PreRegistration | undefined>;
   getAllPreRegistrations(): Promise<PreRegistration[]>;
+  
+  // Moderadores
+  createModerador(moderador: InsertModerador): Promise<Moderador>;
+  getAllModeradores(): Promise<Moderador[]>;
+  getModerador(id: string): Promise<Moderador | undefined>;
+  updateModerador(id: string, moderador: Partial<InsertModerador>): Promise<Moderador>;
+  deleteModerador(id: string): Promise<void>;
+  searchModeradores(searchTerm: string): Promise<Moderador[]>;
+  
+  // Turmas
+  createTurma(turma: InsertTurma): Promise<Turma>;
+  getAllTurmas(): Promise<Turma[]>;
+  getTurma(id: string): Promise<Turma | undefined>;
+  updateTurma(id: string, turma: Partial<InsertTurma>): Promise<Turma>;
+  deleteTurma(id: string): Promise<void>;
+  getTurmasByTurno(turno: string): Promise<Turma[]>;
+  getTurmasBySala(sala: string): Promise<Turma[]>;
+  
+  // Alunos
+  createAluno(aluno: InsertAluno): Promise<Aluno>;
+  getAllAlunos(): Promise<Aluno[]>;
+  getAluno(id: string): Promise<Aluno | undefined>;
+  updateAluno(id: string, aluno: Partial<InsertAluno>): Promise<Aluno>;
+  deleteAluno(id: string): Promise<void>;
+  searchAlunos(searchTerm: string): Promise<Aluno[]>;
+  getAlunosByTurma(turmaId: string): Promise<Aluno[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -168,6 +210,124 @@ export class DatabaseStorage implements IStorage {
 
   async getAllPreRegistrations(): Promise<PreRegistration[]> {
     return await db.select().from(preRegistrations);
+  }
+
+  // Moderadores
+  async createModerador(insertModerador: InsertModerador): Promise<Moderador> {
+    const result = await db.insert(moderadores).values(insertModerador).returning();
+    return result[0];
+  }
+
+  async getAllModeradores(): Promise<Moderador[]> {
+    return await db.select().from(moderadores);
+  }
+
+  async getModerador(id: string): Promise<Moderador | undefined> {
+    const result = await db.select().from(moderadores).where(eq(moderadores.id, id)).limit(1);
+    return result[0];
+  }
+
+  async updateModerador(id: string, updateData: Partial<InsertModerador>): Promise<Moderador> {
+    const result = await db.update(moderadores)
+      .set(updateData)
+      .where(eq(moderadores.id, id))
+      .returning();
+    
+    if (result.length === 0) {
+      throw new Error("Moderador não encontrado");
+    }
+    
+    return result[0];
+  }
+
+  async deleteModerador(id: string): Promise<void> {
+    await db.delete(moderadores).where(eq(moderadores.id, id));
+  }
+
+  async searchModeradores(searchTerm: string): Promise<Moderador[]> {
+    return await db.select().from(moderadores)
+      .where(like(moderadores.nome, `%${searchTerm}%`));
+  }
+
+  // Turmas
+  async createTurma(insertTurma: InsertTurma): Promise<Turma> {
+    const result = await db.insert(turmas).values(insertTurma).returning();
+    return result[0];
+  }
+
+  async getAllTurmas(): Promise<Turma[]> {
+    return await db.select().from(turmas);
+  }
+
+  async getTurma(id: string): Promise<Turma | undefined> {
+    const result = await db.select().from(turmas).where(eq(turmas.id, id)).limit(1);
+    return result[0];
+  }
+
+  async updateTurma(id: string, updateData: Partial<InsertTurma>): Promise<Turma> {
+    const result = await db.update(turmas)
+      .set(updateData)
+      .where(eq(turmas.id, id))
+      .returning();
+    
+    if (result.length === 0) {
+      throw new Error("Turma não encontrada");
+    }
+    
+    return result[0];
+  }
+
+  async deleteTurma(id: string): Promise<void> {
+    await db.delete(turmas).where(eq(turmas.id, id));
+  }
+
+  async getTurmasByTurno(turno: string): Promise<Turma[]> {
+    return await db.select().from(turmas).where(eq(turmas.turno, turno));
+  }
+
+  async getTurmasBySala(sala: string): Promise<Turma[]> {
+    return await db.select().from(turmas).where(eq(turmas.sala, sala));
+  }
+
+  // Alunos
+  async createAluno(insertAluno: InsertAluno): Promise<Aluno> {
+    const result = await db.insert(alunos).values(insertAluno).returning();
+    return result[0];
+  }
+
+  async getAllAlunos(): Promise<Aluno[]> {
+    return await db.select().from(alunos);
+  }
+
+  async getAluno(id: string): Promise<Aluno | undefined> {
+    const result = await db.select().from(alunos).where(eq(alunos.id, id)).limit(1);
+    return result[0];
+  }
+
+  async updateAluno(id: string, updateData: Partial<InsertAluno>): Promise<Aluno> {
+    const result = await db.update(alunos)
+      .set(updateData)
+      .where(eq(alunos.id, id))
+      .returning();
+    
+    if (result.length === 0) {
+      throw new Error("Aluno não encontrado");
+    }
+    
+    return result[0];
+  }
+
+  async deleteAluno(id: string): Promise<void> {
+    await db.delete(alunos).where(eq(alunos.id, id));
+  }
+
+  async searchAlunos(searchTerm: string): Promise<Aluno[]> {
+    return await db.select().from(alunos)
+      .where(like(alunos.nome, `%${searchTerm}%`));
+  }
+
+  async getAlunosByTurma(turmaId: string): Promise<Aluno[]> {
+    return await db.select().from(alunos).where(eq(alunos.turmaId, turmaId));
   }
 }
 

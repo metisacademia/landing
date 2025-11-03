@@ -1,7 +1,7 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertPreRegistrationSchema } from "@shared/schema";
+import { insertPreRegistrationSchema, insertModeradorSchema, insertTurmaSchema, insertAlunoSchema } from "@shared/schema";
 import { z } from "zod";
 
 // Use PRODUCTION by default, unless ASAAS_USE_SANDBOX is explicitly set to 'true'
@@ -564,6 +564,327 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error('🔍 [DEBUG] Erro:', error);
       res.status(500).json({ error: error.message });
+    }
+  });
+
+  // ========== ADMIN ROUTES ==========
+  
+  // Middleware to check if user is admin
+  const requireAdmin = (req: Request, res: Response, next: NextFunction) => {
+    if (req.session?.isAdmin) {
+      next();
+    } else {
+      res.status(401).json({ message: "Não autorizado" });
+    }
+  };
+
+  // Admin Authentication Routes
+  app.post("/api/admin/login", async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      
+      // Simple hardcoded authentication
+      if (username === "admin" && password === "metis2025") {
+        req.session.isAdmin = true;
+        res.json({ success: true, message: "Login realizado com sucesso" });
+      } else {
+        res.status(401).json({ message: "Credenciais inválidas" });
+      }
+    } catch (error: any) {
+      console.error('Erro no login admin:', error);
+      res.status(500).json({ message: "Erro interno do servidor" });
+    }
+  });
+
+  app.post("/api/admin/logout", (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Erro ao fazer logout" });
+      }
+      res.json({ success: true, message: "Logout realizado com sucesso" });
+    });
+  });
+
+  app.get("/api/admin/check-auth", (req, res) => {
+    if (req.session?.isAdmin) {
+      res.json({ isAuthenticated: true });
+    } else {
+      res.json({ isAuthenticated: false });
+    }
+  });
+
+  // Moderadores Routes
+  app.get("/api/admin/moderadores", requireAdmin, async (req, res) => {
+    try {
+      const moderadores = await storage.getAllModeradores();
+      res.json(moderadores);
+    } catch (error: any) {
+      console.error('Erro ao buscar moderadores:', error);
+      res.status(500).json({ message: "Erro ao buscar moderadores" });
+    }
+  });
+
+  app.get("/api/admin/moderadores/search", requireAdmin, async (req, res) => {
+    try {
+      const { q } = req.query;
+      if (!q || typeof q !== 'string') {
+        return res.status(400).json({ message: "Parâmetro de busca inválido" });
+      }
+      const moderadores = await storage.searchModeradores(q);
+      res.json(moderadores);
+    } catch (error: any) {
+      console.error('Erro ao buscar moderadores:', error);
+      res.status(500).json({ message: "Erro ao buscar moderadores" });
+    }
+  });
+
+  app.get("/api/admin/moderadores/:id", requireAdmin, async (req, res) => {
+    try {
+      const moderador = await storage.getModerador(req.params.id);
+      if (!moderador) {
+        return res.status(404).json({ message: "Moderador não encontrado" });
+      }
+      res.json(moderador);
+    } catch (error: any) {
+      console.error('Erro ao buscar moderador:', error);
+      res.status(500).json({ message: "Erro ao buscar moderador" });
+    }
+  });
+
+  app.post("/api/admin/moderadores", requireAdmin, async (req, res) => {
+    try {
+      const validatedData = insertModeradorSchema.parse(req.body);
+      const moderador = await storage.createModerador(validatedData);
+      res.json(moderador);
+    } catch (error: any) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Dados inválidos", errors: error.errors });
+      } else {
+        console.error('Erro ao criar moderador:', error);
+        res.status(500).json({ message: "Erro ao criar moderador" });
+      }
+    }
+  });
+
+  app.put("/api/admin/moderadores/:id", requireAdmin, async (req, res) => {
+    try {
+      const moderador = await storage.updateModerador(req.params.id, req.body);
+      res.json(moderador);
+    } catch (error: any) {
+      console.error('Erro ao atualizar moderador:', error);
+      res.status(500).json({ message: "Erro ao atualizar moderador" });
+    }
+  });
+
+  app.delete("/api/admin/moderadores/:id", requireAdmin, async (req, res) => {
+    try {
+      await storage.deleteModerador(req.params.id);
+      res.json({ success: true, message: "Moderador excluído com sucesso" });
+    } catch (error: any) {
+      console.error('Erro ao excluir moderador:', error);
+      res.status(500).json({ message: "Erro ao excluir moderador" });
+    }
+  });
+
+  // Turmas Routes
+  app.get("/api/admin/turmas", requireAdmin, async (req, res) => {
+    try {
+      const { turno, sala } = req.query;
+      
+      let turmas;
+      if (turno && typeof turno === 'string') {
+        turmas = await storage.getTurmasByTurno(turno);
+      } else if (sala && typeof sala === 'string') {
+        turmas = await storage.getTurmasBySala(sala);
+      } else {
+        turmas = await storage.getAllTurmas();
+      }
+      
+      res.json(turmas);
+    } catch (error: any) {
+      console.error('Erro ao buscar turmas:', error);
+      res.status(500).json({ message: "Erro ao buscar turmas" });
+    }
+  });
+
+  app.get("/api/admin/turmas/:id", requireAdmin, async (req, res) => {
+    try {
+      const turma = await storage.getTurma(req.params.id);
+      if (!turma) {
+        return res.status(404).json({ message: "Turma não encontrada" });
+      }
+      res.json(turma);
+    } catch (error: any) {
+      console.error('Erro ao buscar turma:', error);
+      res.status(500).json({ message: "Erro ao buscar turma" });
+    }
+  });
+
+  app.post("/api/admin/turmas", requireAdmin, async (req, res) => {
+    try {
+      const validatedData = insertTurmaSchema.parse(req.body);
+      const turma = await storage.createTurma(validatedData);
+      res.json(turma);
+    } catch (error: any) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Dados inválidos", errors: error.errors });
+      } else {
+        console.error('Erro ao criar turma:', error);
+        res.status(500).json({ message: "Erro ao criar turma" });
+      }
+    }
+  });
+
+  app.put("/api/admin/turmas/:id", requireAdmin, async (req, res) => {
+    try {
+      const turma = await storage.updateTurma(req.params.id, req.body);
+      res.json(turma);
+    } catch (error: any) {
+      console.error('Erro ao atualizar turma:', error);
+      res.status(500).json({ message: "Erro ao atualizar turma" });
+    }
+  });
+
+  app.delete("/api/admin/turmas/:id", requireAdmin, async (req, res) => {
+    try {
+      await storage.deleteTurma(req.params.id);
+      res.json({ success: true, message: "Turma excluída com sucesso" });
+    } catch (error: any) {
+      console.error('Erro ao excluir turma:', error);
+      res.status(500).json({ message: "Erro ao excluir turma" });
+    }
+  });
+
+  // Alunos Routes
+  app.get("/api/admin/alunos", requireAdmin, async (req, res) => {
+    try {
+      const { turmaId } = req.query;
+      
+      let alunos;
+      if (turmaId && typeof turmaId === 'string') {
+        alunos = await storage.getAlunosByTurma(turmaId);
+      } else {
+        alunos = await storage.getAllAlunos();
+      }
+      
+      res.json(alunos);
+    } catch (error: any) {
+      console.error('Erro ao buscar alunos:', error);
+      res.status(500).json({ message: "Erro ao buscar alunos" });
+    }
+  });
+
+  app.get("/api/admin/alunos/search", requireAdmin, async (req, res) => {
+    try {
+      const { q } = req.query;
+      if (!q || typeof q !== 'string') {
+        return res.status(400).json({ message: "Parâmetro de busca inválido" });
+      }
+      const alunos = await storage.searchAlunos(q);
+      res.json(alunos);
+    } catch (error: any) {
+      console.error('Erro ao buscar alunos:', error);
+      res.status(500).json({ message: "Erro ao buscar alunos" });
+    }
+  });
+
+  app.get("/api/admin/alunos/:id", requireAdmin, async (req, res) => {
+    try {
+      const aluno = await storage.getAluno(req.params.id);
+      if (!aluno) {
+        return res.status(404).json({ message: "Aluno não encontrado" });
+      }
+      res.json(aluno);
+    } catch (error: any) {
+      console.error('Erro ao buscar aluno:', error);
+      res.status(500).json({ message: "Erro ao buscar aluno" });
+    }
+  });
+
+  app.post("/api/admin/alunos", requireAdmin, async (req, res) => {
+    try {
+      const validatedData = insertAlunoSchema.parse(req.body);
+      const aluno = await storage.createAluno(validatedData);
+      res.json(aluno);
+    } catch (error: any) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Dados inválidos", errors: error.errors });
+      } else {
+        console.error('Erro ao criar aluno:', error);
+        res.status(500).json({ message: "Erro ao criar aluno" });
+      }
+    }
+  });
+
+  app.put("/api/admin/alunos/:id", requireAdmin, async (req, res) => {
+    try {
+      const aluno = await storage.updateAluno(req.params.id, req.body);
+      res.json(aluno);
+    } catch (error: any) {
+      console.error('Erro ao atualizar aluno:', error);
+      res.status(500).json({ message: "Erro ao atualizar aluno" });
+    }
+  });
+
+  app.delete("/api/admin/alunos/:id", requireAdmin, async (req, res) => {
+    try {
+      await storage.deleteAluno(req.params.id);
+      res.json({ success: true, message: "Aluno excluído com sucesso" });
+    } catch (error: any) {
+      console.error('Erro ao excluir aluno:', error);
+      res.status(500).json({ message: "Erro ao excluir aluno" });
+    }
+  });
+
+  // Dashboard Stats Route
+  app.get("/api/admin/stats", requireAdmin, async (req, res) => {
+    try {
+      const moderadores = await storage.getAllModeradores();
+      const turmas = await storage.getAllTurmas();
+      const alunos = await storage.getAllAlunos();
+      
+      // Calculate stats
+      const totalModeradores = moderadores.length;
+      const totalTurmas = turmas.length;
+      const totalAlunos = alunos.length;
+      
+      // Calculate capacity and occupancy
+      let capacidadeTotal = 0;
+      let vagasOcupadas = 0;
+      
+      for (const turma of turmas) {
+        capacidadeTotal += turma.capacidadeTotal;
+        const alunosDaTurma = alunos.filter(a => a.turmaId === turma.id);
+        vagasOcupadas += alunosDaTurma.length;
+      }
+      
+      const taxaOcupacao = capacidadeTotal > 0 ? (vagasOcupadas / capacidadeTotal) * 100 : 0;
+      
+      // Stats by turno
+      const turmasManha = turmas.filter(t => t.turno === 'manhã').length;
+      const turmasTarde = turmas.filter(t => t.turno === 'tarde').length;
+      
+      // Stats by sala
+      const salas = ['Memória', 'Linguagem', 'Planejamento', 'Mentalização', 'Contemplação'];
+      const statsBySala = salas.map(sala => ({
+        sala,
+        totalTurmas: turmas.filter(t => t.sala === sala).length
+      }));
+      
+      res.json({
+        totalModeradores,
+        totalTurmas,
+        totalAlunos,
+        capacidadeTotal,
+        vagasOcupadas,
+        taxaOcupacao: Math.round(taxaOcupacao),
+        turmasManha,
+        turmasTarde,
+        statsBySala
+      });
+    } catch (error: any) {
+      console.error('Erro ao buscar estatísticas:', error);
+      res.status(500).json({ message: "Erro ao buscar estatísticas" });
     }
   });
 
