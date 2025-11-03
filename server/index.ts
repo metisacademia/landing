@@ -11,6 +11,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Trust proxy for Replit environment
+app.set('trust proxy', 1);
+
 // Configure session for admin authentication
 app.use(
   session({
@@ -21,10 +24,10 @@ app.use(
       checkPeriod: 86400000 // prune expired entries every 24h
     }),
     cookie: {
-      secure: false, // Set to false for development (HTTP)
-      httpOnly: true,
+      secure: false,
+      httpOnly: false, // Changed to false to debug cookie issues
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
-      sameSite: 'lax'
+      path: '/'
     },
   })
 );
