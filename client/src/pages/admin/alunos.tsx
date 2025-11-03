@@ -201,7 +201,7 @@ export default function Alunos() {
       telefone: aluno.telefone,
       email: aluno.email,
       turnoPreferido: aluno.turnoPreferido,
-      classificacao: aluno.classificacao,
+      classificacao: aluno.classificacao as "Matriculado" | "Experimental",
       turmaId: aluno.turmaId || "none",
     });
     setIsDialogOpen(true);
