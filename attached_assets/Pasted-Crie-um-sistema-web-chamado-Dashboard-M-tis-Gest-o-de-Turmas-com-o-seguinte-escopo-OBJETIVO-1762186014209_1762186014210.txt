@@ -1,0 +1,58 @@
+Crie um sistema web chamado “Dashboard Métis – Gestão de Turmas” com o seguinte escopo:
+
+📘 OBJETIVO
+Gerenciar as turmas presenciais da Métis – Academia da Mente, permitindo cadastrar e visualizar:
+- Horários das aulas (circuitos semanais)
+- Moderadores responsáveis
+- Alunos matriculados
+- Salas correspondentes (Memória, Linguagem, Planejamento, Mentalização e Contemplação)
+- Turnos (manhã, tarde)
+- Disponibilidade de vagas
+
+📚 FUNCIONALIDADES
+1. **Página inicial (Dashboard)**:
+   - Mostrar visão geral: total de turmas, alunos ativos, moderadores, e taxa de ocupação por turno.
+   - Gráfico de ocupação por sala.
+
+2. **Cadastro de Turmas**:
+   - Campos: nome da turma, sala, turno, horário, moderador, capacidade total, observações.
+   - Botão para editar e excluir turmas.
+
+3. **Cadastro de Moderadores**:
+   - Campos: nome completo, e-mail, telefone, sala principal, carga horária semanal.
+   - Vincular automaticamente às turmas correspondentes.
+
+4. **Cadastro de Alunos**:
+   - Campos: nome completo, idade, telefone, e-mail, turno preferido, turma vinculada.
+   - Indicação visual (ex: barra de cor) caso a turma esteja cheia.
+
+5. **Visualização por Turno e Sala**:
+   - Tabela filtrável por turno (manhã/tarde) e por sala (Memória, Linguagem etc.).
+   - Mostrar quem é o moderador e quais alunos participam.
+
+6. **Banco de dados:**
+   - Utilize SQLite (ou Supabase se preferir back-end persistente).
+   - Estrutura:
+     - `moderadores(id, nome, contato, sala_principal)`
+     - `turmas(id, nome, sala, turno, horario, moderador_id)`
+     - `alunos(id, nome, idade, telefone, email, turma_id)`
+
+7. **Design (de acordo com o manual da marca da Métis)**:
+   - Tipografia: *Atkinson Hyperlegible Next*.
+   - Cores primárias: Navy (#173b5a), Dourado (#cda465), Offwhite (#f8f1e7).
+   - Layout minimalista, com cards arredondados e sombra leve.
+   - Logotipo no topo esquerdo.
+   - Botões com cantos arredondados e cor de destaque dourada.
+
+8. **Extras:**
+   - Sistema de login simples (usuário: admin / senha: metis2025).
+   - Exportar lista de alunos em CSV.
+   - Busca rápida por nome de aluno ou moderador.
+
+🧩 TECNOLOGIAS
+- Front-end: React + TailwindCSS
+- Back-end: Node.js + Express
+- Banco: SQLite ou Supabase
+- Deploy automático no Replit
+
+O sistema deve ser responsivo e visualmente alinhado ao manual de marca da Métis.
