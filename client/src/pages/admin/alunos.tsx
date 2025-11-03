@@ -277,165 +277,164 @@ export default function Alunos() {
                 <Download className="h-4 w-4 mr-2" />
                 Exportar CSV
               </Button>
-              <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
-                <DialogTrigger asChild>
-                  <Button
-                    data-testid="button-new-aluno"
-                    className="bg-[#173b5a] hover:bg-[#173b5a]/90"
-                    onClick={() => setIsDialogOpen(true)}
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Novo Aluno
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>
-                      {editingAluno ? "Editar Aluno" : "Novo Aluno"}
-                    </DialogTitle>
-                    <DialogDescription>
-                      Preencha os dados do aluno
-                    </DialogDescription>
-                  </DialogHeader>
-                  <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                      <FormField
-                        control={form.control}
-                        name="nome"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Nome</FormLabel>
-                            <FormControl>
-                              <Input {...field} placeholder="Nome completo" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <div className="grid grid-cols-2 gap-4">
-                        <FormField
-                          control={form.control}
-                          name="idade"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Idade</FormLabel>
-                              <FormControl>
-                                <Input {...field} type="number" min="1" />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="telefone"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Telefone</FormLabel>
-                              <FormControl>
-                                <Input {...field} placeholder="(00) 00000-0000" />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>E-mail</FormLabel>
-                            <FormControl>
-                              <Input {...field} type="email" placeholder="email@exemplo.com" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="turnoPreferido"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Turno Preferido</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Selecione o turno" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {turnos.map((turno) => (
-                                  <SelectItem key={turno} value={turno}>
-                                    {turno.charAt(0).toUpperCase() + turno.slice(1)}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="turmaId"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Turma (opcional)</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Selecione uma turma" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="none">Sem turma</SelectItem>
-                                {turmas?.map((turma) => {
-                                  const cheia = (turma.alunosCount || 0) >= turma.capacidadeTotal;
-                                  return (
-                                    <SelectItem
-                                      key={turma.id}
-                                      value={turma.id}
-                                      disabled={cheia}
-                                    >
-                                      {turma.nome} - {turma.sala} ({turma.alunosCount || 0}/{turma.capacidadeTotal})
-                                      {cheia && " - CHEIA"}
-                                    </SelectItem>
-                                  );
-                                })}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={handleCloseDialog}
-                        >
-                          Cancelar
-                        </Button>
-                        <Button
-                          type="submit"
-                          className="bg-[#173b5a] hover:bg-[#173b5a]/90"
-                          disabled={createMutation.isPending || updateMutation.isPending}
-                        >
-                          {createMutation.isPending || updateMutation.isPending
-                            ? "Salvando..."
-                            : editingAluno
-                            ? "Atualizar"
-                            : "Criar"}
-                        </Button>
-                      </div>
-                    </form>
-                  </Form>
-                </DialogContent>
-              </Dialog>
+              <Button
+                data-testid="button-new-aluno"
+                className="bg-[#173b5a] hover:bg-[#173b5a]/90"
+                onClick={() => setIsDialogOpen(true)}
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Novo Aluno
+              </Button>
             </div>
           </div>
+
+          <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>
+                  {editingAluno ? "Editar Aluno" : "Novo Aluno"}
+                </DialogTitle>
+                <DialogDescription>
+                  Preencha os dados do aluno
+                </DialogDescription>
+              </DialogHeader>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="nome"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nome</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="Nome completo" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="grid grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="idade"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Idade</FormLabel>
+                          <FormControl>
+                            <Input {...field} type="number" min="1" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="telefone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Telefone</FormLabel>
+                          <FormControl>
+                            <Input {...field} placeholder="(00) 00000-0000" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>E-mail</FormLabel>
+                        <FormControl>
+                          <Input {...field} type="email" placeholder="email@exemplo.com" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="turnoPreferido"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Turno Preferido</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecione o turno" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {turnos.map((turno) => (
+                              <SelectItem key={turno} value={turno}>
+                                {turno.charAt(0).toUpperCase() + turno.slice(1)}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="turmaId"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Turma (opcional)</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecione uma turma" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="none">Sem turma</SelectItem>
+                            {turmas?.map((turma) => {
+                              const cheia = (turma.alunosCount || 0) >= turma.capacidadeTotal;
+                              return (
+                                <SelectItem
+                                  key={turma.id}
+                                  value={turma.id}
+                                  disabled={cheia}
+                                >
+                                  {turma.nome} - {turma.sala} ({turma.alunosCount || 0}/{turma.capacidadeTotal})
+                                  {cheia && " - CHEIA"}
+                                </SelectItem>
+                              );
+                            })}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="flex justify-end gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleCloseDialog}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      type="submit"
+                      className="bg-[#173b5a] hover:bg-[#173b5a]/90"
+                      disabled={createMutation.isPending || updateMutation.isPending}
+                    >
+                      {createMutation.isPending || updateMutation.isPending
+                        ? "Salvando..."
+                        : editingAluno
+                        ? "Atualizar"
+                        : "Criar"}
+                    </Button>
+                  </div>
+                </form>
+              </Form>
+            </DialogContent>
+          </Dialog>
 
           <div className="flex items-center gap-2">
             <div className="relative flex-1 max-w-sm">

@@ -245,130 +245,129 @@ export default function Moderadores() {
                 <Download className="h-4 w-4 mr-2" />
                 Exportar CSV
               </Button>
-              <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
-                <DialogTrigger asChild>
-                  <Button
-                    data-testid="button-new-moderador"
-                    className="bg-[#173b5a] hover:bg-[#173b5a]/90"
-                    onClick={() => setIsDialogOpen(true)}
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Novo Moderador
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>
-                      {editingModerador ? "Editar Moderador" : "Novo Moderador"}
-                    </DialogTitle>
-                    <DialogDescription>
-                      Preencha os dados do moderador
-                    </DialogDescription>
-                  </DialogHeader>
-                  <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                      <FormField
-                        control={form.control}
-                        name="nome"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Nome</FormLabel>
-                            <FormControl>
-                              <Input {...field} placeholder="Nome completo" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>E-mail</FormLabel>
-                            <FormControl>
-                              <Input {...field} type="email" placeholder="email@exemplo.com" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="telefone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Telefone</FormLabel>
-                            <FormControl>
-                              <Input {...field} placeholder="(00) 00000-0000" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="salaPrincipal"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Sala Principal</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Selecione uma sala" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {salas.map((sala) => (
-                                  <SelectItem key={sala} value={sala}>
-                                    {sala}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="cargaHorariaSemanal"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Carga Horária Semanal (horas)</FormLabel>
-                            <FormControl>
-                              <Input {...field} type="number" min="1" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={handleCloseDialog}
-                        >
-                          Cancelar
-                        </Button>
-                        <Button
-                          type="submit"
-                          className="bg-[#173b5a] hover:bg-[#173b5a]/90"
-                          disabled={createMutation.isPending || updateMutation.isPending}
-                        >
-                          {createMutation.isPending || updateMutation.isPending
-                            ? "Salvando..."
-                            : editingModerador
-                            ? "Atualizar"
-                            : "Criar"}
-                        </Button>
-                      </div>
-                    </form>
-                  </Form>
-                </DialogContent>
-              </Dialog>
+              <Button
+                data-testid="button-new-moderador"
+                className="bg-[#173b5a] hover:bg-[#173b5a]/90"
+                onClick={() => setIsDialogOpen(true)}
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Novo Moderador
+              </Button>
             </div>
           </div>
+
+          <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>
+                  {editingModerador ? "Editar Moderador" : "Novo Moderador"}
+                </DialogTitle>
+                <DialogDescription>
+                  Preencha os dados do moderador
+                </DialogDescription>
+              </DialogHeader>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="nome"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nome</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="Nome completo" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>E-mail</FormLabel>
+                        <FormControl>
+                          <Input {...field} type="email" placeholder="email@exemplo.com" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="telefone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Telefone</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="(00) 00000-0000" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="salaPrincipal"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Sala Principal</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecione uma sala" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {salas.map((sala) => (
+                              <SelectItem key={sala} value={sala}>
+                                {sala}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="cargaHorariaSemanal"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Carga Horária Semanal (horas)</FormLabel>
+                        <FormControl>
+                          <Input {...field} type="number" min="1" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="flex justify-end gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleCloseDialog}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      type="submit"
+                      className="bg-[#173b5a] hover:bg-[#173b5a]/90"
+                      disabled={createMutation.isPending || updateMutation.isPending}
+                    >
+                      {createMutation.isPending || updateMutation.isPending
+                        ? "Salvando..."
+                        : editingModerador
+                        ? "Atualizar"
+                        : "Criar"}
+                    </Button>
+                  </div>
+                </form>
+              </Form>
+            </DialogContent>
+          </Dialog>
 
           <div className="flex items-center gap-2">
             <div className="relative flex-1 max-w-sm">

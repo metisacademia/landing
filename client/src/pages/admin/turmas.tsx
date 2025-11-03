@@ -219,184 +219,183 @@ export default function Turmas() {
                 Gerencie as turmas do sistema
               </p>
             </div>
-            <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
-              <DialogTrigger asChild>
-                <Button
-                  data-testid="button-new-turma"
-                  className="bg-[#173b5a] hover:bg-[#173b5a]/90"
-                  onClick={() => setIsDialogOpen(true)}
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Nova Turma
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-2xl">
-                <DialogHeader>
-                  <DialogTitle>
-                    {editingTurma ? "Editar Turma" : "Nova Turma"}
-                  </DialogTitle>
-                  <DialogDescription>
-                    Preencha os dados da turma
-                  </DialogDescription>
-                </DialogHeader>
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="nome"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Nome</FormLabel>
-                            <FormControl>
-                              <Input {...field} placeholder="Nome da turma" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="sala"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Sala</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Selecione uma sala" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {salas.map((sala) => (
-                                  <SelectItem key={sala} value={sala}>
-                                    {sala}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="turno"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Turno</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Selecione o turno" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {turnos.map((turno) => (
-                                  <SelectItem key={turno} value={turno}>
-                                    {turno.charAt(0).toUpperCase() + turno.slice(1)}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="horario"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Horário</FormLabel>
-                            <FormControl>
-                              <Input {...field} placeholder="14:00-16:00" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="moderadorId"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Moderador</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Selecione um moderador" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="none">Sem moderador</SelectItem>
-                                {moderadores?.map((mod) => (
-                                  <SelectItem key={mod.id} value={mod.id}>
-                                    {mod.nome}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="capacidadeTotal"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Capacidade Total</FormLabel>
-                            <FormControl>
-                              <Input {...field} type="number" min="1" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+            <Button
+              data-testid="button-new-turma"
+              className="bg-[#173b5a] hover:bg-[#173b5a]/90"
+              onClick={() => setIsDialogOpen(true)}
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Nova Turma
+            </Button>
+          </div>
+
+          <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
+            <DialogContent className="max-w-2xl">
+              <DialogHeader>
+                <DialogTitle>
+                  {editingTurma ? "Editar Turma" : "Nova Turma"}
+                </DialogTitle>
+                <DialogDescription>
+                  Preencha os dados da turma
+                </DialogDescription>
+              </DialogHeader>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
                     <FormField
                       control={form.control}
-                      name="observacoes"
+                      name="nome"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Observações (opcional)</FormLabel>
+                          <FormLabel>Nome</FormLabel>
                           <FormControl>
-                            <Textarea {...field} placeholder="Observações sobre a turma" rows={3} />
+                            <Input {...field} placeholder="Nome da turma" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-                    <div className="flex justify-end gap-2">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={handleCloseDialog}
-                      >
-                        Cancelar
-                      </Button>
-                      <Button
-                        type="submit"
-                        className="bg-[#173b5a] hover:bg-[#173b5a]/90"
-                        disabled={createMutation.isPending || updateMutation.isPending}
-                      >
-                        {createMutation.isPending || updateMutation.isPending
-                          ? "Salvando..."
-                          : editingTurma
-                          ? "Atualizar"
-                          : "Criar"}
-                      </Button>
-                    </div>
-                  </form>
-                </Form>
-              </DialogContent>
-            </Dialog>
-          </div>
+                    <FormField
+                      control={form.control}
+                      name="sala"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Sala</FormLabel>
+                          <Select onValueChange={field.onChange} value={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Selecione uma sala" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {salas.map((sala) => (
+                                <SelectItem key={sala} value={sala}>
+                                  {sala}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="turno"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Turno</FormLabel>
+                          <Select onValueChange={field.onChange} value={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Selecione o turno" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {turnos.map((turno) => (
+                                <SelectItem key={turno} value={turno}>
+                                  {turno.charAt(0).toUpperCase() + turno.slice(1)}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="horario"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Horário</FormLabel>
+                          <FormControl>
+                            <Input {...field} placeholder="14:00-16:00" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="moderadorId"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Moderador</FormLabel>
+                          <Select onValueChange={field.onChange} value={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Selecione um moderador" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="none">Sem moderador</SelectItem>
+                              {moderadores?.map((mod) => (
+                                <SelectItem key={mod.id} value={mod.id}>
+                                  {mod.nome}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="capacidadeTotal"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Capacidade Total</FormLabel>
+                          <FormControl>
+                            <Input {...field} type="number" min="1" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name="observacoes"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Observações (opcional)</FormLabel>
+                        <FormControl>
+                          <Textarea {...field} placeholder="Observações sobre a turma" rows={3} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="flex justify-end gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleCloseDialog}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      type="submit"
+                      className="bg-[#173b5a] hover:bg-[#173b5a]/90"
+                      disabled={createMutation.isPending || updateMutation.isPending}
+                    >
+                      {createMutation.isPending || updateMutation.isPending
+                        ? "Salvando..."
+                        : editingTurma
+                        ? "Atualizar"
+                        : "Criar"}
+                    </Button>
+                  </div>
+                </form>
+              </Form>
+            </DialogContent>
+          </Dialog>
 
           <div className="flex gap-4">
             <Select value={filterTurno} onValueChange={setFilterTurno}>
