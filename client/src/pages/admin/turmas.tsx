@@ -54,7 +54,7 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import type { Turma, Moderador } from "@shared/schema";
 
-const salas = ["Memória", "Linguagem", "Planejamento", "Mentalização", "Contemplação"];
+const salas = ["Memória", "Linguagem", "Planejamento", "Mentalização", "Contemplação", "Circuito Completo"];
 const turnos = ["manhã", "tarde"];
 
 const turmaSchema = z.object({

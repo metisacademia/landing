@@ -101,6 +101,7 @@ export const alunos = pgTable("alunos", {
   telefone: text("telefone").notNull(),
   email: text("email").notNull(),
   turnoPreferido: text("turno_preferido").notNull(),
+  classificacao: text("classificacao").notNull(),
   turmaId: varchar("turma_id").references(() => turmas.id),
 });
 
@@ -125,6 +126,9 @@ export const insertAlunoSchema = createInsertSchema(alunos).omit({
   email: z.string().email("E-mail inválido"),
   telefone: z.string().min(10, "Telefone deve ter no mínimo 10 dígitos"),
   idade: z.number().min(1, "Idade deve ser positiva"),
+  classificacao: z.enum(["Matriculado", "Experimental"], {
+    required_error: "Classificação é obrigatória",
+  }),
 });
 
 // Types

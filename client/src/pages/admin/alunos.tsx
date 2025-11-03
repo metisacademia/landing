@@ -53,7 +53,8 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, Pencil, Trash2, Download, Search } from "lucide-react";
 import type { Aluno, Turma } from "@shared/schema";
 
-const turnos = ["manhã", "tarde"];
+const turnos = ["manhã", "tarde", "noite"];
+const classificacoes = ["Matriculado", "Experimental"];
 
 const alunoSchema = z.object({
   nome: z.string().min(1, "Nome é obrigatório"),
@@ -61,6 +62,9 @@ const alunoSchema = z.object({
   telefone: z.string().min(10, "Telefone deve ter no mínimo 10 dígitos"),
   email: z.string().email("E-mail inválido"),
   turnoPreferido: z.string().min(1, "Turno preferido é obrigatório"),
+  classificacao: z.enum(["Matriculado", "Experimental"], {
+    required_error: "Classificação é obrigatória",
+  }),
   turmaId: z.string().optional(),
 });
 
@@ -102,6 +106,7 @@ export default function Alunos() {
       telefone: "",
       email: "",
       turnoPreferido: "",
+      classificacao: "Matriculado",
       turmaId: "none",
     },
   });
@@ -196,6 +201,7 @@ export default function Alunos() {
       telefone: aluno.telefone,
       email: aluno.email,
       turnoPreferido: aluno.turnoPreferido,
+      classificacao: aluno.classificacao,
       turmaId: aluno.turmaId || "none",
     });
     setIsDialogOpen(true);
@@ -354,30 +360,56 @@ export default function Alunos() {
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    control={form.control}
-                    name="turnoPreferido"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Turno Preferido</FormLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Selecione o turno" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {turnos.map((turno) => (
-                              <SelectItem key={turno} value={turno}>
-                                {turno.charAt(0).toUpperCase() + turno.slice(1)}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <div className="grid grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="turnoPreferido"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Turno Preferido</FormLabel>
+                          <Select onValueChange={field.onChange} value={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Selecione o turno" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {turnos.map((turno) => (
+                                <SelectItem key={turno} value={turno}>
+                                  {turno.charAt(0).toUpperCase() + turno.slice(1)}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="classificacao"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Classificação</FormLabel>
+                          <Select onValueChange={field.onChange} value={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Selecione a classificação" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {classificacoes.map((classificacao) => (
+                                <SelectItem key={classificacao} value={classificacao}>
+                                  {classificacao}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                   <FormField
                     control={form.control}
                     name="turmaId"

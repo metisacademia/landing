@@ -52,7 +52,7 @@ import {
 import { Plus, Pencil, Trash2, Download, Search } from "lucide-react";
 import type { Moderador } from "@shared/schema";
 
-const salas = ["Memória", "Linguagem", "Planejamento", "Mentalização", "Contemplação"];
+const salas = ["Memória", "Linguagem", "Planejamento", "Mentalização", "Contemplação", "Circuito Completo"];
 
 const moderadorSchema = z.object({
   nome: z.string().min(1, "Nome é obrigatório"),
