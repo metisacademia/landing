@@ -586,7 +586,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Simple hardcoded authentication
       if (username === "admin" && password === "metis2025") {
         req.session.isAdmin = true;
-        res.json({ success: true, message: "Login realizado com sucesso" });
+        
+        // Save session before responding to ensure it's persisted
+        req.session.save((err) => {
+          if (err) {
+            console.error('Erro ao salvar sessão:', err);
+            return res.status(500).json({ message: "Erro ao criar sessão" });
+          }
+          res.json({ success: true, message: "Login realizado com sucesso" });
+        });
       } else {
         res.status(401).json({ message: "Credenciais inválidas" });
       }
