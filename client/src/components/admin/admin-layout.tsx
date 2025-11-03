@@ -36,6 +36,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       return await apiRequest("POST", "/api/admin/logout");
     },
     onSuccess: async () => {
+      localStorage.removeItem("admin_token");
       await queryClient.invalidateQueries({ queryKey: ['/api/admin/check-auth'] });
       await queryClient.clear();
       toast({

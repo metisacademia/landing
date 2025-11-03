@@ -12,18 +12,26 @@ interface ProtectedRouteProps {
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const [, setLocation] = useLocation();
+  const hasToken = !!localStorage.getItem("admin_token");
 
   const { data, isLoading } = useQuery<AuthResponse>({
     queryKey: ["/api/admin/check-auth"],
+    enabled: hasToken,
   });
 
   useEffect(() => {
+    if (!hasToken) {
+      setLocation("/admin/login");
+      return;
+    }
+    
     if (!isLoading && !data?.isAuthenticated) {
+      localStorage.removeItem("admin_token");
       setLocation("/admin/login");
     }
-  }, [data, isLoading, setLocation]);
+  }, [data, isLoading, setLocation, hasToken]);
 
-  if (isLoading) {
+  if (!hasToken || isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#f8f1e7]">
         <div className="text-center">

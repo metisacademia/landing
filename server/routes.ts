@@ -569,9 +569,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // ========== ADMIN ROUTES ==========
   
-  // Middleware to check if user is admin
+  // Simple token for admin auth (works better in Replit than cookies)
+  const ADMIN_TOKEN = "metis-admin-token-2025";
+  
+  // Middleware to check if user is admin via token
   const requireAdmin = (req: Request, res: Response, next: NextFunction) => {
-    if (req.session?.isAdmin) {
+    const authHeader = req.headers.authorization;
+    if (authHeader === `Bearer ${ADMIN_TOKEN}`) {
       next();
     } else {
       res.status(401).json({ message: "Não autorizado" });
@@ -585,17 +589,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Simple hardcoded authentication
       if (username === "admin" && password === "metis2025") {
-        req.session.isAdmin = true;
-        
-        // Save session before responding to ensure it's persisted
-        req.session.save((err) => {
-          if (err) {
-            console.error('Erro ao salvar sessão:', err);
-            return res.status(500).json({ message: "Erro ao criar sessão" });
-          }
-          console.log('✅ Login - Session saved with ID:', req.sessionID);
-          console.log('✅ Login - Session data:', req.session);
-          res.json({ success: true, message: "Login realizado com sucesso" });
+        res.json({ 
+          success: true, 
+          message: "Login realizado com sucesso",
+          token: ADMIN_TOKEN 
         });
       } else {
         res.status(401).json({ message: "Credenciais inválidas" });
@@ -607,20 +604,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.post("/api/admin/logout", (req, res) => {
-    req.session.destroy((err) => {
-      if (err) {
-        return res.status(500).json({ message: "Erro ao fazer logout" });
-      }
-      res.json({ success: true, message: "Logout realizado com sucesso" });
-    });
+    res.json({ success: true, message: "Logout realizado com sucesso" });
   });
 
   app.get("/api/admin/check-auth", (req, res) => {
-    console.log('🔍 check-auth - Session ID:', req.sessionID);
-    console.log('🔍 check-auth - Session data:', req.session);
-    console.log('🔍 check-auth - Cookie header:', req.headers.cookie);
-    
-    if (req.session?.isAdmin) {
+    const authHeader = req.headers.authorization;
+    if (authHeader === `Bearer ${ADMIN_TOKEN}`) {
       res.json({ isAuthenticated: true });
     } else {
       res.json({ isAuthenticated: false });
