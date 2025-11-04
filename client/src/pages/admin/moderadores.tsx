@@ -100,7 +100,12 @@ export default function Moderadores() {
       return await apiRequest("POST", "/api/admin/moderadores", data);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/moderadores"] });
+      queryClient.invalidateQueries({ 
+        predicate: (query) => {
+          const key = query.queryKey[0];
+          return key === "/api/admin/moderadores" || key === "/api/admin/moderadores/search";
+        }
+      });
       toast({
         title: "Moderador criado com sucesso",
       });
@@ -121,7 +126,12 @@ export default function Moderadores() {
       return await apiRequest("PUT", `/api/admin/moderadores/${id}`, data);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/moderadores"] });
+      queryClient.invalidateQueries({ 
+        predicate: (query) => {
+          const key = query.queryKey[0];
+          return key === "/api/admin/moderadores" || key === "/api/admin/moderadores/search";
+        }
+      });
       toast({
         title: "Moderador atualizado com sucesso",
       });
@@ -143,7 +153,12 @@ export default function Moderadores() {
       return await apiRequest("DELETE", `/api/admin/moderadores/${id}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/moderadores"] });
+      queryClient.invalidateQueries({ 
+        predicate: (query) => {
+          const key = query.queryKey[0];
+          return key === "/api/admin/moderadores" || key === "/api/admin/moderadores/search";
+        }
+      });
       toast({
         title: "Moderador excluído com sucesso",
       });

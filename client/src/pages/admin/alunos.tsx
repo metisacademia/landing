@@ -116,7 +116,12 @@ export default function Alunos() {
       return await apiRequest("POST", "/api/admin/alunos", data);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/alunos"] });
+      queryClient.invalidateQueries({ 
+        predicate: (query) => {
+          const key = query.queryKey[0];
+          return key === "/api/admin/alunos" || key === "/api/admin/alunos/search";
+        }
+      });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/turmas"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
       toast({
@@ -139,7 +144,12 @@ export default function Alunos() {
       return await apiRequest("PUT", `/api/admin/alunos/${id}`, data);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/alunos"] });
+      queryClient.invalidateQueries({ 
+        predicate: (query) => {
+          const key = query.queryKey[0];
+          return key === "/api/admin/alunos" || key === "/api/admin/alunos/search";
+        }
+      });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/turmas"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
       toast({
@@ -163,7 +173,12 @@ export default function Alunos() {
       return await apiRequest("DELETE", `/api/admin/alunos/${id}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/alunos"] });
+      queryClient.invalidateQueries({ 
+        predicate: (query) => {
+          const key = query.queryKey[0];
+          return key === "/api/admin/alunos" || key === "/api/admin/alunos/search";
+        }
+      });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/turmas"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
       toast({
