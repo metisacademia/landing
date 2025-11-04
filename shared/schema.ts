@@ -59,7 +59,13 @@ export const insertPreRegistrationSchema = createInsertSchema(preRegistrations).
   paymentStatus: true,
   createdAt: true,
 }).extend({
-  cpf: z.string().min(11, "CPF deve ter 11 dígitos").max(14, "CPF inválido"),
+  cpf: z.string()
+    .transform((val) => val.replace(/[^\d]/g, ''))
+    .pipe(
+      z.string()
+        .length(11, "CPF deve ter 11 dígitos")
+        .regex(/^\d{11}$/, "CPF deve conter apenas números")
+    ),
   amount: z.number().min(1, "Valor deve ser positivo"),
   // Validações de endereço obrigatórias para nota fiscal
   postalCode: z.string().min(8, "CEP é obrigatório").max(10, "CEP inválido").regex(/^\d{5}-?\d{3}$/, "CEP deve ter formato 00000-000"),
