@@ -75,13 +75,26 @@ export default function Moderadores() {
     queryKey: searchTerm
       ? ["/api/admin/moderadores/search", searchTerm]
       : ["/api/admin/moderadores"],
-    queryFn: searchTerm
-      ? async () => {
-          const response = await fetch(`/api/admin/moderadores/search?q=${encodeURIComponent(searchTerm)}`);
-          if (!response.ok) throw new Error('Failed to search');
-          return response.json();
-        }
-      : undefined,
+    queryFn: async ({ queryKey }) => {
+      const token = localStorage.getItem("admin_token");
+      const headers: Record<string, string> = {};
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+      
+      let url;
+      if (searchTerm) {
+        url = `/api/admin/moderadores/search?q=${encodeURIComponent(searchTerm)}`;
+      } else {
+        url = "/api/admin/moderadores";
+      }
+      
+      const response = await fetch(url, { headers });
+      if (!response.ok) {
+        throw new Error('Failed to fetch moderadores');
+      }
+      return response.json();
+    },
   });
 
   const form = useForm<ModeradorForm>({

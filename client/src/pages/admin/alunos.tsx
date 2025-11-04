@@ -85,13 +85,26 @@ export default function Alunos() {
     queryKey: searchTerm
       ? ["/api/admin/alunos/search", searchTerm]
       : ["/api/admin/alunos"],
-    queryFn: searchTerm
-      ? async () => {
-          const response = await fetch(`/api/admin/alunos/search?q=${encodeURIComponent(searchTerm)}`);
-          if (!response.ok) throw new Error('Failed to search');
-          return response.json();
-        }
-      : undefined,
+    queryFn: async ({ queryKey }) => {
+      const token = localStorage.getItem("admin_token");
+      const headers: Record<string, string> = {};
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+      
+      let url;
+      if (searchTerm) {
+        url = `/api/admin/alunos/search?q=${encodeURIComponent(searchTerm)}`;
+      } else {
+        url = "/api/admin/alunos";
+      }
+      
+      const response = await fetch(url, { headers });
+      if (!response.ok) {
+        throw new Error('Failed to fetch alunos');
+      }
+      return response.json();
+    },
   });
 
   const { data: turmas } = useQuery<TurmaWithCount[]>({
