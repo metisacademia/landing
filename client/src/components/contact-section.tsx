@@ -3,8 +3,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Phone, Mail, MapPin } from "lucide-react";
 
 export default function ContactSection() {
-  const navigateToCheckout = () => {
-    window.location.href = '/checkout';
+  const openWhatsApp = () => {
+    window.open('https://wa.me/5581992726495', '_blank');
   };
 
   return (
@@ -15,7 +15,7 @@ export default function ContactSection() {
             Visite a Métis
           </h2>
           <p className="text-xl text-muted-foreground" data-testid="contact-description">
-            Agende sua visita, conheça as salas e faça sua pré-matrícula.
+            Agende sua aula experimental e conheça as salas da Métis.
           </p>
         </div>
 
@@ -30,11 +30,11 @@ export default function ContactSection() {
                   <h3 className="text-lg font-semibold mb-2">WhatsApp</h3>
                   <p className="text-muted-foreground mb-2">Para agendamentos e dúvidas</p>
                   <a 
-                    href="https://wa.me/5581991032142" 
+                    href="https://wa.me/5581992726495" 
                     className="text-primary hover:underline font-medium"
                     data-testid="link-whatsapp"
                   >
-                    (81) 99103-2142
+                    (81) 99272-6495
                   </a>
                 </div>
               </div>
@@ -75,19 +75,11 @@ export default function ContactSection() {
             <div className="mt-12">
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
-                  onClick={navigateToCheckout}
+                  onClick={openWhatsApp}
                   className="text-accent-foreground px-8 py-4 rounded-lg font-semibold hover:bg-accent/90 transition-colors bg-[#cda465]"
-                  data-testid="button-final-pre-matricula"
+                  data-testid="button-agende-aula-contato"
                 >
-                  Garantir minha vaga na pré-matrícula
-                </Button>
-                <Button 
-                  variant="outline"
-                  onClick={() => window.open('https://wa.me/5581991032142', '_blank')}
-                  className="border-2 border-primary text-primary px-8 py-4 rounded-lg font-semibold hover:bg-primary hover:text-primary-foreground transition-colors"
-                  data-testid="button-agendar-visita"
-                >
-                  Agendar Visita
+                  Agende sua aula experimental
                 </Button>
               </div>
             </div>

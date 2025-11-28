@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 
 export default function HeroSection() {
-  const navigateToCheckout = () => {
-    window.location.href = '/checkout';
+  const openWhatsApp = () => {
+    window.open('https://wa.me/5581992726495', '_blank');
   };
 
   const scrollToSection = (id: string) => {
@@ -41,12 +41,11 @@ export default function HeroSection() {
           
           <div className="flex justify-start">
             <Button 
-              onClick={navigateToCheckout}
+              onClick={openWhatsApp}
               className="px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 lg:px-12 lg:py-6 rounded-lg text-sm sm:text-base md:text-lg lg:text-xl hover:bg-accent/90 transition-colors shadow-2xl border-2 border-transparent font-bold bg-[#cda465] text-[#0b0b28]"
-              data-testid="button-pre-matricula"
+              data-testid="button-agende-aula"
             >
-              <span className="sm:hidden">Pré-matrícula</span>
-              <span className="hidden sm:inline">Garanta sua vaga com a pré-matrícula</span>
+              Agende sua aula experimental
             </Button>
           </div>
         </div>

@@ -13,8 +13,8 @@ export default function Navigation() {
     setIsOpen(false);
   };
 
-  const navigateToCheckout = () => {
-    window.location.href = '/checkout';
+  const openWhatsApp = () => {
+    window.open('https://wa.me/5581992726495', '_blank');
   };
 
   return (
@@ -60,21 +60,21 @@ export default function Navigation() {
               Contato
             </button>
             <Button 
-              onClick={navigateToCheckout}
+              onClick={openWhatsApp}
               className="px-4 py-2 rounded-lg hover:bg-[#fbbd23]/90 transition-colors text-[#0b0b28] bg-[#cda465] font-bold"
-              data-testid="nav-pre-matricula"
+              data-testid="nav-agende-aula"
             >
-              Pré-matrícula
+              Agende sua aula experimental
             </Button>
           </div>
           
           <div className="md:hidden flex items-center gap-2">
             <Button 
-              onClick={navigateToCheckout}
+              onClick={openWhatsApp}
               className="px-3 py-2 rounded-lg hover:bg-[#fbbd23]/90 transition-colors text-[#0b0b28] bg-[#cda465] text-sm font-bold"
-              data-testid="mobile-nav-pre-matricula-header"
+              data-testid="mobile-nav-agende-aula-header"
             >
-              Pré-matrícula
+              Agende sua aula experimental
             </Button>
             <button 
               onClick={() => setIsOpen(!isOpen)}
@@ -117,11 +117,11 @@ export default function Navigation() {
                 Contato
               </button>
               <Button 
-                onClick={navigateToCheckout}
+                onClick={openWhatsApp}
                 className="px-4 py-2 rounded-lg hover:bg-[#fbbd23]/90 transition-colors mt-4 w-fit text-[#0b0b28] bg-[#cda465] font-bold"
-                data-testid="mobile-nav-pre-matricula"
+                data-testid="mobile-nav-agende-aula"
               >
-                Pré-matrícula
+                Agende sua aula experimental
               </Button>
             </div>
           </div>

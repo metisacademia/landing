@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useLocation } from "wouter";
 
 export default function PricingSection() {
-  const [, setLocation] = useLocation();
+  const openWhatsApp = () => {
+    window.open('https://wa.me/5581992726495', '_blank');
+  };
   
   const plans = [
     {
@@ -47,7 +48,7 @@ export default function PricingSection() {
             Planos & Adesão
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto" data-testid="pricing-description">
-            Pré-matrícula com vantagens exclusivas e prioridade de horários. Conheça nossos planos e garanta sua vaga.
+            Conheça nossos planos e agende sua aula experimental para descobrir a Métis.
           </p>
         </div>
 
@@ -95,14 +96,14 @@ export default function PricingSection() {
 
         <div className="text-center mt-12">
           <Button 
-            onClick={() => setLocation('/checkout')}
+            onClick={openWhatsApp}
             className="px-12 py-6 rounded-lg font-semibold text-xl hover:bg-yellow-400 transition-colors shadow-2xl border-2 border-transparent mb-4 bg-[#cda465] text-[#0b0b28]"
-            data-testid="button-pre-matricula-pricing"
+            data-testid="button-agende-aula-pricing"
           >
-            Pré-matrícula R$ 250
+            Agende sua aula experimental
           </Button>
           <p className="text-muted-foreground" data-testid="guarantee-text">
-            Satisfação garantida: se, após a aula experimental, você não perceber valor, devolvemos a pré-matrícula.
+            Venha conhecer a Métis e descobrir como podemos ajudar você a desenvolver seu potencial cognitivo.
           </p>
         </div>
       </div>
