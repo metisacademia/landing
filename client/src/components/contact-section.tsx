@@ -1,12 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Phone, Mail, MapPin } from "lucide-react";
 
 export default function ContactSection() {
-  const openWhatsApp = () => {
-    window.open('https://wa.me/5581992726495', '_blank');
-  };
-
   return (
     <section id="contato" className="py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -72,17 +67,6 @@ export default function ContactSection() {
               </div>
             </div>
 
-            <div className="mt-12">
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  onClick={openWhatsApp}
-                  className="text-accent-foreground px-8 py-4 rounded-lg font-semibold hover:bg-accent/90 transition-colors bg-[#cda465]"
-                  data-testid="button-agende-aula-contato"
-                >
-                  Agende sua aula experimental
-                </Button>
-              </div>
-            </div>
           </div>
 
           <Card className="p-1 shadow-lg border-border overflow-hidden" data-testid="contact-map">
