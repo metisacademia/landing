@@ -70,17 +70,26 @@ export default function ContactSection() {
           </div>
 
           <Card className="p-1 shadow-lg border-border overflow-hidden" data-testid="contact-map">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.3616453890694!2d-34.90382162408836!3d-8.050835480762887!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab18bc401b8f85%3A0x7eb5e3fc5c8e3d0f!2sKronos%20Empresarial!5e0!3m2!1spt-BR!2sbr!4v1729627104000!5m2!1spt-BR!2sbr"
-              width="100%"
-              height="384"
-              style={{ border: 0 }}
-              allowFullScreen={true}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="w-full h-96 rounded-lg"
-              title="Localização da Métis - Kronos Empresarial, Graças, Recife/PE"
-            />
+            <div className="relative">
+              <div className="w-full h-96 bg-gradient-to-br from-[#1a1a2e] to-[#2a2a4e] rounded-lg flex items-center justify-center">
+                <div className="text-center text-white p-8">
+                  <MapPin className="h-16 w-16 text-[#cda465] mx-auto mb-4" />
+                  <h3 className="text-xl font-bold mb-2">Kronos Empresarial</h3>
+                  <p className="text-white/70 mb-4">
+                    R. das Pernambucanas, 407, Sala 1203<br />
+                    Graças, Recife/PE
+                  </p>
+                </div>
+              </div>
+              <a 
+                href="https://maps.google.com/?q=Kronos+Empresarial+Recife+Gracas"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-4 right-4 bg-white px-4 py-2 rounded-lg shadow-lg text-[#1a1a2e] font-medium hover:bg-gray-100 transition-colors"
+              >
+                Ver no Google Maps →
+              </a>
+            </div>
             <div className="p-4 text-center">
               <p className="text-sm text-muted-foreground">
                 Localização no coração do bairro das Graças, com fácil acesso e estacionamento.
