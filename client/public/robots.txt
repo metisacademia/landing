@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://metisacademia.com.br/sitemap.xml
