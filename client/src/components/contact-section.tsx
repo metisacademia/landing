@@ -55,7 +55,7 @@ export default function ContactSection() {
       title: "WhatsApp",
       subtitle: "Para agendamentos e dúvidas",
       content: "(81) 99272-6495",
-      href: "https://wa.me/5581992726495",
+      href: "https://wa.me/5581992726495?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20aula%20experimental%20na%20M%C3%A9tis.",
       testId: "contact-whatsapp",
       linkTestId: "link-whatsapp",
       onClick: trackWhatsAppClick,

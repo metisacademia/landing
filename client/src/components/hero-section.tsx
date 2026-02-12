@@ -46,7 +46,7 @@ export default function HeroSection() {
       'event': 'whatsapp_click',
       'click_source': 'hero'
     });
-    window.open('https://wa.me/5581992726495', '_blank');
+    window.open('https://wa.me/5581992726495?text=' + encodeURIComponent('Olá! Gostaria de agendar uma aula experimental na Métis.'), '_blank');
   };
 
   const scrollToSection = (id: string) => {

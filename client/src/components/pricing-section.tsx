@@ -40,7 +40,12 @@ const cardVariants = {
 
 export default function PricingSection() {
   const openWhatsApp = () => {
-    window.open('https://wa.me/5581992726495', '_blank');
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': 'whatsapp_click',
+      'click_source': 'pricing'
+    });
+    window.open('https://wa.me/5581992726495?text=' + encodeURIComponent('Olá! Gostaria de saber mais sobre os planos da Métis.'), '_blank');
   };
 
   const plans = [
