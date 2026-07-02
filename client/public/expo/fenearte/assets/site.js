@@ -21,4 +21,16 @@
       target.focus({ preventScroll: true });
     }
   });
+
+  // Controles simples dos carrosséis: sem dependências e com fallback por rolagem.
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest && e.target.closest("[data-gallery-prev], [data-gallery-next]");
+    if (!btn) return;
+    var panel = btn.closest(".panel--gallery");
+    var strip = panel && panel.querySelector("[data-gallery]");
+    if (!strip) return;
+    var dir = btn.hasAttribute("data-gallery-prev") ? -1 : 1;
+    var amount = Math.max(240, Math.round(strip.clientWidth * 0.82));
+    strip.scrollBy({ left: dir * amount, behavior: reduce ? "auto" : "smooth" });
+  });
 })();

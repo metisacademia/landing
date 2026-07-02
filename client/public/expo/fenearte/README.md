@@ -80,13 +80,19 @@ placas/placas_exposicao_metis_A6.pdf
 
 Os `slug` de cada artesão estão em `data/artesaos.json` e são os nomes dos arquivos em `artesaos/`.
 
-## Fotos das peças
+## Fotos das peças e Instagram
 
 As imagens de referência já estão integradas: o índice traz um mosaico de capa
 (`data/artesaos.json` → `exposicao.imagem_capa`) e miniaturas nos cards, e cada página
-de artesão exibe a imagem real (campo `imagem` de cada artesão) com legenda e crédito
+de artesão exibe a imagem principal (campo `imagem` de cada artesão) com legenda e crédito
 com link para a fonte. Todos os arquivos ficam em `assets/images/` e são carregados
 localmente — nenhuma imagem externa é baixada pelo site.
+
+Cada página também possui uma seção de **galeria/carrossel**. Quando houver fotos locais ou
+licenciadas de peças, inserir no campo `galeria` do perfil. Quando houver Instagram oficial,
+institucional ou familiar confirmado, o campo `instagram` gera um cartão de direcionamento.
+Por padrão, o site **não re-hospeda fotos do Instagram**: use link/embedding oficial ou peça
+autorização antes de copiar imagens da rede.
 
 Se algum artesão não tiver o campo `imagem`, o site mantém automaticamente um fallback
 elegante (monograma no card e placeholder tracejado na página). Para trocar uma imagem,
