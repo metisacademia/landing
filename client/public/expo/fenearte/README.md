@@ -89,12 +89,16 @@ com link para a fonte. Todos os arquivos ficam em `assets/images/` e são carreg
 localmente — nenhuma imagem externa é baixada pelo site.
 
 Cada página também possui uma seção de **galeria/carrossel**. Ela fica depois de
-**Para observar na peça** e **Materiais e técnica** e deve conter somente fotos locais
-ou autorizadas das peças, inseridas no campo `galeria` do perfil. Quando houver
-Instagram oficial, institucional ou familiar confirmado, o campo `instagram` gera um
-cartão separado **abaixo da galeria**, com o título “Ver mais no Instagram”.
-Por padrão, o site **não re-hospeda fotos do Instagram**: use link/embedding oficial ou peça
-autorização antes de copiar imagens da rede.
+**Para observar na peça** e **Materiais e técnica** e agora funciona como
+**galeria de referências de estilo**: imagens públicas coletadas da internet para
+ajudar o visitante a reconhecer linguagem, materiais e técnica. As peças da exposição
+continuam disponíveis apenas ao vivo.
+
+Quando houver Instagram oficial, institucional ou familiar confirmado, o campo `instagram`
+gera um cartão separado **abaixo da galeria**, com o título “Ver mais no Instagram”.
+Por padrão, o site **não re-hospeda fotos do Instagram** sem autorização específica:
+as redes sociais entram como direcionamento e as imagens da galeria devem manter fonte,
+crédito e link de origem no próprio card.
 
 Se algum artesão não tiver o campo `imagem`, o site mantém automaticamente um fallback
 elegante (monograma no card e placeholder tracejado na página). Para trocar uma imagem,

@@ -803,8 +803,10 @@ h1, h2, h3 {
 .gallery-card img {
   width: 100%;
   aspect-ratio: 4 / 3;
-  object-fit: cover;
-  background: var(--linen-deep);
+  object-fit: contain;
+  padding: .35rem;
+  box-sizing: border-box;
+  background: var(--white);
 }
 .gallery-card figcaption,
 .gallery-card--placeholder {
