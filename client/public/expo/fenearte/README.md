@@ -1,7 +1,7 @@
 # Mãos que contam histórias
 
 Mini-site estático da exposição da **Métis Academia da Mente** sobre artesãos brasileiros,
-inspirada na **Fenearte**. Doze mestres do barro, da madeira e do couro, cada um com sua
+inspirada na **Fenearte**. Trinta mestres, artistas e artesãos brasileiros, cada um com sua
 própria página de história, feita para leitura confortável — inclusive para o público 60+.
 
 O site é **100% estático e offline**: basta abrir `index.html` no navegador. Sem bibliotecas,
@@ -13,7 +13,7 @@ sem CDNs, sem servidor.
 
 ```
 index.html                 → landing page da exposição
-artesaos/<slug>.html       → uma página por artesão (12 páginas)
+artesaos/<slug>.html       → uma página por artesão (30 páginas)
 assets/style.css           → visual editorial premium (paleta Métis)
 assets/site.js             → JavaScript mínimo (rolagem suave; opcional)
 assets/logo-*.jpg          → logotipos da Métis
@@ -96,7 +96,8 @@ e regere as páginas. Revise os direitos das miniaturas de vídeo antes da impre
 
 ## Nota curatorial
 
-Os textos partem das referências citadas em cada página. Algumas entradas trazem
+Os textos foram revistos para leitura fluida: a narrativa biográfica não cita fontes no corpo
+do texto, e as referências ficam reunidas ao final de cada página. Algumas entradas trazem
 **notas curatoriais** (grafias alternativas, divergências de data ou atribuição que depende da peça exposta).
 **Revise todo o conteúdo antes da impressão final.**
 
