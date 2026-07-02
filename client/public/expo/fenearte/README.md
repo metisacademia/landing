@@ -80,25 +80,23 @@ placas/placas_exposicao_metis_A6.pdf
 
 Os `slug` de cada artesão estão em `data/artesaos.json` e são os nomes dos arquivos em `artesaos/`.
 
-## Fotos das peças e Instagram
+## Fotos dos artesãos, peças e Instagram
 
-As imagens de referência já estão integradas: o índice traz um mosaico de capa
-(`data/artesaos.json` → `exposicao.imagem_capa`) e miniaturas nos cards, e cada página
-de artesão exibe a imagem principal (campo `imagem` de cada artesão) com legenda e crédito
-com link para a fonte. Todos os arquivos ficam em `assets/images/` e são carregados
-localmente — nenhuma imagem externa é baixada pelo site.
+As fotos principais dos perfis devem ser retratos ou registros dos próprios artesãos/artistas,
+não fotos de peças. Cada foto principal mantém legenda, crédito e link de fonte no campo
+`imagem` de `data/artesaos.json`. Quando não houver retrato público confiável, o site mantém
+um placeholder explícito de **foto do artesão em pesquisa**, sem substituir por peça nem por
+imagem de pessoa relacionada.
 
-Cada página também possui uma seção de **galeria/carrossel**. Ela fica depois de
-**Para observar na peça** e **Materiais e técnica** e agora funciona como
-**galeria de referências de estilo**: imagens públicas coletadas da internet para
-ajudar o visitante a reconhecer linguagem, materiais e técnica. As peças da exposição
+A galeria/carrossel fica depois de **Para observar na peça** e **Materiais e técnica** e funciona
+como **galeria de peças e referências de estilo**: obras e peças públicas coletadas da internet
+para ajudar o visitante a reconhecer linguagem, materiais e técnica. As peças da exposição
 continuam disponíveis apenas ao vivo.
 
 Quando houver Instagram oficial, institucional ou familiar confirmado, o campo `instagram`
 gera um cartão separado **abaixo da galeria**, com o título “Ver mais no Instagram”.
-Por padrão, o site **não re-hospeda fotos do Instagram** sem autorização específica:
-as redes sociais entram como direcionamento e as imagens da galeria devem manter fonte,
-crédito e link de origem no próprio card.
+As redes sociais entram como direcionamento e/ou fonte visual com crédito; qualquer imagem
+usada no site deve manter fonte, crédito e link de origem.
 
 Se algum artesão não tiver o campo `imagem`, o site mantém automaticamente um fallback
 elegante (monograma no card e placeholder tracejado na página). Para trocar uma imagem,
