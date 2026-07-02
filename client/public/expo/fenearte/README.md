@@ -96,8 +96,9 @@ e regere as páginas. Revise os direitos das miniaturas de vídeo antes da impre
 
 ## Nota curatorial
 
-Os textos partem de fontes públicas citadas em cada página. Algumas entradas trazem
-**notas curatoriais** (grafias alternativas ou atribuição que depende da peça exposta).
+Os textos partem de fontes públicas e de material de acervo fornecido pela equipe, sempre
+citado em cada página. Algumas entradas trazem **notas curatoriais** (grafias alternativas,
+divergências de data ou atribuição que depende da peça exposta).
 **Revise todo o conteúdo antes da impressão final.**
 
 ## Identidade visual
