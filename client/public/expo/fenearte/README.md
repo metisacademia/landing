@@ -88,9 +88,11 @@ de artesão exibe a imagem principal (campo `imagem` de cada artesão) com legen
 com link para a fonte. Todos os arquivos ficam em `assets/images/` e são carregados
 localmente — nenhuma imagem externa é baixada pelo site.
 
-Cada página também possui uma seção de **galeria/carrossel**. Quando houver fotos locais ou
-licenciadas de peças, inserir no campo `galeria` do perfil. Quando houver Instagram oficial,
-institucional ou familiar confirmado, o campo `instagram` gera um cartão de direcionamento.
+Cada página também possui uma seção de **galeria/carrossel**. Ela fica depois de
+**Para observar na peça** e **Materiais e técnica** e deve conter somente fotos locais
+ou autorizadas das peças, inseridas no campo `galeria` do perfil. Quando houver
+Instagram oficial, institucional ou familiar confirmado, o campo `instagram` gera um
+cartão separado **abaixo da galeria**, com o título “Ver mais no Instagram”.
 Por padrão, o site **não re-hospeda fotos do Instagram**: use link/embedding oficial ou peça
 autorização antes de copiar imagens da rede.
 
