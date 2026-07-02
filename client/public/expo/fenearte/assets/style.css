@@ -34,12 +34,12 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   font-family: var(--font);
   font-size: 1.18rem;      /* generosa para 60+ */
   line-height: 1.72;
@@ -561,15 +561,16 @@ h1, h2, h3 {
 /* Corpo em duas colunas no desktop */
 .artisan-body {
   display: grid;
-  grid-template-columns: 1.55fr .95fr;
+  grid-template-columns: minmax(0, 1.55fr) minmax(280px, .95fr);
   gap: clamp(1.6rem, 4vw, 3.2rem);
   align-items: start;
   padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
 }
+.artisan-body > * { min-width: 0; }
 .artisan-main > * + * { margin-top: 1.5rem; }
 
 /* Foto real do artesão (página individual) */
-.artisan-aside { position: sticky; top: 5rem; }
+.artisan-aside { position: sticky; top: 5rem; min-width: 0; }
 .artisan-photo {
   position: relative;
   margin: 0;
@@ -779,18 +780,21 @@ h1, h2, h3 {
 }
 .gallery-btn:hover { background: var(--blue); color: var(--linen); }
 .gallery-strip {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(245px, 78%);
+  display: flex;
   gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
-  scroll-snap-type: inline mandatory;
+  scroll-snap-type: x mandatory;
   scroll-padding-inline: .2rem;
-  padding: .15rem .15rem .65rem;
+  padding: .15rem .15rem .85rem;
   scrollbar-color: var(--gold) var(--linen-deep);
+  scrollbar-width: thin;
 }
 .gallery-card {
+  flex: 0 0 min(360px, 82%);
   scroll-snap-align: start;
   margin: 0;
   min-height: 100%;
@@ -969,7 +973,8 @@ h1, h2, h3 {
   .hero__actions .btn { flex: 1 1 100%; justify-content: center; }
   .gallery-head { flex-direction: column; }
   .gallery-controls { align-self: flex-start; }
-  .gallery-strip { grid-auto-columns: 86%; }
+  .gallery-strip { padding-bottom: .9rem; }
+  .gallery-card { flex-basis: 86%; }
   .social-card { align-items: flex-start; }
   .social-card__arrow { display: none; }
 }
