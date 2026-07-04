@@ -17,8 +17,10 @@ artesaos/<slug>.html       → uma página por artesão/referência (33 páginas
 assets/style.css           → visual editorial premium (paleta Métis)
 assets/site.js             → JavaScript mínimo (rolagem suave; opcional)
 assets/logo-*.jpg          → logotipos da Métis
-data/artesaos.json         → fonte de conteúdo (NÃO editar à mão sem regenerar)
-scripts/build.py           → gerador estático (lê o JSON e escreve o HTML)
+qrcodes/<slug>.png         → QR codes em PNG para as páginas dos perfis
+qrcodes/<slug>.svg         → QR codes em SVG para impressão/vetor
+qrcodes/links.csv          → tabela de conferência dos links dos QR codes
+scripts/generate_qr.py     → regenerador dos QR codes a partir dos HTML em artesaos/
 ```
 
 ## Como visualizar
@@ -78,7 +80,7 @@ placas/placas_exposicao_metis_A6.pdf
 4. **Teste cada QR code** com um celular real antes da tiragem definitiva das plaquinhas.
 5. Confira o conteúdo de cada página (ver **Nota curatorial** abaixo).
 
-Os `slug` de cada artesão estão em `data/artesaos.json` e são os nomes dos arquivos em `artesaos/`.
+Os `slug` de cada perfil são os nomes dos arquivos em `artesaos/`. O script de QR percorre esses HTML automaticamente.
 
 ## Fotos dos artesãos, peças e Instagram
 

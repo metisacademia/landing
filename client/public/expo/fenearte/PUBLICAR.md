@@ -26,7 +26,7 @@ Use o arquivo:
 exposicao-artesaos-fenearte-site-publicavel.zip
 ```
 
-Ele contém somente o site estático necessário para hospedagem: `index.html`, `artesaos/`, `assets/`, `README.md`, `IMAGE_CREDITS.md`.
+Ele contém somente o site estático necessário para hospedagem: `index.html`, `artesaos/`, `assets/`, `qrcodes/`, `README.md`, `IMAGE_CREDITS.md`.
 
 ## 3. Depois de subir
 
