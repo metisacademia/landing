@@ -77,21 +77,21 @@ Imagens incorporadas para enriquecer o mini-site da exposição. Antes da public
 
 ## Mestra Cida Lima
 - Arquivo local: `assets/images/cida-lima.jpg`
-- Galeria: `assets/images/cida-lima-prato.jpg`, `assets/images/cida-lima-atelie.jpg`
-- Legenda: Mestra Cida Lima com peça de cerâmica; prato/peça e ateliê associados à sua produção em Belo Jardim.
-- Crédito: Revista Continente — “Paneleiras: Ofício que se originou do barro”. Fotos: Roberta Guimarães. Imagem de ateliê: Blog Retrobel — “Mestra Cida Lima: transformação pelo barro”. Revisar direitos antes de publicação ampla.
-- Fontes: https://revistacontinente.com.br/edicoes/129/paneleiras--oficio-que-se-originou-do-barro ; https://blog.retrobel.com.br/mestra-artesa-cida-lima-transformacao-pelo-barro/
+- Galeria: `assets/images/galeria/cida-lima-01.jpg` a `assets/images/galeria/cida-lima-06.jpg`
+- Legenda: Mestra Cida Lima com peça de cerâmica; louça, ateliê e cabeças de barro associadas à produção em Belo Jardim.
+- Crédito: Revista Continente — “Paneleiras: Ofício que se originou do barro”. Fotos: Roberta Guimarães. Blog Retrobel — “Mestra Cida Lima: transformação pelo barro” e produtos Cabeça de Cerâmica Cida Lima M/GG. Imaterial Artesanato Brasileiro — Cabeça Cida Lima PP. Revisar direitos antes de publicação ampla.
+- Fontes: https://revistacontinente.com.br/edicoes/129/paneleiras--oficio-que-se-originou-do-barro ; https://blog.retrobel.com.br/mestra-artesa-cida-lima-transformacao-pelo-barro/ ; https://retrobel.com.br/produtos/cabeca-de-ceramica-cida-lima-gg-38cm/ ; https://retrobel.com.br/produtos/cabeca-de-ceramica-cida-lima-m-23cm/ ; https://www.imaterial.art.br/loja/cultura-popular/esculturas/cabeca-cida-lima-pp/
 
 ## Diomar das Veias
 - Arquivo local: `assets/images/diomar.jpg`
-- Galeria: `assets/images/diomar-escultura.jpg`, `assets/images/diomar-veias.jpg`
-- Legenda: Diomar das Veias ao lado de uma escultura; obras em madeira policromada atribuídas ao artista.
-- Crédito: Blog Diomar das Veias — “Minhas veias” / perfil do autor; Galeria Pontes — “Diomar Freitas Dantas”. Revisar direitos antes de publicação ampla.
-- Fontes: http://diomardasveias.blogspot.com/2010/09/minhas-veias.html ; https://www.galeriapontes.com.br/project/diomar-freitas-dantas/
+- Galeria: `assets/images/galeria/diomar-01.jpg` a `assets/images/galeria/diomar-07.jpg`
+- Legenda: Esculturas em madeira policromada de Diomar das Veias; registro do artista trabalhando no Centro Mestre Noza.
+- Crédito: Blog Diomar das Veias — “Minhas veias”, “Outras veias” e “Trabalhando no Centro de Cultura Popular Mestre Noza”; Galeria Pontes — “Diomar Freitas Dantas”. Revisar direitos antes de publicação ampla.
+- Fontes: http://diomardasveias.blogspot.com/2010/09/minhas-veias.html ; http://diomardasveias.blogspot.com/2010/09/outras-veias.html ; http://diomardasveias.blogspot.com/2010/09/trabalhando-no-centro-de-cultura.html ; https://www.galeriapontes.com.br/project/diomar-freitas-dantas/
 
 ## Movimento Armorial
 - Arquivo local: `assets/images/movimento-armorial.jpg`
-- Galeria: `assets/images/movimento-armorial-mulher-sol.jpg`, `assets/images/movimento-armorial-antonio-nobrega.jpg`
-- Legenda: “Onça Caetana”, de Leonildo da Silva; “Uma Mulher Vestida de Sol”, de Alcione Freitas; Antonio Nóbrega tocando rabeca.
-- Crédito: Casa e Jardim — “Movimento armorial é herança do nordeste e memória artística brasileira”. Fotos: Penellope Bianchi/Divulgação; Antonio Nóbrega: Pedro França/Wikimedia Commons, conforme crédito da matéria. Revisar direitos antes de publicação ampla.
-- Fonte: https://revistacasaejardim.globo.com/arte/noticia/2024/07/movimento-armorial-e-heranca-do-nordeste-e-memoria-artistica-brasileira.ghtml
+- Galeria: `assets/images/galeria/movimento-armorial-01.jpg` a `assets/images/galeria/movimento-armorial-07.jpg`
+- Legenda: “Onça Caetana”, “Uma Mulher Vestida de Sol”, Antonio Nóbrega, vista de exposições e estandarte armorial.
+- Crédito: Casa e Jardim — “Movimento armorial é herança do nordeste e memória artística brasileira” (Penellope Bianchi/Divulgação; Pedro França/Wikimedia Commons conforme a matéria); Agência Brasil — “Exposição no CCBB-SP celebra os 50 anos do Movimento Armorial”; Unifor — foto Acervo UFPE conforme matéria “Armorial 50”; G1 — “Exposição no CCBB Brasília celebra 52 anos do Movimento Armorial”. Revisar direitos antes de publicação ampla.
+- Fontes: https://revistacasaejardim.globo.com/arte/noticia/2024/07/movimento-armorial-e-heranca-do-nordeste-e-memoria-artistica-brasileira.ghtml ; https://agenciabrasil.ebc.com.br/geral/noticia/2022-07/exposicao-no-ccbb-sp-celebra-os-50-anos-do-movimento-armorial ; https://unifor.br/-/-armorial-50-entenda-as-raizes-culturais-do-movimento-artistico-idealizado-por-ariano-suassuna ; https://g1.globo.com/df/distrito-federal/o-que-fazer-no-distrito-federal/noticia/2022/10/18/exposicao-no-ccbb-brasilia-celebra-52-anos-do-movimento-armorial-de-ariano-suassuna-veja-imagens.ghtml
