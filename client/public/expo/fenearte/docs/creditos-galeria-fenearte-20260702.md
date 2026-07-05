@@ -172,6 +172,11 @@ Imagens públicas reunidas em 02/07/2026 para ajudar o visitante a reconhecer es
 - Três Burrinhos — Enciclopédia Itaú Cultural — Corbiniano Lins — https://enciclopedia.itaucultural.org.br/pessoas/2168-corbiniano-lins
 - Revoluções Pernambucanas — Recife Arte Pública — registro do painel Revoluções Pernambucanas, 1967 — http://www.recifeartepublica.com.br/obras/obra/Revolues-Pernambucanas-1817-1824-1948-1967/30
 - Mulher com saia — Rodrigues Galeria de Artes — obra Mulher com Saia, Corbiniano (PE) — https://rodriguesgaleria.com.br/categoria/artistas/corbiniano/
+- Escultura restaurada em área externa — Instagram @corbinianolins — publicação pública de 26/06/2026 — https://www.instagram.com/corbinianolins/p/DaEfFcpiRFI/
+- Vista do conjunto restaurado — Instagram @corbinianolins — publicação pública de 26/06/2026 — https://www.instagram.com/corbinianolins/p/DaEfFcpiRFI/
+- Outro ângulo da escultura restaurada — Instagram @corbinianolins — publicação pública de 26/06/2026 — https://www.instagram.com/corbinianolins/p/DaEfFcpiRFI/
+- Figura feminina restaurada — Instagram @corbinianolins — publicação pública de 23/06/2026 — https://www.instagram.com/corbinianolins/p/DZ7ZKIFlgSX/
+- Detalhe de obra restaurada — Instagram @corbinianolins — publicação pública de 23/06/2026 — https://www.instagram.com/corbinianolins/p/DZ7ZKIFlgSX/
 
 ## Nené Cavalcanti
 - Cabeça em cerâmica — Arte do Brasil — acervo online de arte popular brasileira — http://www.artedobrasil.com.br/maria_neves.html

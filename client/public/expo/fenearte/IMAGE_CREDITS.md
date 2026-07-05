@@ -91,10 +91,11 @@ Imagens incorporadas para enriquecer o mini-site da exposição. Antes da public
 
 ## Corbiniano Lins
 - Arquivo local: `assets/images/corbiniano-lins.jpg`
-- Galeria: `assets/images/galeria/corbiniano-lins-01.jpg` a `assets/images/galeria/corbiniano-lins-03.jpg`
-- Legenda: Corbiniano Lins em registro televisivo; referências visuais de escultura em alumínio, painel público de azulejos e figura feminina alongada.
-- Crédito: G1 Pernambuco / Reprodução TV Globo; Enciclopédia Itaú Cultural; Recife Arte Pública; Rodrigues Galeria de Artes. Revisar direitos antes de publicação ampla.
-- Fontes: https://g1.globo.com/pe/pernambuco/noticia/artista-plastico-corbiniano-lins-morre-aos-94-anos-no-recife.ghtml ; https://enciclopedia.itaucultural.org.br/pessoas/2168-corbiniano-lins ; http://www.recifeartepublica.com.br/obras/obra/Revolues-Pernambucanas-1817-1824-1948-1967/30 ; https://rodriguesgaleria.com.br/categoria/artistas/corbiniano/
+- Galeria institucional/de referência: `assets/images/galeria/corbiniano-lins-01.jpg` a `assets/images/galeria/corbiniano-lins-03.jpg`
+- Galeria extraída do Instagram público: `assets/images/galeria/corbiniano-lins-04.jpg` a `assets/images/galeria/corbiniano-lins-08.jpg`
+- Legenda: Corbiniano Lins em registro televisivo; referências visuais de escultura em alumínio, painel público de azulejos, figura feminina alongada e registros públicos de obras/restaurações compartilhados pelo perfil @corbinianolins.
+- Crédito: G1 Pernambuco / Reprodução TV Globo; Enciclopédia Itaú Cultural; Recife Arte Pública; Rodrigues Galeria de Artes; Instagram @corbinianolins. Revisar direitos antes de publicação ampla.
+- Fontes: https://g1.globo.com/pe/pernambuco/noticia/artista-plastico-corbiniano-lins-morre-aos-94-anos-no-recife.ghtml ; https://enciclopedia.itaucultural.org.br/pessoas/2168-corbiniano-lins ; http://www.recifeartepublica.com.br/obras/obra/Revolues-Pernambucanas-1817-1824-1948-1967/30 ; https://rodriguesgaleria.com.br/categoria/artistas/corbiniano/ ; https://www.instagram.com/corbinianolins/ ; https://www.instagram.com/corbinianolins/p/DaEfFcpiRFI/ ; https://www.instagram.com/corbinianolins/p/DZ7ZKIFlgSX/
 
 ## Movimento Armorial
 - Arquivos locais principais: `assets/images/movimento-armorial-ariano.jpg` (perfil/card) e `assets/images/movimento-armorial.jpg` (Onça Caetana preservada como referência antiga).
