@@ -34,18 +34,25 @@ Importante: esta pesquisa **não autoriza republicar imagens do Instagram**. Par
 - Gilvan Samico: familiar/acervo oficial — https://www.instagram.com/gilvan.samico.oficial/
 - Nené Cavalcanti: confirmado — https://www.instagram.com/cavalcantinene/
 - Mestre Cabral: confirmado — https://www.instagram.com/mestre_cabral/
+- Nuca de Tracunhaém: familiar/legado — https://www.instagram.com/denysdenuca/ — inserido em 05/07/2026 após revisão complementar; perfil público identificado como “Denys família Nuca” e coerente com a continuidade familiar do leão de Nuca.
 
 ## Não encontrado confiável nesta rodada
 
 - Benedito Santeiro: perfil homônimo encontrado, mas não corresponde com segurança ao Benedito ligado a Rosalvo/Olinda.
 - Mestre Rosalvo: candidatos encontrados parecem homônimos ou sem confirmação suficiente.
 - Júlio das Onças: candidato `@juliodasoncas`, mas sem vínculo público claro com Júlio Cesar Nunes Rondão.
-- Miguel dos Santos: apenas homônimos sem relação confiável com o artista/ceramista.
+- Miguel dos Santos: apenas homônimos sem relação confiável com o artista/ceramista; representação por galeria não foi tratada como Instagram do artista.
 - FRS / Francisco Rosa dos Santos: fontes de obra localizadas não apontam Instagram oficial.
 - POS: identidade autoral ainda não confirmada.
-- Nuca de Tracunhaém: não foi localizado perfil institucional/familiar confiável.
 - Mirtes Rufino: perfis encontrados não comprovam vínculo com a artista.
 - Adelaide e Tê Cavalcanti: há possível candidato para Adelaide, mas não há confirmação suficiente para a dupla/irmãs; Tê não teve perfil público confiável localizado.
+- Movimento Armorial: candidatos como `@arianosuassunamestre` tratam do legado de Ariano Suassuna, mas não foram considerados perfil oficial/institucional do Movimento Armorial para esta página temática.
+
+## Revisão complementar — 05/07/2026
+
+Perfis que permaneciam sem Instagram no site antes desta revisão: `adelaide-te-cavalcanti`, `benedito`, `diomar`, `francisco-rosa-dos-santos-frs`, `julio-das-oncas`, `miguel-dos-santos`, `mirtes-rufino`, `movimento-armorial`, `nuca-de-tracunhaem`, `pos` e `rosalvo`.
+
+Resultado editorial: somente **Nuca de Tracunhaém** teve perfil público familiar/legado suficientemente confiável para publicação. Os demais permanecem sem link de Instagram por falta de confirmação pública adequada ou por risco de homônimo.
 
 ## Próximos passos recomendados
 
