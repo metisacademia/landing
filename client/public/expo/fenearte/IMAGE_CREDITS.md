@@ -89,6 +89,13 @@ Imagens incorporadas para enriquecer o mini-site da exposição. Antes da public
 - Crédito: Blog Diomar das Veias — “Minhas veias”, “Outras veias” e “Trabalhando no Centro de Cultura Popular Mestre Noza”; Galeria Pontes — “Diomar Freitas Dantas”. Revisar direitos antes de publicação ampla.
 - Fontes: http://diomardasveias.blogspot.com/2010/09/minhas-veias.html ; http://diomardasveias.blogspot.com/2010/09/outras-veias.html ; http://diomardasveias.blogspot.com/2010/09/trabalhando-no-centro-de-cultura.html ; https://www.galeriapontes.com.br/project/diomar-freitas-dantas/
 
+## Corbiniano Lins
+- Arquivo local: `assets/images/corbiniano-lins.jpg`
+- Galeria: `assets/images/galeria/corbiniano-lins-01.jpg` a `assets/images/galeria/corbiniano-lins-03.jpg`
+- Legenda: Corbiniano Lins em registro televisivo; referências visuais de escultura em alumínio, painel público de azulejos e figura feminina alongada.
+- Crédito: G1 Pernambuco / Reprodução TV Globo; Enciclopédia Itaú Cultural; Recife Arte Pública; Rodrigues Galeria de Artes. Revisar direitos antes de publicação ampla.
+- Fontes: https://g1.globo.com/pe/pernambuco/noticia/artista-plastico-corbiniano-lins-morre-aos-94-anos-no-recife.ghtml ; https://enciclopedia.itaucultural.org.br/pessoas/2168-corbiniano-lins ; http://www.recifeartepublica.com.br/obras/obra/Revolues-Pernambucanas-1817-1824-1948-1967/30 ; https://rodriguesgaleria.com.br/categoria/artistas/corbiniano/
+
 ## Movimento Armorial
 - Arquivos locais principais: `assets/images/movimento-armorial-ariano.jpg` (perfil/card) e `assets/images/movimento-armorial.jpg` (Onça Caetana preservada como referência antiga).
 - Galeria: `assets/images/galeria/movimento-armorial-01.jpg` a `assets/images/galeria/movimento-armorial-07.jpg`

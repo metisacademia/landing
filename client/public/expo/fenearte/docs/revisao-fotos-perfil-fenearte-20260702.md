@@ -3,6 +3,7 @@
 Revisão feita para separar retratos/fotos dos artesãos da galeria de peças. A foto principal de cada perfil deve mostrar o artista/artesão; a galeria deve ficar reservada a obras, peças e referências de estilo.
 
 ## Fotos principais atualizadas
+- **corbiniano-lins** — Corbiniano Lins em registro televisivo sobre sua trajetória artística. Crédito/fonte: G1 Pernambuco / Reprodução TV Globo — matéria sobre Corbiniano Lins, 2018. https://g1.globo.com/pe/pernambuco/noticia/artista-plastico-corbiniano-lins-morre-aos-94-anos-no-recife.ghtml
 - **fido** — Registro público associado ao perfil @mestrefida, usado com identificação provável Fido/Fida. Crédito/fonte: Instagram @mestrefida — publicação pública; crédito ao perfil de origem. https://www.instagram.com/p/DO1IpgYDhtC/
 - **francisco-rosa-dos-santos-frs** — Francisco Rosa dos Santos em retrato do acervo Arte do Brasil. Crédito/fonte: Arte do Brasil — Laurentino Rosa e Francisco Rosa dos Santos. http://www.artedobrasil.com.br/laurentino_rosa.html
 - **gilvan-samico** — Gilvan Samico em entrevista televisiva sobre sua obra. Crédito/fonte: Diário de Pernambuco — “Reveja entrevista com o artista plástico Samico” (YouTube). https://www.youtube.com/watch?v=Ftm0BB-Xxw0
