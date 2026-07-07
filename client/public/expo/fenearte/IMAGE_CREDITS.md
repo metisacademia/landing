@@ -97,6 +97,12 @@ Imagens incorporadas para enriquecer o mini-site da exposição. Antes da public
 - Crédito: G1 Pernambuco / Reprodução TV Globo; Enciclopédia Itaú Cultural; Recife Arte Pública; Rodrigues Galeria de Artes; Instagram @corbinianolins. Revisar direitos antes de publicação ampla.
 - Fontes: https://g1.globo.com/pe/pernambuco/noticia/artista-plastico-corbiniano-lins-morre-aos-94-anos-no-recife.ghtml ; https://enciclopedia.itaucultural.org.br/pessoas/2168-corbiniano-lins ; http://www.recifeartepublica.com.br/obras/obra/Revolues-Pernambucanas-1817-1824-1948-1967/30 ; https://rodriguesgaleria.com.br/categoria/artistas/corbiniano/ ; https://www.instagram.com/corbinianolins/ ; https://www.instagram.com/corbinianolins/p/DaEfFcpiRFI/ ; https://www.instagram.com/corbinianolins/p/DZ7ZKIFlgSX/
 
+## Paulo Orlando da Silva (P.O.S.)
+- Galeria: `assets/images/galeria/pos-paulo-orlando-01.jpg`
+- Legenda: Talha em madeira de Paulo Orlando da Silva (P.O.S.) com figuras humanas, ramagens e pássaros.
+- Crédito: Galeria Karandash / Instagram @galeriakarandash — publicação pública de 05/08/2024. Revisar direitos antes de publicação ampla.
+- Fonte: https://www.instagram.com/p/C-U-MCUpkJA/
+
 ## Movimento Armorial
 - Arquivos locais principais: `assets/images/movimento-armorial-ariano.jpg` (perfil/card) e `assets/images/movimento-armorial.jpg` (Onça Caetana preservada como referência antiga).
 - Galeria: `assets/images/galeria/movimento-armorial-01.jpg` a `assets/images/galeria/movimento-armorial-07.jpg`

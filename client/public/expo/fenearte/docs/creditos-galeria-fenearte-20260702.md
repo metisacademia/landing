@@ -197,3 +197,7 @@ Imagens públicas reunidas em 02/07/2026 para ajudar o visitante a reconhecer es
 - Conjunto de figuras em madeira — Instagram @mestre_cabral — publicação pública; crédito ao perfil de origem. — https://www.instagram.com/p/DTTyd_MlKh2/
 - Figura em madeira policromada — Instagram @mestre_cabral — publicação pública; crédito ao perfil de origem. — https://www.instagram.com/p/DTTyXwDAWdP/
 - Relevo em madeira — Instagram @mestre_cabral — publicação pública; crédito ao perfil de origem. — https://www.instagram.com/p/DRQvqzkjJLF/
+
+
+## Paulo Orlando da Silva (P.O.S.)
+- Talha em madeira — Galeria Karandash / Instagram @galeriakarandash — https://www.instagram.com/p/C-U-MCUpkJA/

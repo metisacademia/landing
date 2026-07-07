@@ -58,3 +58,7 @@ Resultado editorial: somente **Nuca de Tracunhaém** teve perfil público famili
 1. Solicitar autorização/press kit ou fotos de peça à família/ateliê quando houver perfil confirmado.
 2. Substituir placeholders por fotos locais/licenciadas no campo `galeria` do JSON.
 3. Se a curadoria aceitar embeds oficiais do Instagram, escolher posts específicos de peças e inserir como links/embeds, sem baixar imagens.
+
+
+## Atualização POS — 07/07/2026
+- POS / Paulo Orlando da Silva (P.O.S.): não foi localizado Instagram oficial do artista; a identificação e a referência visual foram obtidas em publicação pública da Galeria Karandash: https://www.instagram.com/p/C-U-MCUpkJA/

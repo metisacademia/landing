@@ -41,3 +41,7 @@ Revisão feita para separar retratos/fotos dos artesãos da galeria de peças. A
 - **mestre-cabral** — Galeria: removidas 3 imagem(ns) com pessoa/processo; mantidas peças/referências de obra.
 
 - **mestre-cabral** — QA visual adicional: removida mais 1 imagem da galeria com o mestre como foco; mantidas somente peças/referências de obra.
+
+
+## Atualização POS — 07/07/2026
+- **pos / Paulo Orlando da Silva (P.O.S.)** — artista identificado; retrato público confiável não localizado nesta revisão. A página usa placeholder de retrato e inclui referência visual de obra na galeria, creditada à Galeria Karandash.

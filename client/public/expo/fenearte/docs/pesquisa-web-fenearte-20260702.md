@@ -249,3 +249,17 @@ Data: 02/07/2026
 
 1. Conferir visualmente a peça atribuída a **Fido**: se for Homem Cata-Vento/entalhe em madeira, manter identificação provável como Mestre Fida; se não, voltar para “autoria em pesquisa”.
 2. Confirmar direitos de uso das imagens antes de impressão ampla ou publicação comercial.
+
+
+## Atualização posterior — POS identificado
+
+### Paulo Orlando da Silva (P.O.S.) — atualização 07/07/2026
+- Slug: `pos`
+- Local: Engenho Sete Riachos/Sete Ranchos (PE); atuação em Recife e Olinda.
+- Período: nascido em 1932; falecido em Pernambuco.
+- Técnica: talha e entalhe em madeira de demolição.
+- Nota curatorial: a identificação POS/P.O.S. foi confirmada a partir de publicação da Galeria Karandash e cruzada com o verbete “Paulo” em *O Reinado da Lua*, que informa a assinatura P.O.S. como Paulo Orlando da Silva.
+- Fontes principais:
+  - Galeria Karandash — publicação Instagram de 05/08/2024: https://www.instagram.com/p/C-U-MCUpkJA/
+  - *O Reinado da Lua: escultores populares do Nordeste*, 4ª ed., Recife: Caleidoscópio/Fundarpe, 2010, verbete “Paulo”.
+  - Centro Nacional de Folclore e Cultura Popular — “Artesanato em madeira: Olinda, PE”, entrevista de 30/06/1992.
