@@ -43,14 +43,13 @@ Importante: esta pesquisa **não autoriza republicar imagens do Instagram**. Par
 - Júlio das Onças: candidato `@juliodasoncas`, mas sem vínculo público claro com Júlio Cesar Nunes Rondão.
 - Miguel dos Santos: apenas homônimos sem relação confiável com o artista/ceramista; representação por galeria não foi tratada como Instagram do artista.
 - FRS / Francisco Rosa dos Santos: fontes de obra localizadas não apontam Instagram oficial.
-- POS: identidade autoral ainda não confirmada.
 - Mirtes Rufino: perfis encontrados não comprovam vínculo com a artista.
 - Adelaide e Tê Cavalcanti: há possível candidato para Adelaide, mas não há confirmação suficiente para a dupla/irmãs; Tê não teve perfil público confiável localizado.
 - Movimento Armorial: candidatos como `@arianosuassunamestre` tratam do legado de Ariano Suassuna, mas não foram considerados perfil oficial/institucional do Movimento Armorial para esta página temática.
 
 ## Revisão complementar — 05/07/2026
 
-Perfis que permaneciam sem Instagram no site antes desta revisão: `adelaide-te-cavalcanti`, `benedito`, `diomar`, `francisco-rosa-dos-santos-frs`, `julio-das-oncas`, `miguel-dos-santos`, `mirtes-rufino`, `movimento-armorial`, `nuca-de-tracunhaem`, `pos` e `rosalvo`.
+Perfis que permaneciam sem Instagram no site antes desta revisão: `adelaide-te-cavalcanti`, `benedito`, `diomar`, `francisco-rosa-dos-santos-frs`, `julio-das-oncas`, `miguel-dos-santos`, `mirtes-rufino`, `movimento-armorial`, `nuca-de-tracunhaem` e `rosalvo`.
 
 Resultado editorial: somente **Nuca de Tracunhaém** teve perfil público familiar/legado suficientemente confiável para publicação. Os demais permanecem sem link de Instagram por falta de confirmação pública adequada ou por risco de homônimo.
 

@@ -101,8 +101,6 @@ Imagens públicas reunidas em 02/07/2026 para ajudar o visitante a reconhecer es
 - Homem Catavento — detalhe lateral — Guariroba — Homem Catavento de Francisco Rosa dos Santos — https://guarirobaloja.com.br/products/homem-catavento-verde-e-branco-francisco-rosa-dos-santos
 - Sinaleiro do vento em madeira — Arte do Brasil — acervo online de arte popular brasileira — http://www.artedobrasil.com.br/laurentino_rosa.html
 
-## POS
-- Sem imagem pública suficientemente confiável para povoar a galeria neste momento; manter identificação/curadoria antes de usar imagem genérica.
 
 ## Fido — provável Mestre Fida
 - Homem Catavento — Mestre Fida — TheFOB — Homem Catavento / Mestre Fida — https://www.thefob.com.br/homem-catavento/p

@@ -6,7 +6,6 @@ Data: 02/07/2026
 
 - Pesquisa pública aprofundada feita para os mestres/artesãos solicitados.
 - Informações incorporadas ao `data/artesaos.json` quando havia fonte pública confiável.
-- **POS** permanece sem identificação confiável na internet; manter como assinatura/iniciais em pesquisa.
 - **Fido** foi enriquecido como identificação provável de **Mestre Fida / Valfrido de Oliveira Cezar**, mas requer confirmação visual da peça antes de fechar a autoria.
 - Correções importantes: Nuca = **Manoel Borges da Silva**; Irinéia = nascimento oficial **07/01/1949**; Antônio Nunes/Toinho faleceu em 2020; Mirtes Rufino = paraense radicada em Porto Velho; Cabral = **Everaldo Maciel Cabral**; Nené = **Maria das Neves Cavalcanti Moreira**, Alagoa Nova/PB.
 
@@ -63,14 +62,6 @@ Data: 02/07/2026
   - Identificação informada pela equipe/etiqueta da exposição Métis
   - Referência de acervo da equipe — OCR e conferência visual
 
-### POS
-- Slug: `pos`
-- Local: Procedência a confirmar
-- Período: Dados biográficos em pesquisa
-- Técnica: Técnica/material a confirmar pela peça exposta
-- Nota curatorial: Pesquisa web ampla por “POS”, “P.O.S.” e variações associadas a arte popular, artesanato, Fenearte, barro, madeira, cerâmica e acervos públicos não localizou identificação confiável. Manter como assinatura/iniciais até haver foto da peça, etiqueta original, catálogo ou procedência.
-- Fontes principais:
-  - Identificação informada pela equipe/etiqueta da exposição Métis
   - Pesquisa web Métis — julho de 2026: Consultas a buscadores, Artesol/Rede Artesol, Museu do Pontal, Enciclopédia Itaú Cultural, Mapa Cultural PE, Cultura PE, Fenearte e bases públicas não localizaram identificação confiável.
   - Enciclopédia Itaú Cultural — busca de verbetes: https://enciclopedia.itaucultural.org.br/busca
   - Museu do Pontal — acervo e pesquisa em arte popular brasileira: https://museudopontal.org.br/acervo/
@@ -257,5 +248,4 @@ Data: 02/07/2026
 ## Pendências
 
 1. Conferir visualmente a peça atribuída a **Fido**: se for Homem Cata-Vento/entalhe em madeira, manter identificação provável como Mestre Fida; se não, voltar para “autoria em pesquisa”.
-2. Obter foto, etiqueta ou procedência da peça **POS**; a internet não permitiu fechar nome, local ou técnica.
-3. Confirmar direitos de uso das imagens antes de impressão ampla ou publicação comercial.
+2. Confirmar direitos de uso das imagens antes de impressão ampla ou publicação comercial.

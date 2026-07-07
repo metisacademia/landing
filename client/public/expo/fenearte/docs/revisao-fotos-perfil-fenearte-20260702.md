@@ -23,7 +23,6 @@ Revisão feita para separar retratos/fotos dos artesãos da galeria de peças. A
 
 ## Perfis ainda sem retrato público confiável
 - **benedito** — Foto direta de Benedito Santeiro não localizada; removida imagem relacionada a Mestre Rosalvo para evitar atribuição incorreta.
-- **pos** — Identificação ainda não confirmada; sem foto pública confiável.
 - **adelaide-te-cavalcanti** — Sem retrato público confiável de Adelaide e Tê Cavalcanti localizado nesta revisão.
 
 ## Limpeza de galerias
