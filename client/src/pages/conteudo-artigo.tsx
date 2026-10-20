@@ -4,6 +4,7 @@ import Footer from "@/components/footer";
 import NotFound from "@/pages/not-found";
 import { BreadcrumbTrail, CtaBand, FaqList, MedicalNotice, RelatedLinks, sans, serif } from "@/components/page-shell";
 import { formatLongDate, getArticle, relatedOf } from "@/content/articles";
+import { formatScheduledBadge } from "@/content/schedule";
 
 export default function ConteudoArtigoPage() {
   const params = useParams<{ slug: string }>();
@@ -26,8 +27,17 @@ export default function ConteudoArtigoPage() {
             Rascunho de exemplo. Este texto não entra no site publicado.
           </p>
         ) : null}
+        {article.scheduled ? (
+          <p
+            className="bg-[#cda465] px-6 pb-3 pt-24 text-center text-sm font-semibold leading-relaxed text-[#173b5a] md:pt-28"
+            style={sans}
+            data-testid="artigo-agendado"
+          >
+            {formatScheduledBadge(article.date)}
+          </p>
+        ) : null}
         <header
-          className={`border-b-4 border-[#cda465] bg-[#173b5a] text-[#f8f1e7] ${article.draft ? "pb-14 pt-8 md:pb-20" : "pb-14 pt-28 md:pb-20 md:pt-36"}`}
+          className={`border-b-4 border-[#cda465] bg-[#173b5a] text-[#f8f1e7] ${article.draft || article.scheduled ? "pb-14 pt-8 md:pb-20" : "pb-14 pt-28 md:pb-20 md:pt-36"}`}
         >
           <div className="container-elegant max-w-3xl min-w-0">
             <BreadcrumbTrail />

@@ -1,4 +1,5 @@
 import { includeContentDrafts } from "@/content/flags";
+import { isFuturePublishDate } from "@/content/schedule";
 import { splitFrontmatter, type YamlValue } from "@/content/frontmatter";
 import { renderArticleMarkdown, type TocItem } from "@/content/markdown";
 import { getPerson, type Person } from "@/content/people";
@@ -36,6 +37,8 @@ export type Article = {
   category?: string;
   tags: string[];
   draft: boolean;
+  /** Data futura no calendário de Recife. No preview aparece com noindex. */
+  scheduled: boolean;
   faq: ArticleFaq[];
   related: ArticleRelated[];
   html: string;
@@ -192,6 +195,7 @@ function parseArticle(path: string, raw: string): Article | null {
     fail(file, "title e description não podem ter aspas ou < >");
   }
   if (!DATE.test(date) || !DATE.test(updated)) fail(file, "date e updated usam AAAA-MM-DD");
+  const scheduled = !draft && isFuturePublishDate(date);
   if (summary.length > 300) fail(file, `summary tem ${summary.length} caracteres; o máximo é 300`);
   if (cover && !cover.startsWith("/")) fail(file, "cover precisa ser um caminho do site, começando com /");
   if (ogImage && !ogImage.startsWith("/")) fail(file, "ogImage precisa ser um caminho do site, começando com /");
@@ -207,6 +211,8 @@ function parseArticle(path: string, raw: string): Article | null {
   if (reviewerId && !reviewer) {
     fail(file, `reviewer "${reviewerId}" não está em client/src/content/people.ts`);
   }
+
+  if (scheduled && !includeContentDrafts) return null;
 
   const rendered = renderArticleMarkdown(body);
   return {
@@ -230,6 +236,7 @@ function parseArticle(path: string, raw: string): Article | null {
       return tag;
     }),
     draft,
+    scheduled,
     faq: asFaq(file, data.faq),
     related: asRelated(file, data.related),
     html: rendered.html,
@@ -252,7 +259,7 @@ export function listVisibleArticles(): Article[] {
 }
 
 export function listPublishedArticles(): Article[] {
-  return articles.filter((article) => !article.draft);
+  return articles.filter((article) => !article.draft && !article.scheduled);
 }
 
 export function hasPublishedArticles(): boolean {

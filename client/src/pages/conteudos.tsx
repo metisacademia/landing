@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import PageShell, { CtaBand, sans, serif } from "@/components/page-shell";
 import { formatLongDate, listVisibleArticles, tagLabel, type Article } from "@/content/articles";
+import { formatScheduledBadge } from "@/content/schedule";
 
 export default function ConteudosPage() {
   const articles = listVisibleArticles();
@@ -15,6 +16,7 @@ export default function ConteudosPage() {
   const [tag, setTag] = useState<string | null>(null);
   const visible = tag ? articles.filter((article) => article.tags.includes(tag)) : articles;
   const showingDrafts = articles.some((article) => article.draft);
+  const showingScheduled = articles.some((article) => article.scheduled);
 
   return (
     <PageShell
@@ -31,6 +33,15 @@ export default function ConteudosPage() {
               data-testid="conteudos-draft-note"
             >
               Os cartões marcados como rascunho só aparecem neste preview. No site publicado eles ficam de fora, e o menu Conteúdos só entra quando houver um artigo aprovado.
+            </p>
+          ) : null}
+          {showingScheduled ? (
+            <p
+              className="mb-8 rounded-2xl border border-[#cda465] bg-white px-5 py-4 text-sm leading-relaxed text-[#173b5a]"
+              style={sans}
+              data-testid="conteudos-agendado-note"
+            >
+              Os cartões marcados como agendados só aparecem neste preview. No site publicado eles entram na data indicada.
             </p>
           ) : null}
 
@@ -127,6 +138,11 @@ function ArticleCard({ article }: { article: Article }) {
           {article.draft ? (
             <span className="rounded-full bg-[#cda465] px-3 py-1 text-xs font-semibold text-[#173b5a]">
               Rascunho
+            </span>
+          ) : null}
+          {article.scheduled ? (
+            <span className="rounded-full bg-[#cda465] px-3 py-1 text-xs font-semibold text-[#173b5a]" data-testid={`agendado-${article.slug}`}>
+              {formatScheduledBadge(article.date)}
             </span>
           ) : null}
           {hasCover && article.category ? <span>{article.category}</span> : null}

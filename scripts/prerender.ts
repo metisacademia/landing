@@ -2,10 +2,13 @@ import fs from "node:fs";
 import path from "node:path";
 import { createServer } from "vite";
 import { includeContentDrafts } from "./content-drafts";
+import { warnArticleSchedule } from "./warn-article-schedule";
 
 const projectRoot = path.resolve(import.meta.dirname, "..");
 const distDir = path.join(projectRoot, "dist/public");
 const draftsInBuild = includeContentDrafts("production");
+
+warnArticleSchedule(path.join(projectRoot, "client/content/artigos"));
 
 const vite = await createServer({
   configFile: path.join(projectRoot, "vite.config.ts"),
