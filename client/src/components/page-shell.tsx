@@ -17,37 +17,43 @@ type PageShellProps = {
   children: ReactNode;
 };
 
-export default function PageShell({ eyebrow, title, lede, children }: PageShellProps) {
+export function BreadcrumbTrail() {
   const [location] = useLocation();
   const seo = getSeo(location);
 
+  return (
+    <nav aria-label="Trilha">
+      <ol className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-sm text-white/70" style={sans}>
+        {seo.breadcrumbs.map((crumb, index) => {
+          const last = index === seo.breadcrumbs.length - 1;
+          return (
+            <li key={`${crumb.path}-${index}`} className="flex min-w-0 items-center gap-2">
+              {index > 0 ? <span aria-hidden="true">/</span> : null}
+              {last ? (
+                <span className="min-w-0 break-words text-white" aria-current="page">
+                  {crumb.name}
+                </span>
+              ) : (
+                <Link href={crumb.path} className="hover:text-[#c9a961] transition-colors">
+                  {crumb.name}
+                </Link>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}
+
+export default function PageShell({ eyebrow, title, lede, children }: PageShellProps) {
   return (
     <div className="min-h-screen bg-[#faf8f5] text-foreground">
       <Navigation />
       <main>
         <header className="bg-[#0f2940] text-white pt-28 pb-14 md:pt-36 md:pb-20">
           <div className="container-elegant max-w-4xl">
-            <nav aria-label="Trilha">
-              <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-white/70" style={sans}>
-                {seo.breadcrumbs.map((crumb, index) => {
-                  const last = index === seo.breadcrumbs.length - 1;
-                  return (
-                    <li key={crumb.path} className="flex items-center gap-2">
-                      {index > 0 ? <span aria-hidden="true">/</span> : null}
-                      {last ? (
-                        <span className="text-white" aria-current="page">
-                          {crumb.name}
-                        </span>
-                      ) : (
-                        <Link href={crumb.path} className="hover:text-[#c9a961] transition-colors">
-                          {crumb.name}
-                        </Link>
-                      )}
-                    </li>
-                  );
-                })}
-              </ol>
-            </nav>
+            <BreadcrumbTrail />
             <p className="mt-6 text-sm font-medium uppercase tracking-widest text-[#c9a961]" style={sans}>
               {eyebrow}
             </p>
@@ -147,16 +153,18 @@ export function CtaBand({
   position,
   message = TRIAL_MESSAGE,
   label = "Chamar no WhatsApp",
+  buttonClassName = "",
 }: {
   title: string;
   text: string;
   position: string;
   message?: string;
   label?: string;
+  buttonClassName?: string;
 }) {
   return (
     <section className="section-padding-sm bg-[#0f2940]">
-      <div className="container-elegant max-w-3xl text-center">
+      <div className="container-elegant max-w-3xl min-w-0 text-center">
         <h2 className="text-3xl md:text-4xl font-medium text-white" style={serif}>
           {title}
         </h2>
@@ -166,7 +174,7 @@ export function CtaBand({
         <WhatsAppAnchor
           position={position}
           message={message}
-          className="btn-premium mt-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c9a961]"
+          className={`btn-premium mt-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c9a961] ${buttonClassName}`}
         >
           {label}
         </WhatsAppAnchor>

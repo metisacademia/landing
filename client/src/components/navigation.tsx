@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WhatsAppAnchor } from "@/components/whatsapp-anchor";
+import { withConteudosLink } from "@/content/articles";
 import { navLinks, TRIAL_MESSAGE } from "@/lib/site";
 
 declare global {
@@ -24,6 +25,8 @@ export default function Navigation() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const links = withConteudosLink(navLinks);
 
   return (
     <motion.nav
@@ -67,7 +70,7 @@ export default function Navigation() {
           </motion.div>
 
           <div className="hidden lg:flex items-center gap-10">
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -178,7 +181,7 @@ export default function Navigation() {
 
                 <div className="flex-1 overflow-y-auto py-6">
                   <div className="flex flex-col space-y-1 px-4">
-                    {navLinks.map((link, index) => (
+                    {links.map((link, index) => (
                       <motion.div
                         key={link.href}
                         initial={{ opacity: 0, x: 20 }}

@@ -1,12 +1,17 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createServer } from "vite";
+import { includeContentDrafts } from "./content-drafts";
 
 const projectRoot = path.resolve(import.meta.dirname, "..");
 const distDir = path.join(projectRoot, "dist/public");
+const draftsInBuild = includeContentDrafts("production");
 
 const vite = await createServer({
   configFile: path.join(projectRoot, "vite.config.ts"),
+  // O mesmo mode do `vite build`. Sem isto o SSR do prerender fica em
+  // development e os rascunhos entrariam no HTML de produção.
+  mode: "production",
   server: { middlewareMode: true },
   appType: "custom",
 });
@@ -29,6 +34,8 @@ try {
     renderSpaHead: () => string;
     indexablePages: () => Array<{ path: string; canonical: string }>;
     getSeo: (path: string) => unknown;
+    publishedArticleCount: () => number;
+    publishedArticleLinks: () => Array<{ title: string; canonical: string; description: string }>;
   };
 
   const templatePath = path.join(distDir, "index.html");
@@ -98,8 +105,80 @@ try {
       throw new Error(`sitemap sem ${page.canonical}`);
     }
   }
+  if (sitemap.includes("exemplo-rascunho")) {
+    throw new Error("sitemap não pode listar o rascunho de exemplo");
+  }
+  if (seo.publishedArticleCount() === 0 && sitemap.includes("/conteudos")) {
+    throw new Error("sitemap listou /conteudos sem artigo publicado");
+  }
 
-  console.log(`sitemap com ${seo.indexablePages().length} URLs`);
+  const llmsPath = path.join(distDir, "llms.txt");
+  const publishedLinks = seo.publishedArticleLinks();
+  if (publishedLinks.length > 0) {
+    const current = fs.readFileSync(llmsPath, "utf8").trimEnd();
+    const section = [
+      "",
+      "## Conteúdos",
+      "",
+      ...publishedLinks.map((link) => `- [${link.title}](${link.canonical}): ${link.description}`),
+      "",
+    ].join("\n");
+    fs.writeFileSync(llmsPath, `${current}\n${section}`);
+  }
+  const llms = fs.readFileSync(llmsPath, "utf8");
+  if (llms.includes("exemplo-rascunho")) {
+    throw new Error("llms.txt não pode listar o rascunho de exemplo");
+  }
+
+  const homeHtml = fs.readFileSync(path.join(distDir, "index.html"), "utf8");
+  if (seo.publishedArticleCount() === 0 && homeHtml.includes(">Conteúdos<")) {
+    throw new Error("a home mostra o menu Conteúdos sem artigo publicado");
+  }
+
+  const draftFile = path.join(distDir, "conteudos/exemplo-rascunho/index.html");
+  const conteudosIndex = path.join(distDir, "conteudos/index.html");
+  if (draftsInBuild) {
+    if (!fs.existsSync(draftFile) || !fs.existsSync(conteudosIndex)) {
+      throw new Error("o preview deveria pré-renderizar /conteudos e o rascunho de exemplo");
+    }
+    const draftHtml = fs.readFileSync(draftFile, "utf8");
+    for (const needle of [
+      "Resposta rápida",
+      "Revisado por",
+      "Atualizado em",
+      "BlogPosting",
+      "FAQPage",
+      "BreadcrumbList",
+      "noindex, nofollow",
+      "wa.me/5581992726495",
+      "Agendar aula experimental gratuita",
+    ]) {
+      if (!draftHtml.includes(needle)) throw new Error(`rascunho sem ${needle}`);
+    }
+    const assetsDir = path.join(distDir, "assets");
+    const bundleHasCta = fs.readdirSync(assetsDir).some((file) => {
+      if (!file.endsWith(".js")) return false;
+      return fs.readFileSync(path.join(assetsDir, file), "utf8").includes("cta_artigo_");
+    });
+    if (!bundleHasCta) throw new Error("o bundle do preview não tem o evento do CTA do artigo");
+  } else if (fs.existsSync(draftFile) || fs.existsSync(conteudosIndex)) {
+    throw new Error("build de produção gerou /conteudos só com rascunho");
+  }
+
+  if (!draftsInBuild) {
+    const assetsDir = path.join(distDir, "assets");
+    for (const file of fs.readdirSync(assetsDir)) {
+      if (!file.endsWith(".js")) continue;
+      const js = fs.readFileSync(path.join(assetsDir, file), "utf8");
+      if (js.includes("Para que serve este modelo")) {
+        throw new Error(`${file} ainda contém o texto do rascunho de exemplo`);
+      }
+    }
+  }
+
+  console.log(
+    `sitemap com ${seo.indexablePages().length} URLs; rascunhos ${draftsInBuild ? "incluídos no preview" : "fora da produção"}; artigos publicados: ${seo.publishedArticleCount()}`,
+  );
 } finally {
   await vite.close();
 }

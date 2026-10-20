@@ -424,3 +424,81 @@
 :focus:not(:focus-visible) {
   outline: none;
 }
+
+.conteudo-byline,
+.conteudo-resumo,
+.conteudo-body {
+  font-family: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", Arial, sans-serif;
+}
+
+.conteudo-body {
+  color: #173b5a;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.conteudo-body > * + * {
+  margin-top: 1.1rem;
+}
+
+.conteudo-body h2,
+.conteudo-body h3 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 500;
+  line-height: 1.25;
+  color: #173b5a;
+  scroll-margin-top: 7rem;
+}
+
+.conteudo-body h2 {
+  margin-top: 2.25rem;
+  font-size: 1.75rem;
+}
+
+.conteudo-body h3 {
+  margin-top: 1.75rem;
+  font-size: 1.35rem;
+}
+
+.conteudo-body a {
+  color: #173b5a;
+  text-decoration: underline;
+  text-decoration-color: #cda465;
+  text-underline-offset: 0.18em;
+}
+
+.conteudo-body ul,
+.conteudo-body ol {
+  padding-left: 1.25rem;
+}
+
+.conteudo-body ul {
+  list-style: disc;
+}
+
+.conteudo-body ol {
+  list-style: decimal;
+}
+
+.conteudo-body blockquote {
+  border-left: 3px solid #cda465;
+  padding-left: 1rem;
+  color: #173b5a;
+}
+
+.conteudo-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 1rem;
+}
+
+.conteudo-body pre,
+.conteudo-table {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.conteudo-body code {
+  overflow-wrap: anywhere;
+}
