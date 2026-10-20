@@ -1,4 +1,11 @@
 import {
+  absoluteAssetUrl,
+  hasVisibleArticles,
+  listPublishedArticles,
+  listVisibleArticles,
+  type Article,
+} from "@/content/articles";
+import {
   ADDRESS,
   BUSINESS_DESCRIPTION,
   EMAIL,
@@ -41,6 +48,13 @@ export type PageSeo = {
   preloadImage?: string;
   /** Trecho que precisa existir no HTML prerenderizado. */
   htmlCheck: string;
+  ogType?: "website" | "article";
+  ogImage?: string;
+  ogImageAlt?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
+  publishedTime?: string;
+  modifiedTime?: string;
 };
 
 const HOME_TITLE = "Métis Academia da Mente | Treino cognitivo em Recife (Graças)";
@@ -174,12 +188,15 @@ function courseNode(): Record<string, unknown> {
   };
 }
 
-function webPageNode(page: {
-  path: string;
-  title: string;
-  description: string;
-  canonical: string;
-}): Record<string, unknown> {
+function webPageNode(
+  page: {
+    path: string;
+    title: string;
+    description: string;
+    canonical: string;
+  },
+  image: string = OG_IMAGE,
+): Record<string, unknown> {
   return {
     "@type": "WebPage",
     "@id": `${page.canonical}#webpage`,
@@ -189,7 +206,7 @@ function webPageNode(page: {
     inLanguage: "pt-BR",
     isPartOf: { "@id": `${SITE_URL}/#website` },
     about: { "@id": `${SITE_URL}/#negocio` },
-    primaryImageOfPage: OG_IMAGE,
+    primaryImageOfPage: image,
   };
 }
 
@@ -241,6 +258,7 @@ type PageInput = {
   preloadImage?: string;
   htmlCheck: string;
   robots?: string;
+  image?: string;
 };
 
 function buildPage(input: PageInput): PageSeo {
@@ -254,12 +272,15 @@ function buildPage(input: PageInput): PageSeo {
   }
   if (input.path === "/como-funciona") nodes.push(courseNode());
   nodes.push(
-    webPageNode({
-      path: input.path,
-      title: input.title,
-      description: input.description,
-      canonical,
-    }),
+    webPageNode(
+      {
+        path: input.path,
+        title: input.title,
+        description: input.description,
+        canonical,
+      },
+      input.image ?? OG_IMAGE,
+    ),
   );
   if (input.breadcrumbs.length > 1) nodes.push(breadcrumbNode(input.breadcrumbs));
   if (input.faqs && input.faqs.length > 0) nodes.push(faqNode(input.faqs));
@@ -283,6 +304,117 @@ function buildPage(input: PageInput): PageSeo {
 }
 
 const homeCrumb: Crumb = { name: "Início", path: "/" };
+
+const CONTEUDOS_DESCRIPTION =
+  "Textos da Métis sobre memória, envelhecimento e treino cognitivo em Recife.";
+
+function contributorNode(person: Article["author"]): Record<string, unknown> {
+  switch (person.kind) {
+    case "organization":
+      return {
+        "@type": "Organization",
+        name: person.schemaName ?? person.name,
+        url: person.url ?? SITE_URL,
+      };
+    case "person":
+      return {
+        "@type": "Person",
+        name: person.name,
+        jobTitle: person.role,
+        ...(person.credential ? { description: person.credential } : {}),
+      };
+    default: {
+      const unknown: never = person.kind;
+      return unknown;
+    }
+  }
+}
+
+function articleSeo(article: Article): PageSeo {
+  const path = `/conteudos/${article.slug}`;
+  const indexable = !article.draft;
+  const coverImage = article.cover ? absoluteAssetUrl(article.cover) : undefined;
+  const shareImage = article.ogImage ? absoluteAssetUrl(article.ogImage) : coverImage;
+  const page = buildPage({
+    path,
+    title: `${article.title} | Métis`,
+    description: article.description,
+    indexable,
+    robots: indexable ? "index, follow" : "noindex, nofollow",
+    changefreq: "monthly",
+    priority: "0.6",
+    breadcrumbs: [
+      homeCrumb,
+      { name: "Conteúdos", path: "/conteudos" },
+      { name: article.title, path },
+    ],
+    faqs: article.faq,
+    image: coverImage,
+    extraNodes: [
+      organizationNode(),
+      {
+        "@type": "BlogPosting",
+        "@id": `${canonicalUrl(path)}#artigo`,
+        headline: article.title,
+        description: article.description,
+        image: coverImage ?? OG_IMAGE,
+        datePublished: article.date,
+        dateModified: article.updated,
+        inLanguage: "pt-BR",
+        author: contributorNode(article.author),
+        ...(article.reviewer ? { reviewedBy: contributorNode(article.reviewer) } : {}),
+        publisher: { "@id": `${SITE_URL}/#organizacao` },
+        mainEntityOfPage: canonicalUrl(path),
+        ...(article.category ? { articleSection: article.category } : {}),
+      },
+    ],
+    htmlCheck: article.title,
+  });
+  return {
+    ...page,
+    ogType: "article",
+    ogImage: shareImage,
+    ogImageAlt: article.ogImage ? article.title : article.coverAlt,
+    ogImageWidth: article.ogImage ? 1200 : article.coverWidth,
+    ogImageHeight: article.ogImage ? 630 : article.coverHeight,
+    publishedTime: article.date,
+    modifiedTime: article.updated,
+  };
+}
+
+function conteudosIndexSeo(): PageSeo {
+  const published = listPublishedArticles();
+  const indexable = published.length > 0;
+  return buildPage({
+    path: "/conteudos",
+    title: "Conteúdos | Métis Academia da Mente",
+    description: CONTEUDOS_DESCRIPTION,
+    indexable,
+    robots: indexable ? "index, follow" : "noindex, nofollow",
+    changefreq: "weekly",
+    priority: "0.7",
+    breadcrumbs: [homeCrumb, { name: "Conteúdos", path: "/conteudos" }],
+    extraNodes: indexable
+      ? [
+          {
+            "@type": "ItemList",
+            itemListElement: published.map((article, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              name: article.title,
+              url: canonicalUrl(`/conteudos/${article.slug}`),
+            })),
+          },
+        ]
+      : [],
+    htmlCheck: "Conteúdos",
+  });
+}
+
+function contentSeoPages(): PageSeo[] {
+  if (!hasVisibleArticles()) return [];
+  return [conteudosIndexSeo(), ...listVisibleArticles().map(articleSeo)];
+}
 
 const roomPages: PageSeo[] = roomOrder.map((slug) => {
   const room = rooms[slug];
@@ -393,6 +525,7 @@ const pages: PageSeo[] = [
     faqs: [homeFaqs[1], extraFaqs[2], extraFaqs[3]],
     htmlCheck: "como indicar a Métis",
   }),
+  ...contentSeoPages(),
 ];
 
 const byPath = new Map<string, PageSeo>(pages.map((page) => [page.path, page]));
@@ -447,6 +580,18 @@ export function indexablePages(): PageSeo[] {
   return pages.filter((page) => page.indexable);
 }
 
+export function publishedArticleCount(): number {
+  return listPublishedArticles().length;
+}
+
+export function publishedArticleLinks(): { title: string; canonical: string; description: string }[] {
+  return listPublishedArticles().map((article) => ({
+    title: article.title,
+    canonical: canonicalUrl(`/conteudos/${article.slug}`),
+    description: article.description,
+  }));
+}
+
 export function isRoomSlug(value: string): value is RoomSlug {
   return Object.prototype.hasOwnProperty.call(rooms, value);
 }
@@ -460,6 +605,9 @@ function escapeHtml(value: string): string {
 }
 
 export function renderHead(seo: PageSeo): string {
+  const image = seo.ogImage ?? OG_IMAGE;
+  const imageAlt = seo.ogImageAlt ?? "Logotipo da Métis Academia da Mente";
+  const ogType = seo.ogType ?? "website";
   const lines = [
     `<title>${escapeHtml(seo.title)}</title>`,
     `<meta name="description" content="${escapeHtml(seo.description)}" />`,
@@ -468,19 +616,36 @@ export function renderHead(seo: PageSeo): string {
     `<meta property="og:title" content="${escapeHtml(seo.title)}" />`,
     `<meta property="og:site_name" content="${escapeHtml(NAP_NAME)}" />`,
     `<meta property="og:description" content="${escapeHtml(seo.description)}" />`,
-    `<meta property="og:image" content="${OG_IMAGE}" />`,
-    `<meta property="og:image:secure_url" content="${OG_IMAGE}" />`,
-    `<meta property="og:image:width" content="1080" />`,
-    `<meta property="og:image:height" content="1080" />`,
-    `<meta property="og:image:alt" content="Logotipo da Métis Academia da Mente" />`,
+    `<meta property="og:image" content="${escapeHtml(image)}" />`,
+    `<meta property="og:image:secure_url" content="${escapeHtml(image)}" />`,
+  ];
+  if (seo.ogImageWidth && seo.ogImageHeight) {
+    lines.push(
+      `<meta property="og:image:width" content="${seo.ogImageWidth}" />`,
+      `<meta property="og:image:height" content="${seo.ogImageHeight}" />`,
+    );
+  } else if (!seo.ogImage) {
+    lines.push(
+      `<meta property="og:image:width" content="1080" />`,
+      `<meta property="og:image:height" content="1080" />`,
+    );
+  }
+  lines.push(
+    `<meta property="og:image:alt" content="${escapeHtml(imageAlt)}" />`,
     `<meta property="og:url" content="${escapeHtml(seo.canonical)}" />`,
-    `<meta property="og:type" content="website" />`,
+    `<meta property="og:type" content="${ogType}" />`,
     `<meta property="og:locale" content="pt_BR" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${escapeHtml(seo.title)}" />`,
     `<meta name="twitter:description" content="${escapeHtml(seo.description)}" />`,
-    `<meta name="twitter:image" content="${OG_IMAGE}" />`,
-  ];
+    `<meta name="twitter:image" content="${escapeHtml(image)}" />`,
+  );
+  if (ogType === "article" && seo.publishedTime) {
+    lines.push(`<meta property="article:published_time" content="${escapeHtml(seo.publishedTime)}" />`);
+  }
+  if (ogType === "article" && seo.modifiedTime) {
+    lines.push(`<meta property="article:modified_time" content="${escapeHtml(seo.modifiedTime)}" />`);
+  }
   if (seo.preloadImage) {
     lines.push(`<link rel="preload" as="image" href="${escapeHtml(seo.preloadImage)}" />`);
   }

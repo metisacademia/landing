@@ -2,6 +2,7 @@ import { Instagram, Phone, Mail, MapPin, Heart } from "lucide-react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { WhatsAppAnchor } from "@/components/whatsapp-anchor";
+import { withConteudosLink } from "@/content/articles";
 import {
   ADDRESS_ONE_LINE,
   EMAIL,
@@ -88,7 +89,7 @@ export default function Footer() {
                   Início
                 </Link>
               </li>
-              {footerExplore.map((link) => (
+              {withConteudosLink(footerExplore).map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}

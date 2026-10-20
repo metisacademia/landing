@@ -15,6 +15,9 @@ import ContatoPage from "@/pages/contato";
 import PerguntasFrequentesPage from "@/pages/perguntas-frequentes";
 import TreinoCognitivoRecifePage from "@/pages/treino-cognitivo-recife";
 import ParaMedicosPage from "@/pages/para-medicos";
+import ConteudosPage from "@/pages/conteudos";
+import ConteudoArtigoPage from "@/pages/conteudo-artigo";
+import { hasVisibleArticles } from "@/content/articles";
 import AdminLogin from "@/pages/admin/login";
 import AdminDashboard from "@/pages/admin/dashboard";
 import Moderadores from "@/pages/admin/moderadores";
@@ -34,6 +37,8 @@ function AppRoutes() {
       <Route path="/perguntas-frequentes" component={PerguntasFrequentesPage} />
       <Route path="/treino-cognitivo-em-recife" component={TreinoCognitivoRecifePage} />
       <Route path="/para-medicos" component={ParaMedicosPage} />
+      {hasVisibleArticles() ? <Route path="/conteudos" component={ConteudosPage} /> : null}
+      {hasVisibleArticles() ? <Route path="/conteudos/:slug" component={ConteudoArtigoPage} /> : null}
       {/* Equipe: criar a rota só quando houver nome, CRM-PE, RQE, foto autorizada e bio confirmados pela própria pessoa. */}
       <Route path="/checkout" component={Checkout} />
       <Route path="/admin/login" component={AdminLogin} />
