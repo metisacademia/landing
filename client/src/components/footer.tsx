@@ -32,8 +32,8 @@ export default function Footer() {
   return (
     <footer className="bg-[#0f2940] text-white">
       <div className="container-elegant py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
-          <div className="lg:col-span-1">
+        <div className="grid min-w-0 gap-12 md:grid-cols-2 lg:grid-cols-4">
+          <div className="min-w-0 lg:col-span-1">
             <motion.div
               className="mb-6"
               initial={{ opacity: 0, y: 20 }}
@@ -75,7 +75,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div>
+          <div className="min-w-0">
             <h2
               className="font-medium text-lg mb-6"
               style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
@@ -102,7 +102,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="min-w-0">
             <h2
               className="font-medium text-lg mb-6"
               style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
@@ -124,7 +124,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="min-w-0">
             <h2
               className="font-medium text-lg mb-6"
               style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
@@ -137,42 +137,42 @@ export default function Footer() {
                 <a
                   href={`tel:${PHONE_TEL}`}
                   onClick={trackPhoneClick}
-                  className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+                  className="flex min-w-0 items-center gap-3 text-white/70 transition-colors hover:text-white"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-white/10">
                     <Phone className="h-4 w-4" />
                   </div>
-                  <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>{PHONE_DISPLAY}</span>
+                  <span className="min-w-0 break-words" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>{PHONE_DISPLAY}</span>
                 </a>
               </li>
               <li>
                 <WhatsAppAnchor
                   position="footer"
                   message={TRIAL_MESSAGE}
-                  className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+                  className="flex min-w-0 items-center gap-3 text-white/70 transition-colors hover:text-white"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-white/10">
                     <Phone className="h-4 w-4" />
                   </div>
-                  <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>WhatsApp {PHONE_DISPLAY}</span>
+                  <span className="min-w-0 break-words" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>WhatsApp {PHONE_DISPLAY}</span>
                 </WhatsAppAnchor>
               </li>
               <li data-testid="footer-email">
                 <a
                   href={`mailto:${EMAIL}`}
-                  className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
+                  className="flex min-w-0 items-start gap-3 text-white/70 transition-colors hover:text-white"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-white/10">
                     <Mail className="h-4 w-4" />
                   </div>
-                  <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>{EMAIL}</span>
+                  <span className="min-w-0 break-all" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>{EMAIL}</span>
                 </a>
               </li>
-              <li className="flex items-start gap-3 text-white/70" data-testid="footer-location">
-                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+              <li className="flex min-w-0 items-start gap-3 text-white/70" data-testid="footer-location">
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-white/10">
                   <MapPin className="h-4 w-4" />
                 </div>
-                <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>{ADDRESS_ONE_LINE}</span>
+                <span className="min-w-0 break-words" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>{ADDRESS_ONE_LINE}</span>
               </li>
             </ul>
           </div>

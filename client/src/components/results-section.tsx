@@ -85,8 +85,8 @@ export default function ResultsSection() {
   return (
     <section className="section-padding bg-white relative overflow-hidden">
       {/* Elemento decorativo */}
-      <div className="absolute top-1/2 left-0 w-72 h-72 bg-[#c9a961]/5 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2" />
-      <div className="absolute top-1/2 right-0 w-72 h-72 bg-[#0f2940]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="pointer-events-none absolute left-0 top-1/3 h-48 w-48 rounded-full bg-[#c9a961]/5 blur-3xl sm:h-64 sm:w-64" aria-hidden="true" />
+      <div className="pointer-events-none absolute bottom-1/3 right-0 h-48 w-48 rounded-full bg-[#0f2940]/5 blur-3xl sm:h-64 sm:w-64" aria-hidden="true" />
 
       <div className="container-elegant relative z-10">
         {/* Header */}

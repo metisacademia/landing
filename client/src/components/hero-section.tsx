@@ -213,11 +213,11 @@ export default function HeroSection() {
           {/* CTAs */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex w-full max-w-full flex-col gap-4 sm:flex-row"
           >
             <Button
               asChild
-              className="group relative px-8 py-6 rounded-xl text-base md:text-lg font-semibold transition-all duration-300 shadow-xl hover:shadow-2xl bg-gradient-to-r from-[#c9a961] to-[#b89a52] text-[#0f2940] border-0 hover:scale-[1.02] active:scale-[0.98]"
+              className="group relative h-auto w-full max-w-full whitespace-normal rounded-xl border-0 bg-gradient-to-r from-[#c9a961] to-[#b89a52] px-6 py-4 text-center text-base font-semibold leading-snug text-[#0f2940] shadow-xl transition-all duration-300 hover:shadow-2xl sm:w-auto sm:px-8 sm:py-6 md:text-lg sm:hover:scale-[1.02] active:scale-[0.98]"
               style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
             >
               <WhatsAppAnchor position="hero" message={TRIAL_MESSAGE} data-testid="button-agende-aula">
@@ -227,7 +227,7 @@ export default function HeroSection() {
             <Button
               asChild
               variant="outline"
-              className="px-8 py-6 rounded-xl text-base md:text-lg font-semibold transition-all duration-300 border-2 border-white/30 text-white bg-transparent hover:bg-white/10 hover:border-[#c9a961] hover:text-[#c9a961] hover:scale-[1.02] active:scale-[0.98]"
+              className="h-auto w-full max-w-full whitespace-normal rounded-xl border-2 border-white/30 bg-transparent px-6 py-4 text-center text-base font-semibold leading-snug text-white transition-all duration-300 hover:border-[#c9a961] hover:bg-white/10 hover:text-[#c9a961] sm:w-auto sm:px-8 sm:py-6 md:text-lg sm:hover:scale-[1.02] active:scale-[0.98]"
               style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
             >
               <Link href="/como-funciona" data-testid="button-saiba-mais">

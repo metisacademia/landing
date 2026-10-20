@@ -45,8 +45,8 @@ export default function PricingSection() {
   return (
     <section id="planos" className="section-padding bg-[#0f2940] relative overflow-hidden">
       {/* Elementos decorativos */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#c9a961]/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#c9a961]/5 rounded-full blur-3xl" />
+      <div className="pointer-events-none absolute left-0 top-0 h-48 w-48 rounded-full bg-[#c9a961]/5 blur-3xl sm:h-72 sm:w-72" aria-hidden="true" />
+      <div className="pointer-events-none absolute bottom-0 right-0 h-48 w-48 rounded-full bg-[#c9a961]/5 blur-3xl sm:h-72 sm:w-72" aria-hidden="true" />
 
       <div className="container-elegant relative z-10">
         {/* Badge de escassez */}
@@ -58,7 +58,7 @@ export default function PricingSection() {
           transition={{ duration: 0.5 }}
         >
           <span
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white text-sm font-medium"
+            className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2.5 text-center text-sm font-medium text-white sm:px-5"
             style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
           >
             <Users className="w-4 h-4 text-[#c9a961]" />
@@ -219,7 +219,7 @@ export default function PricingSection() {
         >
           <Button
             asChild
-            className="px-12 py-6 rounded-xl font-semibold text-lg bg-gradient-to-r from-[#c9a961] to-[#b89a52] text-[#0f2940] hover:shadow-xl hover:shadow-[#c9a961]/25 transition-all duration-300 hover:scale-[1.02]"
+            className="h-auto w-full max-w-full whitespace-normal rounded-xl px-5 py-4 text-center text-base font-semibold leading-snug bg-gradient-to-r from-[#c9a961] to-[#b89a52] text-[#0f2940] transition-all duration-300 hover:shadow-xl hover:shadow-[#c9a961]/25 sm:w-auto sm:px-12 sm:py-6 sm:text-lg sm:hover:scale-[1.02]"
             style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
           >
             <WhatsAppAnchor position="pricing_experimental" message={TRIAL_MESSAGE} data-testid="button-agende-aula-pricing">

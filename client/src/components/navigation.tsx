@@ -201,7 +201,7 @@ export default function Navigation() {
                 <div className="p-6 border-t border-white/10">
                   <Button
                     asChild
-                    className="w-full py-4 rounded-xl bg-gradient-to-r from-[#c9a961] to-[#b89a52] text-[#0f2940] font-semibold shadow-lg hover:shadow-xl transition-shadow"
+                    className="h-auto w-full max-w-full whitespace-normal rounded-xl bg-gradient-to-r from-[#c9a961] to-[#b89a52] py-4 text-center font-semibold leading-snug text-[#0f2940] shadow-lg transition-shadow hover:shadow-xl"
                     style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
                   >
                     <WhatsAppAnchor

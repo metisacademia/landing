@@ -83,8 +83,8 @@ export default function TestimonialsSection() {
       />
 
       {/* Círculo decorativo */}
-      <div className="absolute -top-32 -right-32 w-64 h-64 bg-[#c9a961]/5 rounded-full blur-3xl" />
-      <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-[#c9a961]/5 rounded-full blur-3xl" />
+      <div className="pointer-events-none absolute right-0 top-0 h-48 w-48 rounded-full bg-[#c9a961]/5 blur-3xl sm:h-64 sm:w-64" aria-hidden="true" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-48 w-48 rounded-full bg-[#c9a961]/5 blur-3xl sm:h-64 sm:w-64" aria-hidden="true" />
 
       <div className="container-elegant relative z-10">
         {/* Header */}
