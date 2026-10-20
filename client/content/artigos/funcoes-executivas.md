@@ -6,10 +6,6 @@ date: 2026-10-20
 updated: 2026-10-20
 author: equipe-metis
 summary: "Funções executivas são as habilidades que o cérebro usa para planejar, manter o foco, segurar impulsos e mudar de plano quando algo sai do previsto. As principais são controle inibitório, memória de trabalho e flexibilidade cognitiva. Mudam com a idade, mas seguem em uso e podem ser exercitadas."
-cover: /images/conteudos/funcoes-executivas.jpg
-coverAlt: "Homem de cerca de 60 anos planejando uma viagem à mesa, com caderno, mapa e celular"
-coverWidth: 1200
-coverHeight: 630
 category: Funções executivas
 tags:
   - funcoes-executivas

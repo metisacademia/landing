@@ -26,22 +26,24 @@ export default function ConteudoArtigoPage() {
             Rascunho de exemplo. Este texto não entra no site publicado.
           </p>
         ) : null}
-        <header className={`bg-[#0f2940] text-white ${article.draft ? "pb-14 pt-8 md:pb-20" : "pb-14 pt-28 md:pb-20 md:pt-36"}`}>
+        <header
+          className={`border-b-4 border-[#cda465] bg-[#173b5a] text-[#f8f1e7] ${article.draft ? "pb-14 pt-8 md:pb-20" : "pb-14 pt-28 md:pb-20 md:pt-36"}`}
+        >
           <div className="container-elegant max-w-3xl min-w-0">
             <BreadcrumbTrail />
             <p className="mt-6 text-sm font-medium uppercase tracking-widest text-[#cda465]" style={sans}>
               {article.category ?? "Conteúdos"}
             </p>
-            <h1 className="mt-4 break-words text-3xl font-medium leading-tight text-white md:text-5xl" style={serif} data-testid="artigo-titulo">
+            <h1 className="mt-4 break-words text-3xl font-medium leading-tight text-[#f8f1e7] md:text-5xl" style={serif} data-testid="artigo-titulo">
               {article.title}
             </h1>
-            <div className="conteudo-byline mt-6 space-y-2 text-sm leading-relaxed text-white/85 md:text-base" style={sans}>
+            <div className="conteudo-byline mt-6 space-y-2 text-sm leading-relaxed text-[#f8f1e7]/85 md:text-base" style={sans}>
               <p>
-                Por <span className="text-white">{article.author.name}</span>
+                Por <span className="text-[#f8f1e7]">{article.author.name}</span>
               </p>
               {article.reviewer ? (
                 <p data-testid="artigo-revisao">
-                  Revisado por <span className="text-white">{article.reviewer.name}</span> em{" "}
+                  Revisado por <span className="text-[#f8f1e7]">{article.reviewer.name}</span> em{" "}
                   <time dateTime={article.updated}>{formatLongDate(article.updated)}</time>
                   {article.reviewer.credential ? (
                     <span className="mt-1 block break-words text-white/70">{article.reviewer.credential}</span>
@@ -66,15 +68,17 @@ export default function ConteudoArtigoPage() {
               <p className="mt-3 break-words text-lg leading-relaxed text-[#173b5a]">{article.summary}</p>
             </aside>
 
-            <figure className="mt-8 min-w-0">
-              <img
-                src={article.cover}
-                alt={article.coverAlt}
-                width={article.coverWidth}
-                height={article.coverHeight}
-                className="h-auto w-full rounded-2xl object-cover"
-              />
-            </figure>
+            {article.cover && article.coverAlt ? (
+              <figure className="mt-8 min-w-0">
+                <img
+                  src={article.cover}
+                  alt={article.coverAlt}
+                  width={article.coverWidth}
+                  height={article.coverHeight}
+                  className="h-auto w-full rounded-2xl object-cover"
+                />
+              </figure>
+            ) : null}
 
             <div className={`mt-10 min-w-0 ${showToc ? "lg:grid lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-10" : ""}`}>
               {showToc ? (

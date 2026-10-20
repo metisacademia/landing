@@ -333,7 +333,7 @@ function contributorNode(person: Article["author"]): Record<string, unknown> {
 function articleSeo(article: Article): PageSeo {
   const path = `/conteudos/${article.slug}`;
   const indexable = !article.draft;
-  const image = absoluteAssetUrl(article.cover);
+  const image = article.cover ? absoluteAssetUrl(article.cover) : undefined;
   const page = buildPage({
     path,
     title: `${article.title} | Métis`,
@@ -356,7 +356,7 @@ function articleSeo(article: Article): PageSeo {
         "@id": `${canonicalUrl(path)}#artigo`,
         headline: article.title,
         description: article.description,
-        image,
+        image: image ?? OG_IMAGE,
         datePublished: article.date,
         dateModified: article.updated,
         inLanguage: "pt-BR",

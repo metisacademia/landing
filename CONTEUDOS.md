@@ -31,10 +31,6 @@ updated: 2026-10-20
 author: equipe-metis
 reviewer: id-em-people-ts
 summary: "Resposta curta, em até 300 caracteres, sem HTML."
-cover: /images/conteudos/titulo-do-artigo.jpg
-coverAlt: "Descrição da foto"
-coverWidth: 1200
-coverHeight: 630
 category: Memória
 tags:
   - memoria
@@ -57,9 +53,20 @@ Texto do artigo em Markdown, depois da segunda linha `---`. Use `##` e `###` par
 
 ## Imagens
 
+A capa é opcional. Sem `cover`, a página do artigo e o cartão do índice ficam só com texto, nas cores da marca. O Open Graph e o `image` do `BlogPosting` usam o logotipo que o restante do site já usa (`/images/logo-metis-bg-color.jpg`).
+
+Quando houver foto, acrescente:
+
+```yaml
+cover: /images/conteudos/titulo-do-artigo.jpg
+coverAlt: "Descrição da foto"
+coverWidth: 1200
+coverHeight: 630
+```
+
 - Capa recomendada: **1200×630**, JPG ou WebP, até cerca de 250 KB.
 - Caminho público, começando com `/images/...`.
-- `coverAlt` é obrigatório.
+- `coverAlt` é obrigatório junto com `cover`.
 - `coverWidth` e `coverHeight` são opcionais e alimentam as tags Open Graph.
 
 ## O que a página já faz

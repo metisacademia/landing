@@ -168,6 +168,15 @@ try {
       if (!articleHtml.includes('"author":{"@type":"Organization","name":"Métis Academia da Mente","url":"https://www.metisacademia.com.br"}')) {
         throw new Error(`${link.canonical} sem autor organização`);
       }
+      const postingAt = articleHtml.indexOf('"@type":"BlogPosting"');
+      const posting = postingAt >= 0 ? articleHtml.slice(postingAt, postingAt + 900) : "";
+      if (!posting.includes('"image":"https://www.metisacademia.com.br/images/logo-metis-bg-color.jpg"')) {
+        throw new Error(`${link.canonical} sem a imagem padrão no BlogPosting`);
+      }
+      if (articleHtml.includes("/images/conteudos/")) {
+        throw new Error(`${link.canonical} ainda aponta para uma capa que não existe`);
+      }
+      assertLocalImages(articleFile, articleHtml);
       for (const href of ["/como-funciona", "/aula-experimental", "/treino-cognitivo-em-recife"]) {
         if (!articleHtml.includes(`href="${href}"`)) throw new Error(`${link.canonical} sem ${href}`);
       }
@@ -185,6 +194,7 @@ try {
     if (!executivas.includes('href="/salas/funcoes-executivas"')) {
       throw new Error("artigo de funções executivas sem a sala");
     }
+    assertLocalImages(conteudosIndex, indexHtml);
   }
 
   if (!draftsInBuild) {
@@ -203,6 +213,20 @@ try {
   );
 } finally {
   await vite.close();
+}
+
+function assertLocalImages(file: string, html: string) {
+  const urls = new Set<string>();
+  for (const match of html.matchAll(/\bsrc="([^"]+)"/g)) urls.add(match[1]);
+  for (const match of html.matchAll(/property="og:image" content="([^"]+)"/g)) urls.add(match[1]);
+  for (const url of urls) {
+    const pathOnly = url.replace(/^https:\/\/www\.metisacademia\.com\.br/, "");
+    if (!pathOnly.startsWith("/") || pathOnly.includes("?")) continue;
+    const local = path.join(distDir, decodeURIComponent(pathOnly).replace(/^\//, ""));
+    if (!fs.existsSync(local)) {
+      throw new Error(`${file} aponta para arquivo ausente: ${pathOnly}`);
+    }
+  }
 }
 
 function assertPage(

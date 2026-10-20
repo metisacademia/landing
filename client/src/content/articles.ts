@@ -26,8 +26,9 @@ export type Article = {
   author: Person;
   reviewer?: Person;
   summary: string;
-  cover: string;
-  coverAlt: string;
+  /** Ausente quando o artigo não tem capa. A página fica só com texto. */
+  cover?: string;
+  coverAlt?: string;
   coverWidth?: number;
   coverHeight?: number;
   category?: string;
@@ -158,8 +159,8 @@ function parseArticle(path: string, raw: string): Article | null {
   const authorId = asString(file, data, "author");
   const reviewerId = asOptionalString(data, "reviewer");
   const summary = asString(file, data, "summary");
-  const cover = asString(file, data, "cover");
-  const coverAlt = asString(file, data, "coverAlt");
+  const cover = asOptionalString(data, "cover");
+  const coverAlt = asOptionalString(data, "coverAlt");
 
   if (slug !== file) fail(file, `o slug "${slug}" precisa ser igual ao nome do arquivo`);
   if (!SLUG.test(slug)) fail(file, "slug usa só letras minúsculas, números e hífen");
@@ -169,7 +170,11 @@ function parseArticle(path: string, raw: string): Article | null {
   }
   if (!DATE.test(date) || !DATE.test(updated)) fail(file, "date e updated usam AAAA-MM-DD");
   if (summary.length > 300) fail(file, `summary tem ${summary.length} caracteres; o máximo é 300`);
-  if (!cover.startsWith("/")) fail(file, "cover precisa ser um caminho do site, começando com /");
+  if (cover && !cover.startsWith("/")) fail(file, "cover precisa ser um caminho do site, começando com /");
+  if (cover && !coverAlt) fail(file, "coverAlt é obrigatório quando há cover");
+  if (!cover && (coverAlt || data.coverWidth !== undefined || data.coverHeight !== undefined)) {
+    fail(file, "coverAlt, coverWidth e coverHeight só entram junto com cover");
+  }
   if (!body.trim()) fail(file, "o artigo está sem texto depois do frontmatter");
 
   const author = getPerson(authorId);

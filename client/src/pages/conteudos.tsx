@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import PageShell, { CtaBand, sans, serif } from "@/components/page-shell";
-import { formatLongDate, listVisibleArticles } from "@/content/articles";
+import { formatLongDate, listVisibleArticles, type Article } from "@/content/articles";
 
 export default function ConteudosPage() {
   const articles = listVisibleArticles();
@@ -75,36 +75,7 @@ export default function ConteudosPage() {
           <ul className="grid min-w-0 gap-6">
             {visible.map((article) => (
               <li key={article.slug} className="min-w-0">
-                <Link
-                  href={`/conteudos/${article.slug}`}
-                  className="block min-w-0 overflow-hidden rounded-2xl bg-white shadow-sm transition-shadow hover:shadow-md"
-                  data-testid={`conteudo-card-${article.slug}`}
-                >
-                  <img
-                    src={article.cover}
-                    alt={article.coverAlt}
-                    width={article.coverWidth}
-                    height={article.coverHeight}
-                    className="aspect-[1200/630] h-auto w-full object-cover"
-                  />
-                  <div className="min-w-0 p-6">
-                    <div className="flex min-w-0 flex-wrap items-center gap-2 text-sm text-[#4a5568]" style={sans}>
-                      {article.draft ? (
-                        <span className="rounded-full bg-[#cda465] px-3 py-1 text-xs font-semibold text-[#173b5a]">
-                          Rascunho
-                        </span>
-                      ) : null}
-                      {article.category ? <span>{article.category}</span> : null}
-                      <time dateTime={article.date}>{formatLongDate(article.date)}</time>
-                    </div>
-                    <h2 className="mt-3 break-words text-2xl font-medium text-[#173b5a]" style={serif}>
-                      {article.title}
-                    </h2>
-                    <p className="mt-3 break-words leading-relaxed text-[#4a5568]" style={sans}>
-                      {article.summary}
-                    </p>
-                  </div>
-                </Link>
+                <ArticleCard article={article} />
               </li>
             ))}
           </ul>
@@ -118,5 +89,58 @@ export default function ConteudosPage() {
         buttonClassName="h-auto w-full max-w-full whitespace-normal text-center sm:w-auto"
       />
     </PageShell>
+  );
+}
+
+function ArticleCard({ article }: { article: Article }) {
+  const cover = article.cover;
+  const coverAlt = article.coverAlt;
+  const hasCover = cover !== undefined && coverAlt !== undefined;
+
+  return (
+    <Link
+      href={`/conteudos/${article.slug}`}
+      className={`block min-w-0 overflow-hidden rounded-2xl shadow-sm transition-shadow hover:shadow-md ${hasCover ? "bg-white" : "border border-[#cda465] bg-[#f8f1e7]"}`}
+      data-testid={`conteudo-card-${article.slug}`}
+    >
+      {hasCover ? (
+        <img
+          src={cover}
+          alt={coverAlt}
+          width={article.coverWidth}
+          height={article.coverHeight}
+          className="aspect-[1200/630] h-auto w-full object-cover"
+        />
+      ) : (
+        <div className="bg-[#173b5a] px-6 pb-6 pt-7">
+          <div className="h-1 w-12 rounded-full bg-[#cda465]" aria-hidden="true" />
+          <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-[#cda465]" style={sans}>
+            {article.category ?? "Conteúdos"}
+          </p>
+          <h2 className="mt-3 break-words text-2xl font-medium leading-tight text-[#f8f1e7]" style={serif}>
+            {article.title}
+          </h2>
+        </div>
+      )}
+      <div className="min-w-0 p-6">
+        <div className="flex min-w-0 flex-wrap items-center gap-2 text-sm text-[#173b5a]/80" style={sans}>
+          {article.draft ? (
+            <span className="rounded-full bg-[#cda465] px-3 py-1 text-xs font-semibold text-[#173b5a]">
+              Rascunho
+            </span>
+          ) : null}
+          {hasCover && article.category ? <span>{article.category}</span> : null}
+          <time dateTime={article.date}>{formatLongDate(article.date)}</time>
+        </div>
+        {hasCover ? (
+          <h2 className="mt-3 break-words text-2xl font-medium text-[#173b5a]" style={serif}>
+            {article.title}
+          </h2>
+        ) : null}
+        <p className={`break-words leading-relaxed text-[#173b5a] ${hasCover ? "mt-3" : "mt-0"}`} style={sans}>
+          {article.summary}
+        </p>
+      </div>
+    </Link>
   );
 }
