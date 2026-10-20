@@ -50,14 +50,35 @@ const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 /** Nome visível da etiqueta. O slug continua no filtro e no frontmatter. */
 const TAG_LABELS: Record<string, string> = {
+  aposentadoria: "Aposentadoria",
+  arte: "Arte",
   atencao: "Atenção",
+  atividades: "Atividades",
+  "comprometimento-cognitivo-leve": "Comprometimento cognitivo leve",
+  concentracao: "Concentração",
+  conversa: "Conversa",
+  convivio: "Convívio",
+  cuidador: "Cuidador",
+  cultura: "Cultura",
+  diagnostico: "Diagnóstico",
   envelhecimento: "Envelhecimento",
   esquecimento: "Esquecimento",
+  "estimulacao-cognitiva": "Estimulação cognitiva",
   familia: "Família",
+  foco: "Foco",
   "funcoes-executivas": "Funções executivas",
+  idosos: "Idosos",
+  leitura: "Leitura",
   memoria: "Memória",
+  "mente-ativa": "Mente ativa",
+  musica: "Música",
+  "pais-idosos": "Pais idosos",
   planejamento: "Planejamento",
+  presente: "Presente",
   recife: "Recife",
+  rotina: "Rotina",
+  suplementos: "Suplementos",
+  vitaminas: "Vitaminas",
 };
 
 export function tagLabel(slug: string): string {
