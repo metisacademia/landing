@@ -63,7 +63,7 @@ export default function CircuitSection() {
               <Link
                 key={slug}
                 href={`/salas/${slug}`}
-                className="group relative flex h-full min-h-[26rem] flex-col overflow-hidden rounded-2xl lg:min-h-[32rem]"
+                className="group relative flex h-full min-h-[24rem] flex-col overflow-hidden rounded-2xl sm:min-h-[30rem] lg:min-h-[40rem]"
                 data-testid={`room-card-${slug}`}
               >
                 <img
@@ -75,33 +75,42 @@ export default function CircuitSection() {
                   decoding="async"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(to_top,#0b0b28_0%,#0b0b28_22%,rgba(23,59,90,0.94)_58%,rgba(23,59,90,0.28)_100%)]" />
-                <div className="relative z-10 flex h-full flex-col p-5 md:p-6">
-                  <div className="h-24 shrink-0 lg:h-32" aria-hidden="true" />
-                  <div className={`mb-3 flex h-12 w-12 items-center justify-center rounded-xl ${style.color}`}>
+                <div
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-[58%]"
+                  style={{
+                    background:
+                      "linear-gradient(to bottom, transparent 0%, rgba(23,59,90,0.88) 16%, #173b5a 36%, #0b0b28 54%, #0b0b28 100%)",
+                  }}
+                />
+                <div className="relative z-10 mt-auto flex w-full flex-col p-5 md:p-6">
+                  <div className={`mb-3 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${style.color}`}>
                     <Icon className="h-6 w-6 text-white" />
                   </div>
                   <h3
-                    className="mb-1 flex min-h-[2.6em] min-w-0 items-end text-lg font-medium leading-tight text-white md:text-xl"
+                    className="mb-1 min-h-[3.25rem] text-lg font-medium leading-tight text-white md:min-h-[3.5rem] md:text-xl"
                     style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                    data-testid={`room-title-${slug}`}
                   >
-                    <span className="min-w-0">{room.title}</span>
+                    {room.title}
                   </h3>
                   <p
-                    className="mb-2 min-h-[2.6em] text-sm leading-snug text-white/85"
+                    className="mb-2 min-h-[2.75rem] text-sm leading-snug text-white"
                     style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
+                    data-testid={`room-subtitle-${slug}`}
                   >
                     {room.subtitle}
                   </p>
                   <p
-                    className="text-sm leading-relaxed text-white/95"
+                    className="min-h-[6.75rem] text-sm leading-relaxed text-white lg:min-h-[9rem]"
                     style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
+                    data-testid={`room-description-${slug}`}
                   >
                     {room.short}
                   </p>
                   <span
-                    className="mt-auto pt-4 text-sm font-medium text-[#c9a961]"
+                    className="pt-4 text-sm font-medium text-[#c9a961]"
                     style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
+                    data-testid={`room-link-${slug}`}
                   >
                     Conheça a sala
                   </span>

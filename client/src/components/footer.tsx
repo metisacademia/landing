@@ -165,7 +165,11 @@ export default function Footer() {
                   <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-white/10">
                     <Mail className="h-4 w-4" />
                   </div>
-                  <span className="min-w-0 break-all" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>{EMAIL}</span>
+                  <span className="min-w-0 text-sm leading-snug [overflow-wrap:normal] sm:text-base" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+                    <span className="whitespace-nowrap">{EMAIL.slice(0, EMAIL.indexOf("@") + 1)}</span>
+                    <wbr />
+                    <span className="whitespace-nowrap">{EMAIL.slice(EMAIL.indexOf("@") + 1)}</span>
+                  </span>
                 </a>
               </li>
               <li className="flex min-w-0 items-start gap-3 text-white/70" data-testid="footer-location">

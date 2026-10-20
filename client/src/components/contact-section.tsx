@@ -140,14 +140,20 @@ export default function ContactSection() {
                     <a
                       href={item.href}
                       onClick={item.onClick}
-                      className="inline-flex max-w-full items-start gap-1 break-words font-medium text-[#c9a961] transition-colors hover:text-[#b89a52]"
+                      className="inline-flex max-w-full items-start gap-1 font-medium text-[#c9a961] transition-colors hover:text-[#b89a52]"
                       style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
                       data-testid={item.linkTestId}
                     >
-                      <span className={item.content.includes("@") ? "min-w-0 break-all" : "min-w-0 break-words"}>
-                        {item.content}
-                      </span>
-                      <ExternalLink className="mt-1 h-4 w-4 shrink-0" />
+                      {item.content.includes("@") ? (
+                        <span className="min-w-0 text-sm leading-snug [overflow-wrap:normal] sm:text-base">
+                          <span className="whitespace-nowrap">{item.content.slice(0, item.content.indexOf("@") + 1)}</span>
+                          <wbr />
+                          <span className="whitespace-nowrap">{item.content.slice(item.content.indexOf("@") + 1)}</span>
+                        </span>
+                      ) : (
+                        <span className="min-w-0">{item.content}</span>
+                      )}
+                      <ExternalLink className="mt-0.5 h-4 w-4 shrink-0" />
                     </a>
                   ) : (
                     <p
