@@ -78,8 +78,10 @@ export function serveStatic(app: Express) {
 
   app.use(express.static(distPath));
 
-  // fall through to index.html if the file doesn't exist
+  // Páginas prerenderizadas são servidas pelo express.static.
+  // Rotas sem HTML próprio (admin, checkout) usam o shell do SPA.
   app.use("*", (_req, res) => {
-    res.sendFile(path.resolve(distPath, "index.html"));
+    const spa = path.resolve(distPath, "spa.html");
+    res.sendFile(fs.existsSync(spa) ? spa : path.resolve(distPath, "index.html"));
   });
 }

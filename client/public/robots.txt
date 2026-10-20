@@ -1,3 +1,6 @@
 User-agent: *
 Allow: /
-Sitemap: https://metisacademia.com.br/sitemap.xml
+
+# Resumo para sistemas de IA: https://www.metisacademia.com.br/llms.txt
+
+Sitemap: https://www.metisacademia.com.br/sitemap.xml

@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -81,9 +80,20 @@
     scroll-behavior: smooth;
   }
 
+  @media (scripting: none) {
+    #root * {
+      opacity: 1 !important;
+    }
+
+    #root nav {
+      transform: none !important;
+    }
+  }
+
   body {
     @apply antialiased bg-background text-foreground;
     font-family: var(--font-sans);
+    overflow-wrap: break-word;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
