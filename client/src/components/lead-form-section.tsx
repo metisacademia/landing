@@ -16,6 +16,9 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { motion } from "framer-motion";
 import { Brain, Check, Gift, Clock, Shield } from "lucide-react";
+import { trackWhatsAppClick } from "@/lib/whatsapp";
+import { WhatsAppAnchor } from "@/components/whatsapp-anchor";
+import { TRIAL_MESSAGE } from "@/lib/site";
 
 // Declaração do dataLayer e função UTM para TypeScript
 declare global {
@@ -114,6 +117,7 @@ export default function LeadFormSection() {
       'utm_campaign': data.utm_campaign || '',
       'origem': data.origem || '',
     });
+    trackWhatsAppClick("lead_form");
 
     // Monta mensagem para WhatsApp (inclui UTMs para rastreamento interno)
     let message = `Olá! Meu nome é ${data.name} e gostaria de agendar uma aula experimental. Meu telefone: ${data.phone}. Conheci a Métis por: ${data.source}`;
@@ -323,7 +327,11 @@ export default function LeadFormSection() {
                     className="text-center text-sm text-[#4a5568]/70 mt-6"
                     style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
                   >
-                    Você será direcionado ao WhatsApp para finalizar o agendamento
+                    Você será direcionado ao WhatsApp para finalizar o agendamento.{" "}
+                    <WhatsAppAnchor position="lead_form_link" message={TRIAL_MESSAGE} className="text-[#0f2940] underline decoration-[#c9a961] underline-offset-4">
+                      Ou chame agora
+                    </WhatsAppAnchor>
+                    .
                   </p>
                 </form>
               </Form>

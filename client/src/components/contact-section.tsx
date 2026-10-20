@@ -1,13 +1,9 @@
+import { Link } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Phone, Mail, MapPin, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
-
-// Declaração do dataLayer para TypeScript
-declare global {
-  interface Window {
-    dataLayer: Record<string, unknown>[];
-  }
-}
+import { trackWhatsAppClick } from "@/lib/whatsapp";
+import { MAPS_URL } from "@/lib/site";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -32,23 +28,6 @@ const itemVariants = {
 };
 
 export default function ContactSection() {
-  // Funções de rastreamento para GTM
-  const trackWhatsAppClick = () => {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      'event': 'whatsapp_click',
-      'click_source': 'contact_section'
-    });
-  };
-
-  const trackPhoneClick = () => {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      'event': 'phone_click',
-      'click_source': 'contact_section'
-    });
-  };
-
   const contactItems = [
     {
       icon: Phone,
@@ -58,7 +37,7 @@ export default function ContactSection() {
       href: "https://wa.me/5581992726495?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20aula%20experimental%20na%20M%C3%A9tis.",
       testId: "contact-whatsapp",
       linkTestId: "link-whatsapp",
-      onClick: trackWhatsAppClick,
+      onClick: () => trackWhatsAppClick("contact_section"),
     },
     {
       icon: Mail,
@@ -209,7 +188,7 @@ export default function ContactSection() {
                   </div>
                 </div>
                 <a
-                  href="https://maps.google.com/?q=Kronos+Empresarial+Recife+Gracas"
+                  href={MAPS_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="absolute bottom-4 right-4 inline-flex items-center gap-2 bg-white px-5 py-3 rounded-xl shadow-lg text-[#0f2940] font-medium hover:bg-[#faf8f5] transition-colors"
@@ -224,7 +203,10 @@ export default function ContactSection() {
                   className="text-sm text-[#4a5568]"
                   style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
                 >
-                  Localização no coração do bairro das Graças, com fácil acesso e estacionamento.
+                  Localização no coração do bairro das Graças, com fácil acesso e estacionamento.{" "}
+                  <Link href="/contato" className="text-[#0f2940] font-medium underline decoration-[#c9a961] underline-offset-4">
+                    Como chegar
+                  </Link>
                 </p>
               </div>
             </Card>

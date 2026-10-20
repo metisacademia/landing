@@ -2,7 +2,21 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist/public",
   "framework": null,
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "metisacademia.com.br" }],
+      "destination": "https://www.metisacademia.com.br/",
+      "permanent": true
+    },
+    {
+      "source": "/:path+",
+      "has": [{ "type": "host", "value": "metisacademia.com.br" }],
+      "destination": "https://www.metisacademia.com.br/:path+",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/(.*)", "destination": "/spa.html" }
   ]
 }

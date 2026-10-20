@@ -1,8 +1,11 @@
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { Check, Sparkles, Users } from "lucide-react";
+import { WhatsAppAnchor } from "@/components/whatsapp-anchor";
+import { PLANS_MESSAGE, plans, TRIAL_MESSAGE } from "@/lib/site";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -39,73 +42,6 @@ const cardVariants = {
 };
 
 export default function PricingSection() {
-  const openWhatsApp = () => {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      'event': 'whatsapp_click',
-      'click_source': 'pricing'
-    });
-    window.open('https://wa.me/5581992726495?text=' + encodeURIComponent('Olá! Gostaria de saber mais sobre os planos da Métis.'), '_blank');
-  };
-
-  const plans = [
-    {
-      name: "Mensal",
-      originalPrice: "1.300",
-      price: "1.145",
-      savings: "155",
-      testId: "mensal",
-      benefits: [
-        "1 aula semanal de 2h30",
-        "Circuito completo das 4 salas",
-        "Material didático incluso",
-      ]
-    },
-    {
-      name: "Trimestral",
-      originalPrice: "1.090",
-      price: "990",
-      savings: "300",
-      testId: "trimestral",
-      benefits: [
-        "1 aula semanal de 2h30",
-        "Circuito completo das 4 salas",
-        "Material didático incluso",
-        "Acompanhamento personalizado",
-      ]
-    },
-    {
-      name: "Semestral",
-      originalPrice: "990",
-      price: "890",
-      savings: "600",
-      isPopular: true,
-      testId: "semestral",
-      benefits: [
-        "1 aula semanal de 2h30",
-        "Circuito completo das 4 salas",
-        "Material didático incluso",
-        "Acompanhamento personalizado",
-        "Relatório de evolução",
-      ]
-    },
-    {
-      name: "Anual",
-      originalPrice: "890",
-      price: "790",
-      savings: "1.200",
-      testId: "anual",
-      benefits: [
-        "1 aula semanal de 2h30",
-        "Circuito completo das 4 salas",
-        "Material didático incluso",
-        "Acompanhamento personalizado",
-        "Relatório de evolução",
-        "Prioridade em eventos",
-      ]
-    }
-  ];
-
   return (
     <section id="planos" className="section-padding bg-[#0f2940] relative overflow-hidden">
       {/* Elementos decorativos */}
@@ -182,14 +118,14 @@ export default function PricingSection() {
             <motion.div key={plan.name} variants={cardVariants} custom={index}>
               <Card
                 className={`group h-full bg-white/5 backdrop-blur-sm border transition-all duration-500 rounded-2xl overflow-hidden ${
-                  plan.isPopular
+                  plan.popular
                     ? 'border-[#c9a961] shadow-lg shadow-[#c9a961]/10'
                     : 'border-white/10 hover:border-white/20'
                 }`}
-                data-testid={`plan-${plan.testId}`}
+                data-testid={`plan-${plan.id}`}
               >
                 {/* Badge popular */}
-                {plan.isPopular && (
+                {plan.popular && (
                   <div className="bg-gradient-to-r from-[#c9a961] to-[#b89a52] px-4 py-2 text-center">
                     <span
                       className="text-sm font-semibold text-[#0f2940] flex items-center justify-center gap-2"
@@ -206,7 +142,7 @@ export default function PricingSection() {
                   <h3
                     className="text-xl font-medium text-white mb-4"
                     style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-                    data-testid={`plan-${plan.testId}-name`}
+                    data-testid={`plan-${plan.id}-name`}
                   >
                     {plan.name}
                   </h3>
@@ -217,7 +153,7 @@ export default function PricingSection() {
                       <span
                         className="text-2xl sm:text-3xl md:text-4xl font-medium text-white"
                         style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-                        data-testid={`plan-${plan.testId}-price`}
+                        data-testid={`plan-${plan.id}-price`}
                       >
                         R$ {plan.price}
                       </span>
@@ -230,7 +166,7 @@ export default function PricingSection() {
                     </div>
                     <Badge
                       className="mt-2 bg-[#c9a961]/20 text-[#c9a961] border-[#c9a961]/30 hover:bg-[#c9a961]/30"
-                      data-testid={`plan-${plan.testId}-savings`}
+                      data-testid={`plan-${plan.id}-savings`}
                     >
                       Economia R$ {plan.savings}
                     </Badge>
@@ -255,15 +191,17 @@ export default function PricingSection() {
 
                   {/* CTA */}
                   <Button
-                    onClick={openWhatsApp}
+                    asChild
                     className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 ${
-                      plan.isPopular
+                      plan.popular
                         ? 'bg-gradient-to-r from-[#c9a961] to-[#b89a52] text-[#0f2940] hover:shadow-lg hover:shadow-[#c9a961]/25'
                         : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'
                     }`}
                     style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
                   >
-                    Escolher plano
+                    <WhatsAppAnchor position={`pricing_${plan.id}`} message={PLANS_MESSAGE}>
+                      Escolher plano
+                    </WhatsAppAnchor>
                   </Button>
                 </CardContent>
               </Card>
@@ -280,12 +218,13 @@ export default function PricingSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           <Button
-            onClick={openWhatsApp}
+            asChild
             className="px-12 py-6 rounded-xl font-semibold text-lg bg-gradient-to-r from-[#c9a961] to-[#b89a52] text-[#0f2940] hover:shadow-xl hover:shadow-[#c9a961]/25 transition-all duration-300 hover:scale-[1.02]"
             style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}
-            data-testid="button-agende-aula-pricing"
           >
-            Agende sua aula experimental gratuita
+            <WhatsAppAnchor position="pricing_experimental" message={TRIAL_MESSAGE} data-testid="button-agende-aula-pricing">
+              Agende sua aula experimental gratuita
+            </WhatsAppAnchor>
           </Button>
           <p
             className="text-white/60 mt-4"
@@ -293,6 +232,11 @@ export default function PricingSection() {
             data-testid="guarantee-text"
           >
             Conheça a Métis antes de decidir • Sem compromisso
+          </p>
+          <p className="mt-4">
+            <Link href="/planos" className="text-[#c9a961] font-medium underline decoration-[#c9a961]/40 underline-offset-4" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+              Ver planos e preços em detalhe
+            </Link>
           </p>
         </motion.div>
       </div>
