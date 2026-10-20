@@ -24,7 +24,7 @@ export type Article = {
   date: string;
   updated: string;
   author: Person;
-  reviewer: Person;
+  reviewer?: Person;
   summary: string;
   cover: string;
   coverAlt: string;
@@ -156,7 +156,7 @@ function parseArticle(path: string, raw: string): Article | null {
   const date = asString(file, data, "date");
   const updated = asString(file, data, "updated");
   const authorId = asString(file, data, "author");
-  const reviewerId = asString(file, data, "reviewer");
+  const reviewerId = asOptionalString(data, "reviewer");
   const summary = asString(file, data, "summary");
   const cover = asString(file, data, "cover");
   const coverAlt = asString(file, data, "coverAlt");
@@ -173,9 +173,11 @@ function parseArticle(path: string, raw: string): Article | null {
   if (!body.trim()) fail(file, "o artigo está sem texto depois do frontmatter");
 
   const author = getPerson(authorId);
-  const reviewer = getPerson(reviewerId);
   if (!author) fail(file, `author "${authorId}" não está em client/src/content/people.ts`);
-  if (!reviewer) fail(file, `reviewer "${reviewerId}" não está em client/src/content/people.ts`);
+  const reviewer = reviewerId ? getPerson(reviewerId) : undefined;
+  if (reviewerId && !reviewer) {
+    fail(file, `reviewer "${reviewerId}" não está em client/src/content/people.ts`);
+  }
 
   const rendered = renderArticleMarkdown(body);
   return {

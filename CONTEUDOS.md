@@ -17,7 +17,7 @@ O nome do arquivo é o endereço: `memoria-e-rotina.md` publica em `/conteudos/m
 - `draft: true` fica de fora do site publicado, do sitemap, do `llms.txt` e do índice.
 - O preview da Vercel e o `npm run dev` mostram o rascunho, para a equipe revisar o modelo.
 - O menu **Conteúdos** (cabeçalho e rodapé) só aparece quando existe pelo menos um artigo com `draft: false`.
-- Não publique o arquivo `exemplo-rascunho.md`. Ele é só o modelo.
+- `reviewer` é opcional. Sem esse campo, a página não mostra “Revisado por” e o JSON-LD não traz `reviewedBy`.
 
 ## Frontmatter
 
@@ -28,7 +28,7 @@ description: "Meta description, no máximo 155 caracteres, sem aspas."
 slug: titulo-do-artigo
 date: 2026-10-20
 updated: 2026-10-20
-author: id-em-people-ts
+author: equipe-metis
 reviewer: id-em-people-ts
 summary: "Resposta curta, em até 300 caracteres, sem HTML."
 cover: /images/conteudos/titulo-do-artigo.jpg
@@ -53,7 +53,7 @@ related:
 
 Texto do artigo em Markdown, depois da segunda linha `---`. Use `##` e `###` para o sumário. Imagem no texto: `![texto alternativo](/images/conteudos/detalhe.jpg)`.
 
-`author` e `reviewer` são os `id` de `people.ts`. Enquanto o nome, o CRM-PE e o RQE não estiverem confirmados pela própria pessoa, use um perfil marcado como placeholder. Não inventar registro.
+`author` e, quando houver, `reviewer` são os `id` de `people.ts`. `equipe-metis` é a organização Equipe Métis, sem CRM. Um revisor pessoa só entra com nome, CRM-PE e RQE confirmados. Não inventar registro. Se `reviewer` ficar de fora, o artigo publica sem linha de revisão.
 
 ## Imagens
 
@@ -64,6 +64,6 @@ Texto do artigo em Markdown, depois da segunda linha `---`. Use `##` e `###` par
 
 ## O que a página já faz
 
-Título, meta description, canonical em `https://www.metisacademia.com.br`, Open Graph, JSON-LD (`BlogPosting`, trilha e FAQ quando houver), resposta rápida, sumário, linha de autor e de revisor, data de atualização, artigos relacionados e o botão de WhatsApp da aula experimental (o mesmo evento `whatsapp_click`).
+Título, meta description, canonical em `https://www.metisacademia.com.br`, Open Graph, JSON-LD (`BlogPosting`, trilha e FAQ quando houver), resposta rápida, sumário, linha de autor, linha de revisor só quando o frontmatter traz `reviewer`, data de atualização, artigos relacionados e o botão de WhatsApp da aula experimental (o mesmo evento `whatsapp_click`).
 
 O aviso de que a Métis é estímulo cognitivo, e não tratamento, já entra no modelo. Não prometa cura, prevenção nem resultado garantido (CFM 2.336/2023).

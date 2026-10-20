@@ -20,7 +20,7 @@ export default function ConteudosPage() {
     <PageShell
       eyebrow="Leitura"
       title="Conteúdos"
-      lede="Textos sobre memória, envelhecimento e treino cognitivo em Recife. Cada artigo publicado passa por revisão de um neurologista da Métis."
+      lede="Textos da Equipe Métis sobre memória, envelhecimento e treino cognitivo em Recife."
     >
       <section className="section-padding-sm bg-[#f8f1e7]">
         <div className="container-elegant max-w-4xl min-w-0">

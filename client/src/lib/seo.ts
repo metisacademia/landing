@@ -306,15 +306,28 @@ function buildPage(input: PageInput): PageSeo {
 const homeCrumb: Crumb = { name: "Início", path: "/" };
 
 const CONTEUDOS_DESCRIPTION =
-  "Textos da Métis sobre memória, envelhecimento e treino cognitivo em Recife. Revisão de um neurologista da equipe antes da publicação.";
+  "Textos da Métis sobre memória, envelhecimento e treino cognitivo em Recife.";
 
-function personNode(person: Article["author"]): Record<string, unknown> {
-  return {
-    "@type": "Person",
-    name: person.name,
-    jobTitle: person.role,
-    description: person.credential,
-  };
+function contributorNode(person: Article["author"]): Record<string, unknown> {
+  switch (person.kind) {
+    case "organization":
+      return {
+        "@type": "Organization",
+        name: person.schemaName ?? person.name,
+        url: person.url ?? SITE_URL,
+      };
+    case "person":
+      return {
+        "@type": "Person",
+        name: person.name,
+        jobTitle: person.role,
+        ...(person.credential ? { description: person.credential } : {}),
+      };
+    default: {
+      const unknown: never = person.kind;
+      return unknown;
+    }
+  }
 }
 
 function articleSeo(article: Article): PageSeo {
@@ -347,8 +360,8 @@ function articleSeo(article: Article): PageSeo {
         datePublished: article.date,
         dateModified: article.updated,
         inLanguage: "pt-BR",
-        author: personNode(article.author),
-        reviewedBy: personNode(article.reviewer),
+        author: contributorNode(article.author),
+        ...(article.reviewer ? { reviewedBy: contributorNode(article.reviewer) } : {}),
         publisher: { "@id": `${SITE_URL}/#organizacao` },
         mainEntityOfPage: canonicalUrl(path),
         ...(article.category ? { articleSection: article.category } : {}),

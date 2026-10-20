@@ -499,6 +499,27 @@
   overflow-x: auto;
 }
 
+.conteudo-body table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.conteudo-body th,
+.conteudo-body td {
+  padding: 0.75rem 0.6rem;
+  vertical-align: top;
+  text-align: left;
+  border-bottom: 1px solid rgba(23, 59, 90, 0.15);
+  overflow-wrap: anywhere;
+}
+
+.conteudo-body th {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 500;
+}
+
 .conteudo-body code {
   overflow-wrap: anywhere;
 }

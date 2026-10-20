@@ -39,11 +39,15 @@ export default function ConteudoArtigoPage() {
               <p>
                 Por <span className="text-white">{article.author.name}</span>
               </p>
-              <p data-testid="artigo-revisao">
-                Revisado por <span className="text-white">{article.reviewer.name}</span> em{" "}
-                <time dateTime={article.updated}>{formatLongDate(article.updated)}</time>
-              </p>
-              <p className="break-words text-white/70">{article.reviewer.credential}</p>
+              {article.reviewer ? (
+                <p data-testid="artigo-revisao">
+                  Revisado por <span className="text-white">{article.reviewer.name}</span> em{" "}
+                  <time dateTime={article.updated}>{formatLongDate(article.updated)}</time>
+                  {article.reviewer.credential ? (
+                    <span className="mt-1 block break-words text-white/70">{article.reviewer.credential}</span>
+                  ) : null}
+                </p>
+              ) : null}
               <p>
                 Publicado em <time dateTime={article.date}>{formatLongDate(article.date)}</time>
                 {" · "}

@@ -72,4 +72,22 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://www.metisacademia.com.br/conteudos</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.metisacademia.com.br/conteudos/esquecimento-e-normal</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.metisacademia.com.br/conteudos/funcoes-executivas</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
