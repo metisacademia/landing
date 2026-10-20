@@ -29,7 +29,7 @@ export default function TestimonialsSection() {
   const [isPaused, setIsPaused] = useState(false);
 
   const stats = [
-    { number: "90%", label: "de satisfação" },
+    { number: "93%", label: "de satisfação" },
     { number: "6", label: "alunos por turma" },
     { number: "4", label: "salas no circuito" },
   ];
