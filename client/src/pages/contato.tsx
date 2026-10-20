@@ -27,10 +27,10 @@ export default function ContatoPage() {
               Como chegar
             </h2>
             <p className="text-lg leading-relaxed">
-              O ponto de referência é o Kronos Empresarial, na Rua das Pernambucanas, bairro das Graças. A sala é a 1203. O site descreve a localização como sendo no coração das Graças, com fácil acesso e estacionamento. Não há, nesta página, o número de vagas nem se o estacionamento é rotativo ou pago: isso se confirma pelo WhatsApp.
+              A Métis fica no Kronos Empresarial, na Rua das Pernambucanas, sala 1203, no coração das Graças, com fácil acesso e estacionamento. Para detalhes sobre o estacionamento, fale com a equipe pelo WhatsApp.
             </p>
             <p className="text-lg leading-relaxed">
-              Bairros vizinhos, como Espinheiro, Aflitos, Parnamirim, Derby e Jaqueira, ficam perto. O horário de funcionamento não está publicado. A equipe informa os dias disponíveis no agendamento.
+              Os dias e horários de turma são combinados no agendamento.
             </p>
             <ul className="space-y-3 text-lg">
               <li>
@@ -73,7 +73,7 @@ export default function ContatoPage() {
       <CtaBand
         position="cta_contato"
         title="Chamar a Métis"
-        text="O WhatsApp é o caminho publicado para agendar a aula experimental e tirar dúvidas de caminho."
+        text="Fale com a equipe pelo WhatsApp para agendar a aula experimental ou tirar dúvidas sobre como chegar."
       />
     </PageShell>
   );

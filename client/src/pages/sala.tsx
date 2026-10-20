@@ -36,7 +36,7 @@ export default function SalaPage({ params }: SalaPageProps) {
             <p>{room.short}</p>
             <p>{room.detail}</p>
             <p>
-              As atividades são presenciais e mudam ao longo do programa. A equipe apresenta o roteiro na aula. Esta página não lista exercícios específicos porque eles não estão publicados no site.
+              As atividades são presenciais e variam ao longo do programa. A equipe apresenta o roteiro em cada encontro.
             </p>
           </div>
         </div>
@@ -83,7 +83,7 @@ export default function SalaPage({ params }: SalaPageProps) {
       <RelatedLinks
         links={[
           { href: "/como-funciona", label: "Como funciona", text: "A ordem do circuito, a duração e o tamanho do grupo." },
-          { href: "/planos", label: "Planos e preços", text: "Valores mensais publicados e o que cada plano inclui." },
+          { href: "/planos", label: "Planos e preços", text: "Os quatro valores mensais e o que cada plano inclui." },
           { href: "/aula-experimental", label: "Aula experimental", text: "Um encontro gratuito para conhecer o espaço antes de decidir." },
         ]}
       />

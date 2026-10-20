@@ -1,7 +1,7 @@
 /**
  * Fatos públicos da Métis, usados no texto e no schema.
  * Não acrescentar nome de profissional, CRM, depoimento, nota, prêmio ou estatística
- * que não esteja publicado pela equipe.
+ * sem confirmação da equipe.
  */
 
 export const SITE_URL = "https://www.metisacademia.com.br";
@@ -56,14 +56,6 @@ export const PLANS_MESSAGE =
 
 export const DOCTOR_MESSAGE =
   "Olá! Sou profissional de saúde e gostaria de indicar alguém para conhecer a Métis.";
-
-export const NEARBY_NEIGHBORHOODS = [
-  "Espinheiro",
-  "Aflitos",
-  "Parnamirim",
-  "Derby",
-  "Jaqueira",
-] as const;
 
 export type Plan = {
   id: "mensal" | "trimestral" | "semestral" | "anual";
@@ -153,7 +145,7 @@ export const homeFaqs: readonly Faq[] = [
   {
     question: "Preciso de encaminhamento médico?",
     answer:
-      "Não é obrigatório. A Métis é um programa de estímulo cognitivo preventivo, aberto a qualquer pessoa interessada em cuidar da saúde mental e cognitiva.",
+      "Não é obrigatório. A Métis é um programa de estímulo cognitivo aberto a adultos que querem manter a mente ativa. Quem tem acompanhamento médico continua com ele normalmente.",
   },
   {
     question: "Como escolho meus horários?",
@@ -173,7 +165,7 @@ export const homeFaqs: readonly Faq[] = [
   {
     question: "Qual a base científica da metodologia?",
     answer:
-      "Nossa metodologia foi desenvolvida por neurologistas e é baseada em intervenções não-farmacológicas com evidências científicas comprovadas em estudos sobre envelhecimento cognitivo saudável.",
+      "A metodologia foi desenvolvida por neurologistas e é baseada em intervenções não farmacológicas estudadas na literatura científica sobre envelhecimento cognitivo. É uma atividade de estímulo, não um tratamento.",
   },
 ];
 
@@ -185,16 +177,16 @@ export const extraFaqs: readonly Faq[] = [
   {
     question: "Quanto custam os planos?",
     answer:
-      "Os preços publicados no site, por mês, são: plano mensal R$ 1.145, trimestral R$ 990, semestral R$ 890 e anual R$ 790. Todos incluem 1 aula semanal de 2h30, o circuito completo das 4 salas e material didático. Os demais benefícios mudam conforme o plano. A aula experimental é gratuita.",
+      "Os valores mensais são: plano mensal R$ 1.145, trimestral R$ 990, semestral R$ 890 e anual R$ 790. Todos incluem 1 aula semanal de 2h30, o circuito completo das 4 salas e material didático. Os demais benefícios mudam conforme o plano. A aula experimental é gratuita.",
   },
   {
     question: "A Métis trata ou previne Alzheimer e demência?",
     answer:
-      "Não. A Métis não trata, não previne e não cura Alzheimer, demência ou qualquer outra doença. É um programa preventivo de estímulo cognitivo: estimula memória, linguagem, atenção e funções executivas e busca fortalecer a reserva cognitiva. Não substitui consulta, diagnóstico ou tratamento médico.",
+      "Não. A Métis não trata, não previne e não cura Alzheimer, demência ou qualquer outra doença. É um programa de estímulo cognitivo para memória, linguagem, atenção e funções executivas, e não substitui consulta, diagnóstico ou tratamento médico.",
   },
   {
     question: "Como agendo a aula experimental?",
-    answer: `Pelo WhatsApp ${PHONE_DISPLAY}. A aula é gratuita e sem compromisso. A equipe confirma o horário e os detalhes. A duração da aula experimental não está publicada nesta página: ela é informada no agendamento.`,
+    answer: `Pelo WhatsApp ${PHONE_DISPLAY}. A aula é gratuita e sem compromisso. A equipe confirma o horário e os detalhes. A duração e os detalhes são informados no agendamento.`,
   },
   {
     question: "Com que frequência são os encontros e quanto duram?",
@@ -204,12 +196,12 @@ export const extraFaqs: readonly Faq[] = [
   {
     question: "Qual o horário de funcionamento?",
     answer:
-      "O horário de funcionamento ainda não está publicado neste site. A equipe informa os dias e horários disponíveis pelo WhatsApp, na matrícula ou no agendamento da aula experimental.",
+      "Os dias e horários de turma são informados pelo WhatsApp, na matrícula ou no agendamento da aula experimental.",
   },
   {
     question: "Preciso morar nas Graças para participar?",
     answer:
-      "Não. A unidade fica nas Graças, em Recife. Pessoas de outros bairros podem participar. Espinheiro, Aflitos, Parnamirim, Derby e Jaqueira são vizinhos. O caminho e o estacionamento podem ser confirmados pelo WhatsApp.",
+      "Não. A unidade fica nas Graças, em Recife, e recebe alunos de qualquer bairro. O caminho e o estacionamento podem ser confirmados pelo WhatsApp.",
   },
 ];
 
@@ -253,7 +245,7 @@ export const rooms: Record<RoomSlug, Room> = {
     height: 768,
     seoTitle: "Sala da Linguagem | Treino de linguagem na Métis, Recife",
     seoDescription:
-      "A Sala da Linguagem da Métis, nas Graças, exercita comunicação, vocabulário, interpretação e expressão em grupos de até 6 adultos. Parte do circuito semanal de 2h30.",
+      "A Sala da Linguagem da Métis, nas Graças, exercita vocabulário, interpretação e expressão em grupos de até 6, no circuito semanal de 2h30.",
   },
   memoria: {
     slug: "memoria",
@@ -271,17 +263,17 @@ export const rooms: Record<RoomSlug, Room> = {
     height: 360,
     seoTitle: "Sala da Memória | Treino de memória para adultos em Recife",
     seoDescription:
-      "A Sala da Memória da Métis, nas Graças, estimula memória e repertório cultural em grupos de até 6. Integra o circuito semanal de 2h30 da academia da mente.",
+      "A Sala da Memória da Métis, nas Graças, estimula memória e repertório cultural em grupos de até 6, no circuito semanal de 2h30.",
   },
   "funcoes-executivas": {
     slug: "funcoes-executivas",
     title: "Sala das Funções Executivas",
     subtitle: "Foco, planejamento e tomada de decisão",
     short:
-      "Aqui o cérebro trabalha em alta performance: atenção, planejamento e resolução de problemas.",
+      "Aqui o foco é atenção, planejamento e resolução de problemas.",
     detail:
       "Integração corpo-mente, com estímulo da atenção, planejamento e resolução de problemas. É o centro de comando de suas ações, onde as interações se tornam movimento e você fortalece suas habilidades de execução.",
-    why: "Funções executivas são as habilidades de manter a atenção, planejar um passo de cada vez e resolver um problema cotidiano. No circuito, esta sala também é descrita como sala de atividades executivas. O trabalho é presencial, em grupo, e não é uma avaliação neuropsicológica.",
+    why: "Funções executivas são as habilidades de manter a atenção, planejar um passo de cada vez e resolver um problema cotidiano. O trabalho é presencial, em grupo, e não é uma avaliação neuropsicológica.",
     image: "/images/sala-executiva.jpg",
     imageAlt:
       "Sala das Funções Executivas da Métis Academia da Mente, no bairro das Graças, em Recife",
@@ -290,7 +282,7 @@ export const rooms: Record<RoomSlug, Room> = {
     seoTitle:
       "Sala das Funções Executivas | Atenção e planejamento na Métis",
     seoDescription:
-      "O que são funções executivas e como a Métis as estimula em Recife: atenção, planejamento e resolução de problemas, em grupos de até 6, no circuito de 2h30.",
+      "Atenção, planejamento e resolução de problemas na Sala das Funções Executivas da Métis, nas Graças, no circuito de 2h30.",
   },
   contemplacao: {
     slug: "contemplacao",
@@ -300,7 +292,7 @@ export const rooms: Record<RoomSlug, Room> = {
       "Depois do esforço cognitivo, chega o momento da pausa. Aqui a mente descansa e consolida.",
     detail:
       "É o espaço onde sua mente descansa e consolida. Depois da estimulação, você entra em estado contemplativo ativo, onde o cérebro descansa e integra tudo o que foi vivido. Aqui, a presença se torna aprendizado consolidado.",
-    why: "A pausa faz parte do circuito, não é um intervalo vazio. A Métis descreve um estado contemplativo ativo, em que a pessoa integra o que viveu nas outras salas. A curadoria cultural da casa — livros, obras, filmes e playlists — acompanha a experiência como um todo.",
+    why: "A pausa faz parte do circuito. Depois do estímulo, a pessoa entra em um estado contemplativo ativo e integra o que viveu nas outras salas. A curadoria cultural — livros, obras, filmes e playlists — acompanha a experiência.",
     image: "/images/sala-contemplacao.jpg",
     imageAlt:
       "Sala da Contemplação da Métis Academia da Mente, no bairro das Graças, em Recife",
@@ -308,7 +300,7 @@ export const rooms: Record<RoomSlug, Room> = {
     height: 1024,
     seoTitle: "Sala da Contemplação | Pausa e cultura na Métis, Recife",
     seoDescription:
-      "A Sala da Contemplação fecha o circuito da Métis: pausa, presença e integração depois do estímulo. Academia da mente nas Graças, Recife, em grupos de até 6.",
+      "A Sala da Contemplação fecha o circuito da Métis nas Graças: pausa e integração depois do estímulo, em grupos de até 6.",
   },
 };
 

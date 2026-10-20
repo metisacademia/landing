@@ -209,16 +209,6 @@ export default function TestimonialsSection() {
             </div>
           </motion.div>
 
-          <noscript>
-            <ul className="mt-8 space-y-4 text-left text-white/90">
-              {testimonials.map((testimonial) => (
-                <li key={testimonial.quote}>
-                  “{testimonial.quote}” — Aluno(a) Métis ({testimonial.benefit})
-                </li>
-              ))}
-            </ul>
-          </noscript>
-
           {/* Pagination dots */}
           <div className="flex justify-center gap-3 mt-8">
             {testimonials.map((_, index) => (

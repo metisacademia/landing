@@ -9,12 +9,12 @@ export default function PlanosPage() {
     <PageShell
       eyebrow="Investimento"
       title="Planos e preços"
-      lede={`Os planos da Métis custam ${PRICE_RANGE_LABEL}, conforme a opção publicada no site. Todos incluem uma aula presencial por semana, de 2h30, com o circuito completo das quatro salas, em grupos de até 6 pessoas. A aula experimental é gratuita e sem compromisso.`}
+      lede={`Os planos da Métis vão de ${PRICE_RANGE_LABEL}. Todos incluem uma aula presencial por semana, de 2h30, com o circuito completo das quatro salas, em grupos de até 6 pessoas. A aula experimental é gratuita e sem compromisso.`}
     >
       <section className="section-padding bg-[#0f2940]">
         <div className="container-elegant">
           <p className="text-center text-white/80 mb-10 max-w-3xl mx-auto" style={sans}>
-            Vagas limitadas: máximo de 6 alunos por turma. Os valores abaixo são os preços mensais exibidos no site. Forma de pagamento, fidelidade e cancelamento não estão publicados aqui — a equipe confirma no atendimento.
+            Vagas limitadas: máximo de 6 alunos por turma. Formas de pagamento e condições são apresentadas no atendimento.
           </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {plans.map((plan) => (
@@ -75,10 +75,7 @@ export default function PlanosPage() {
           </h2>
           <p>Uma aula semanal de 2h30 e o circuito completo das quatro salas: Linguagem, Memória, Funções Executivas e Contemplação. Material didático incluso.</p>
           <p>
-            A partir do plano trimestral, o site também lista acompanhamento personalizado. Nos planos semestral e anual, há relatório de evolução. O plano anual inclui prioridade em eventos. O conteúdo desses relatórios e eventos não está detalhado nesta página.
-          </p>
-          <p>
-            A etiqueta “Economia” é a mesma publicada na página inicial, ao lado de cada plano. O site não explica o cálculo. Por isso ela é repetida aqui do mesmo jeito, sem uma interpretação nova.
+            A partir do plano trimestral, há acompanhamento personalizado. Nos planos semestral e anual, há relatório de evolução. O plano anual inclui prioridade em eventos.
           </p>
           <MedicalNotice />
         </div>

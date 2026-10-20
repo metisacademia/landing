@@ -18,7 +18,7 @@ export default function AulaExperimentalPage() {
           <ul className="list-disc pl-5 space-y-2">
             <li>A aula é gratuita.</li>
             <li>Não há compromisso de matrícula.</li>
-            <li>O objetivo publicado é conhecer a metodologia, a equipe e o ambiente.</li>
+            <li>Você conhece a metodologia, a equipe e o ambiente.</li>
             <li>O contato é o WhatsApp {PHONE_DISPLAY}.</li>
             <li>A unidade fica na {ADDRESS_ONE_LINE}.</li>
           </ul>
@@ -26,10 +26,10 @@ export default function AulaExperimentalPage() {
             O que a equipe confirma no agendamento
           </h2>
           <p>
-            A duração da aula experimental, o que levar e se o encontro percorre o circuito inteiro de 2h30 não estão publicados. Esses pontos são combinados no WhatsApp, junto com o horário. O programa regular, depois da matrícula, é semanal e dura 2h30, em grupos de até 6 pessoas.
+            A duração, o que levar e o roteiro da aula são combinados pelo WhatsApp, junto com o horário. Depois da matrícula, o programa é semanal, com 2h30 de duração, em grupos de até 6 pessoas.
           </p>
           <p>
-            No formulário da página inicial, a Métis informa que responde em até 24 horas. O mesmo canal serve para quem prefere chamar direto, sem preencher o formulário.
+            Respondemos em até 24 horas. Se preferir, chame direto no WhatsApp.
           </p>
           <MedicalNotice />
         </div>
@@ -39,7 +39,7 @@ export default function AulaExperimentalPage() {
         links={[
           { href: "/como-funciona", label: "Como funciona", text: "O circuito que a aula apresenta." },
           { href: "/planos", label: "Planos e preços", text: "Os valores, se a aula fizer sentido." },
-          { href: "/contato", label: "Como chegar", text: "Endereço, mapa e estacionamento mencionado no site." },
+          { href: "/contato", label: "Como chegar", text: "Endereço, mapa e estacionamento." },
         ]}
       />
       <CtaBand

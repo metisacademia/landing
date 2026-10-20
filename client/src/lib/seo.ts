@@ -1,13 +1,11 @@
 import {
   ADDRESS,
-  ADDRESS_ONE_LINE,
   BUSINESS_DESCRIPTION,
   EMAIL,
   GEO,
   INSTAGRAM_URL,
   NAP_NAME,
   OG_IMAGE,
-  PHONE_DISPLAY,
   PHONE_SCHEMA,
   PRICE_RANGE_SCHEMA,
   SITE_URL,
@@ -47,7 +45,7 @@ export type PageSeo = {
 
 const HOME_TITLE = "Métis Academia da Mente | Treino cognitivo em Recife (Graças)";
 const HOME_DESCRIPTION =
-  "Academia da mente desenvolvida por neurologistas, nas Graças, Recife. Circuito semanal de memória, linguagem e foco em grupos de até 6. Agende uma aula experimental gratuita.";
+  "Academia da mente criada por neurologistas nas Graças, Recife. Circuito semanal de 2h30 em grupos de até 6. Agende sua aula experimental gratuita.";
 
 function healthClubNode(): Record<string, unknown> {
   return {
@@ -319,7 +317,7 @@ const pages: PageSeo[] = [
     path: "/como-funciona",
     title: "Como funciona o circuito Métis | Academia da Mente em Recife",
     description:
-      "O circuito da Métis dura 2h30 por semana, em quatro salas e grupos de até 6 adultos, nas Graças, Recife. Veja a ordem das salas e agende uma aula experimental.",
+      "O circuito da Métis: 2h30 por semana, quatro salas e grupos de até 6 adultos, nas Graças, Recife. Conheça as salas e agende uma aula experimental.",
     priority: "0.9",
     breadcrumbs: [homeCrumb, { name: "Como funciona", path: "/como-funciona" }],
     faqs: [homeFaqs[0], homeFaqs[4], homeFaqs[2]],
@@ -339,7 +337,8 @@ const pages: PageSeo[] = [
   buildPage({
     path: "/aula-experimental",
     title: "Aula experimental gratuita | Métis Academia da Mente",
-    description: `Agende uma aula experimental gratuita na Métis, nas Graças, Recife. Sem compromisso. A equipe confirma horário e detalhes pelo WhatsApp ${PHONE_DISPLAY}.`,
+    description:
+      "Aula experimental gratuita na Métis, nas Graças, Recife. Sem compromisso. A equipe confirma horário e detalhes pelo WhatsApp.",
     priority: "0.8",
     breadcrumbs: [
       homeCrumb,
@@ -364,7 +363,8 @@ const pages: PageSeo[] = [
   buildPage({
     path: "/contato",
     title: "Contato e como chegar | Métis nas Graças, Recife",
-    description: `Métis Academia da Mente: ${ADDRESS_ONE_LINE}. WhatsApp ${PHONE_DISPLAY}.`,
+    description:
+      "Como chegar à Métis nas Graças, Recife: Kronos Empresarial, Rua das Pernambucanas, 407, sala 1203.",
     priority: "0.8",
     breadcrumbs: [homeCrumb, { name: "Contato", path: "/contato" }],
     faqs: [extraFaqs[0], extraFaqs[5], extraFaqs[6]],
@@ -374,7 +374,7 @@ const pages: PageSeo[] = [
     path: "/treino-cognitivo-em-recife",
     title: "Treino cognitivo em Recife | Métis nas Graças",
     description:
-      "Treino e estimulação cognitiva para adultos nas Graças, Recife. Circuito semanal de 2h30 em grupos de até 6. Planos de R$ 790 a R$ 1.145 por mês. Aula experimental gratuita.",
+      "Treino cognitivo para adultos e idosos nas Graças, Recife: circuito semanal de 2h30, grupos de até 6. Aula experimental grátis.",
     priority: "0.9",
     breadcrumbs: [
       homeCrumb,
@@ -387,24 +387,11 @@ const pages: PageSeo[] = [
     path: "/para-medicos",
     title: "Para médicos: como indicar a Métis | Recife",
     description:
-      "Neurologistas, geriatras e clínicas podem indicar adultos à Métis, academia de estímulo cognitivo nas Graças, Recife. A indicação não é obrigatória e o programa não substitui o cuidado médico.",
+      "Como médicos e clínicas podem indicar adultos à Métis, nas Graças, Recife. Estímulo cognitivo que não substitui o cuidado médico.",
     priority: "0.6",
     breadcrumbs: [homeCrumb, { name: "Para médicos", path: "/para-medicos" }],
     faqs: [homeFaqs[1], extraFaqs[2], extraFaqs[3]],
     htmlCheck: "como indicar a Métis",
-  }),
-  buildPage({
-    path: "/equipe",
-    title: "Equipe | Métis Academia da Mente",
-    description:
-      "Página em preparação. Os dados dos profissionais da Métis ainda serão publicados pela própria equipe.",
-    indexable: false,
-    prerender: true,
-    robots: "noindex, nofollow",
-    priority: "0.1",
-    breadcrumbs: [homeCrumb, { name: "Equipe", path: "/equipe" }],
-    includeBusiness: false,
-    htmlCheck: "ainda não foram publicados",
   }),
 ];
 
@@ -419,7 +406,7 @@ export function normalizePath(pathname: string): string {
 const notFoundSeo: PageSeo = buildPage({
   path: "/404",
   title: "Página não encontrada | Métis Academia da Mente",
-  description: "Esta página não existe no site da Métis Academia da Mente.",
+  description: "Este endereço não faz parte da Métis Academia da Mente.",
   indexable: false,
   prerender: false,
   robots: "noindex, nofollow",

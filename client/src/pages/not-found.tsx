@@ -12,7 +12,7 @@ export default function NotFound() {
             <h1 className="text-2xl font-medium text-[#0f2940]">Página não encontrada</h1>
           </div>
           <p className="mt-4 text-sm text-[#4a5568]">
-            Este endereço não existe no site da Métis Academia da Mente.
+            Este endereço não faz parte da Métis Academia da Mente.
           </p>
           <Link href="/" className="inline-block mt-6 text-[#0f2940] font-medium underline decoration-[#c9a961] underline-offset-4">
             Voltar ao início

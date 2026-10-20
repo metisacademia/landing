@@ -16,20 +16,20 @@ export default function ParaMedicosPage() {
             O que a pessoa encontra
           </h2>
           <p>
-            Um circuito semanal de 2h30, em quatro salas — Linguagem, Memória, Funções Executivas e Contemplação — em grupos de até 6 pessoas. O método foi desenvolvido por neurologistas. Os planos publicados custam {PRICE_RANGE_LABEL}. Há aula experimental gratuita.
+            Um circuito semanal de 2h30, em quatro salas — Linguagem, Memória, Funções Executivas e Contemplação — em grupos de até 6 pessoas. O método foi desenvolvido por neurologistas. Os planos vão de {PRICE_RANGE_LABEL}. Há aula experimental gratuita.
           </p>
           <p>Endereço: {ADDRESS_ONE_LINE}.</p>
           <h2 className="text-3xl font-medium text-[#0f2940] pt-4" style={serif}>
             O que a Métis não faz
           </h2>
           <p>
-            Não emite diagnóstico, não prescreve e não promete prevenir ou curar Alzheimer, demência ou outra doença. Não há, neste site, um formulário de encaminhamento, um laudo de volta ao consultório nem o nome do corpo clínico. O relatório de evolução citado nos planos semestral e anual é um benefício do aluno. O site não diz que esse relatório é enviado ao médico indicador.
+            Não emite diagnóstico, não prescreve e não promete prevenir, tratar ou curar Alzheimer, demência ou qualquer outra doença.
           </p>
           <h2 className="text-3xl font-medium text-[#0f2940] pt-4" style={serif}>
             Como indicar
           </h2>
           <p>
-            Passe o WhatsApp {PHONE_DISPLAY} ou o e-mail {EMAIL}. A pessoa, ou a família, agenda a aula experimental. No formulário do site existe a opção “Indicação médica” em “Como conheceu a Métis?”. Não é preciso um documento para a aula acontecer.
+            Passe o WhatsApp {PHONE_DISPLAY} ou o e-mail {EMAIL}. A pessoa, ou a família, agenda a aula experimental. No formulário, é possível marcar “Indicação médica” em “Como conheceu a Métis?”. Não é preciso um documento para a aula acontecer.
           </p>
           <p className="rounded-2xl bg-[#faf8f5] p-6">
             Texto que pode ser encaminhado: “A Métis é uma academia de estímulo cognitivo para adultos nas Graças, Recife. O circuito semanal dura 2h30, em grupos de até 6. Não substitui acompanhamento médico. Aula experimental gratuita pelo WhatsApp {PHONE_DISPLAY}.”
@@ -50,7 +50,7 @@ export default function ParaMedicosPage() {
         title="Falar com a equipe"
         message={DOCTOR_MESSAGE}
         label="WhatsApp para indicação"
-        text="Se quiser avisar a Métis sobre uma indicação, use o WhatsApp. Não há convênio ou parceria publicada além deste contato."
+        text="Para avisar a equipe sobre uma indicação, use o WhatsApp."
       />
     </PageShell>
   );

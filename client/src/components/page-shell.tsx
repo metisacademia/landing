@@ -73,7 +73,7 @@ export function MedicalNotice() {
         O que a Métis não promete
       </h2>
       <p className="text-[#4a5568] leading-relaxed" style={sans}>
-        A Métis é um programa preventivo de estímulo cognitivo. Estimula memória, linguagem, atenção e funções executivas e busca fortalecer a reserva cognitiva. Não é tratamento, não substitui avaliação médica e não promete prevenir ou curar Alzheimer, demência ou qualquer outra doença.
+        A Métis é um programa de estímulo cognitivo para adultos. Trabalha memória, linguagem, atenção e funções executivas. Não é tratamento médico, não substitui avaliação médica e não promete prevenir, tratar ou curar Alzheimer, demência ou qualquer outra doença.
       </p>
     </aside>
   );

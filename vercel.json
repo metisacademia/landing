@@ -17,6 +17,9 @@
     }
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/spa.html" }
+    { "source": "/checkout", "destination": "/spa.html" },
+    { "source": "/checkout/:path*", "destination": "/spa.html" },
+    { "source": "/admin", "destination": "/spa.html" },
+    { "source": "/admin/:path*", "destination": "/spa.html" }
   ]
 }

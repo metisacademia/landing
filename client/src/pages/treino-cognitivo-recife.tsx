@@ -4,7 +4,6 @@ import {
   ADDRESS_ONE_LINE,
   extraFaqs,
   homeFaqs,
-  NEARBY_NEIGHBORHOODS,
   PHONE_DISPLAY,
   PRICE_RANGE_LABEL,
 } from "@/lib/site";
@@ -16,7 +15,7 @@ export default function TreinoCognitivoRecifePage() {
     <PageShell
       eyebrow="Recife · Graças"
       title="Treino cognitivo em Recife"
-      lede={`A Métis é uma academia de treino cognitivo para adultos nas Graças, Recife, com método desenvolvido por neurologistas. O circuito semanal dura 2h30, em grupos de até 6 pessoas, e os planos publicados vão de ${PRICE_RANGE_LABEL}. A aula experimental é gratuita.`}
+      lede={`A Métis é uma academia de treino cognitivo para adultos e idosos nas Graças, Recife, com método desenvolvido por neurologistas. O circuito semanal dura 2h30, em grupos de até 6 pessoas, e os planos vão de ${PRICE_RANGE_LABEL}. A aula experimental é gratuita.`}
     >
       <section className="section-padding bg-white">
         <div className="container-elegant max-w-3xl space-y-4 text-lg text-[#4a5568] leading-relaxed" style={sans}>
@@ -27,7 +26,7 @@ export default function TreinoCognitivoRecifePage() {
             Uma vez por semana, a pessoa percorre quatro salas: Linguagem, Memória, Funções Executivas e Contemplação. O encontro estimula memória, linguagem, atenção e funções executivas e busca fortalecer a reserva cognitiva. Há curadoria cultural — livros, obras, filmes e playlists — e acompanhamento profissional.
           </p>
           <p>
-            É um programa presencial, no {ADDRESS_ONE_LINE}. Não é um aplicativo e não é uma consulta.
+            É um programa presencial, na {ADDRESS_ONE_LINE}. Não é um aplicativo e não é uma consulta.
           </p>
           <p>
             <Link href="/como-funciona" className="text-[#0f2940] font-medium underline decoration-[#c9a961] underline-offset-4">
@@ -45,13 +44,13 @@ export default function TreinoCognitivoRecifePage() {
       <section className="section-padding bg-[#faf8f5]">
         <div className="container-elegant max-w-3xl space-y-4 text-lg text-[#4a5568] leading-relaxed" style={sans}>
           <h2 className="text-3xl font-medium text-[#0f2940]" style={serif}>
-            Estimulação cognitiva para idosos e adultos 50+ nas Graças
+            Estimulação cognitiva para adultos e idosos nas Graças
           </h2>
           <p>
-            Muita gente chega à Métis depois dos 50, ou é um filho ou uma filha buscando uma atividade presencial para o pai ou a mãe. O programa é para adultos. O ambiente é em grupo pequeno, de até 6 pessoas, no bairro das Graças.
+            O programa é para adultos e idosos, em grupos pequenos de até 6 pessoas, no bairro das Graças.
           </p>
           <p>
-            A unidade não muda de bairro: há uma sala, no Kronos Empresarial. Moradores de {NEARBY_NEIGHBORHOODS.join(", ")} estão perto e podem participar. Não existem filiais com o nome desses bairros.
+            A unidade fica no Kronos Empresarial, nas Graças, em Recife.
           </p>
           <p>
             Esquecimentos do dia a dia preocupam muitas famílias. A Métis não diagnostica e não diz, à distância, se um esquecimento é esperado ou se pede avaliação. Quem nota uma mudança que incomoda deve procurar um médico. O treino cognitivo não substitui essa consulta.
@@ -66,7 +65,7 @@ export default function TreinoCognitivoRecifePage() {
             Como começar
           </h2>
           <p>
-            O primeiro passo publicado é a aula experimental gratuita, pelo WhatsApp {PHONE_DISPLAY}. Encaminhamento médico não é obrigatório. Quem é acompanhado por um profissional de saúde pode ir indicado e continuar o cuidado médico em paralelo.
+            O primeiro passo é a aula experimental gratuita, pelo WhatsApp {PHONE_DISPLAY}. Encaminhamento médico não é obrigatório. Quem é acompanhado por um profissional de saúde pode ir indicado e continuar o cuidado médico em paralelo.
           </p>
         </div>
       </section>

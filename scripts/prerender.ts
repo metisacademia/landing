@@ -65,7 +65,24 @@ try {
     console.log(`prerender ${page.path} → ${path.relative(projectRoot, outFile)} (${document.length} bytes)`);
   }
 
-  const lastmod = "2026-10-20";
+  const notFoundHtml = render("/404");
+  const notFoundHead = seo.renderHead(seo.getSeo("/404"));
+  const notFoundDocument = template
+    .replace(marker, `<!--seo-head:start-->\n    ${notFoundHead}\n    <!--seo-head:end-->`)
+    .replace('<div id="root"></div>', `<div id="root">${notFoundHtml}</div>`);
+  const notFoundFile = path.join(distDir, "404.html");
+  fs.writeFileSync(notFoundFile, notFoundDocument);
+  assertPage(notFoundFile, notFoundDocument, {
+    path: "/404",
+    title: "Página não encontrada | Métis Academia da Mente",
+    canonical: "https://www.metisacademia.com.br/404",
+    htmlCheck: "Página não encontrada",
+    indexable: false,
+    robots: "noindex, nofollow",
+  });
+  console.log(`prerender /404 → ${path.relative(projectRoot, notFoundFile)} (${notFoundDocument.length} bytes)`);
+
+  const lastmod = new Date().toISOString().slice(0, 10);
   const sitemap = seo.renderSitemap(lastmod);
   fs.writeFileSync(path.join(distDir, "sitemap.xml"), sitemap);
   fs.writeFileSync(path.join(projectRoot, "client/public/sitemap.xml"), sitemap);
@@ -118,6 +135,26 @@ function assertPage(
   }
   if (!html.includes('lang="pt-BR"')) {
     throw new Error(`${file} sem lang pt-BR`);
+  }
+  const description = html.match(/<meta name="description" content="([^"]*)"/);
+  if (!description) throw new Error(`${file} sem meta description`);
+  if (description[1].length > 155) {
+    throw new Error(`${file} description com ${description[1].length} caracteres`);
+  }
+  const forbidden = [
+    "programa preventivo",
+    "evidências científicas comprovadas",
+    "evidências comprovadas",
+    "alta performance",
+    "O site ",
+    "neste site",
+    "nesta página",
+    "50+",
+    "60+",
+    "Não existem filiais",
+  ];
+  for (const phrase of forbidden) {
+    if (html.includes(phrase)) throw new Error(`${file} contém "${phrase}"`);
   }
   if (page.path === "/") {
     const answer = "O circuito é uma jornada semanal de 2h30";

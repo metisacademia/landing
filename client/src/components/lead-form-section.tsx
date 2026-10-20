@@ -16,7 +16,6 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { motion } from "framer-motion";
 import { Brain, Check, Gift, Clock, Shield } from "lucide-react";
-import { trackWhatsAppClick } from "@/lib/whatsapp";
 import { WhatsAppAnchor } from "@/components/whatsapp-anchor";
 import { TRIAL_MESSAGE } from "@/lib/site";
 
@@ -109,15 +108,15 @@ export default function LeadFormSection() {
   const onSubmit = (data: LeadFormData) => {
     // Evento de rastreamento para GTM
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      'event': 'form_submit',
-      'form_type': 'contato',
-      'utm_source': data.utm_source || '',
-      'utm_medium': data.utm_medium || '',
-      'utm_campaign': data.utm_campaign || '',
-      'origem': data.origem || '',
-    });
-    trackWhatsAppClick("lead_form");
+    const formTracking = {
+      form_type: "contato",
+      utm_source: data.utm_source || "",
+      utm_medium: data.utm_medium || "",
+      utm_campaign: data.utm_campaign || "",
+      origem: data.origem || "",
+    };
+    window.dataLayer.push({ event: "lead_form_submit", ...formTracking });
+    window.dataLayer.push({ event: "form_submit", ...formTracking });
 
     // Monta mensagem para WhatsApp (inclui UTMs para rastreamento interno)
     let message = `Olá! Meu nome é ${data.name} e gostaria de agendar uma aula experimental. Meu telefone: ${data.phone}. Conheci a Métis por: ${data.source}`;

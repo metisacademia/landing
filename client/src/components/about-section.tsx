@@ -45,7 +45,7 @@ export default function AboutSection() {
       iconColor: "text-[#0f2940]",
       title: "Para quem é",
       items: [
-        { icon: Check, text: "Pessoas que valorizam prevenção, autonomia e bem-estar" },
+        { icon: Check, text: "Pessoas que querem cuidar da saúde cognitiva, da autonomia e do bem-estar" },
         { icon: Check, text: "Quem quer fortalecer memória, atenção e foco" },
         { icon: Check, text: "Famílias que buscam ambiente acolhedor e de alto padrão" },
       ],
@@ -69,7 +69,7 @@ export default function AboutSection() {
       iconColor: "text-[#0f2940]",
       title: "Diferenciais Métis",
       items: [
-        { icon: Check, text: "Base científica com evidências comprovadas" },
+        { icon: Check, text: "Intervenções não farmacológicas estudadas na literatura científica" },
         { icon: Check, text: "Equipe multidisciplinar especializada" },
         { icon: Check, text: "Metodologia exclusiva desenvolvida por neurologistas" },
       ],

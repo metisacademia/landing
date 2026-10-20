@@ -77,8 +77,8 @@ export default function ResultsSection() {
       icon: Shield,
       bgColor: "bg-[#c9a961]/15",
       iconColor: "text-[#c9a961]",
-      title: "Prevenção Cognitiva",
-      description: "Fortalecimento da reserva cognitiva com base em evidências científicas."
+      title: "Reserva cognitiva",
+      description: "Atividades pensadas para estimular a reserva cognitiva."
     }
   ];
 

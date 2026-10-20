@@ -6,7 +6,7 @@ export default function PerguntasFrequentesPage() {
     <PageShell
       eyebrow="Dúvidas"
       title="Perguntas frequentes"
-      lede="As respostas abaixo repetem o que a Métis já publica: o circuito semanal de 2h30, grupos de até 6 pessoas, preços, aula experimental gratuita e o endereço nas Graças. Onde um dado ainda não existe no site, a resposta diz isso com clareza."
+      lede="Respostas sobre o circuito semanal de 2h30, os grupos de até 6 pessoas, os planos, a aula experimental gratuita e o endereço nas Graças."
     >
       <FaqList faqs={allFaqs} heading="Respostas" />
       <RelatedLinks

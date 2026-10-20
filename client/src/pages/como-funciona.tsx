@@ -17,13 +17,13 @@ export default function ComoFuncionaPage() {
             Um encontro, quatro salas
           </h2>
           <p>
-            O site descreve o circuito nesta ordem: Linguagem, Memória, Funções Executivas e Contemplação. Cada sala estimula capacidades diferentes, com atividades práticas e culturais. A Métis não publica a minutagem de cada sala. O que está publicado é a duração total: 2h30, uma vez por semana.
+            O circuito segue esta ordem: Linguagem, Memória, Funções Executivas e Contemplação. Cada sala estimula capacidades diferentes, com atividades práticas e culturais, em um encontro semanal de 2h30.
           </p>
           <p>
             Os grupos têm no máximo 6 pessoas. A experiência inclui ambiente com iluminação suave e materiais táteis, curadoria cultural (livros, obras, filmes e playlists) e acompanhamento profissional. As atividades presenciais mudam ao longo do programa e são apresentadas pela equipe na aula.
           </p>
           <p>
-            Na matrícula, a pessoa indica os dias e horários de preferência. A equipe confirma a disponibilidade pelo WhatsApp. O horário de funcionamento da casa ainda não está publicado nesta página.
+            Na matrícula, você indica os dias e horários de preferência, e a equipe confirma a disponibilidade pelo WhatsApp.
           </p>
         </div>
       </section>
@@ -75,7 +75,7 @@ export default function ComoFuncionaPage() {
               Para quem é
             </h2>
             <p>
-              A Métis se apresenta para pessoas que valorizam prevenção, autonomia e bem-estar, para quem quer fortalecer memória, atenção e foco, e para famílias que buscam um ambiente acolhedor e de alto padrão. O público do programa é adulto. Não há turma infantil neste site.
+              O programa é voltado a adultos que querem fortalecer memória, atenção e foco, e a famílias que buscam um ambiente acolhedor e de alto padrão.
             </p>
             <p>
               Encaminhamento médico não é obrigatório. Quem já é acompanhado por um neurologista, geriatra ou outra clínica pode vir indicado — e o programa continua sendo estímulo, não tratamento.
