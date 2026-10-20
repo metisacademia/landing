@@ -51,6 +51,8 @@ Texto do artigo em Markdown, depois da segunda linha `---`. Use `##` e `###` par
 
 `author` e, quando houver, `reviewer` são os `id` de `people.ts`. `equipe-metis` é a organização Equipe Métis, sem CRM. Um revisor pessoa só entra com nome, CRM-PE e RQE confirmados. Não inventar registro. Se `reviewer` ficar de fora, o artigo publica sem linha de revisão.
 
+`tags` ficam em slug, sem acento. O filtro mostra o nome em português: Atenção, Envelhecimento, Esquecimento, Família, Funções executivas, Memória, Planejamento, Recife. Uma etiqueta nova precisa desse nome em `client/src/content/articles.ts`.
+
 ## Imagens
 
 A capa é opcional. Sem `cover`, a página do artigo e o cartão do índice ficam só com texto, nas cores da marca. O Open Graph e o `image` do `BlogPosting` usam o logotipo que o restante do site já usa (`/images/logo-metis-bg-color.jpg`).

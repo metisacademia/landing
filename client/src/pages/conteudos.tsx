@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import PageShell, { CtaBand, sans, serif } from "@/components/page-shell";
-import { formatLongDate, listVisibleArticles, type Article } from "@/content/articles";
+import { formatLongDate, listVisibleArticles, tagLabel, type Article } from "@/content/articles";
 
 export default function ConteudosPage() {
   const articles = listVisibleArticles();
@@ -10,7 +10,7 @@ export default function ConteudosPage() {
     for (const article of articles) {
       for (const tag of article.tags) found.add(tag);
     }
-    return Array.from(found).sort((left, right) => left.localeCompare(right, "pt-BR"));
+    return Array.from(found).sort((left, right) => tagLabel(left).localeCompare(tagLabel(right), "pt-BR"));
   }, [articles]);
   const [tag, setTag] = useState<string | null>(null);
   const visible = tag ? articles.filter((article) => article.tags.includes(tag)) : articles;
@@ -54,7 +54,7 @@ export default function ConteudosPage() {
                   className={`rounded-full px-4 py-2 text-sm ${tag === item ? "bg-[#173b5a] text-white" : "bg-white text-[#173b5a]"}`}
                   style={sans}
                 >
-                  {item}
+                  {tagLabel(item)}
                 </button>
               ))}
             </div>

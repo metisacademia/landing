@@ -45,6 +45,26 @@ export type Article = {
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
+/** Nome visível da etiqueta. O slug continua no filtro e no frontmatter. */
+const TAG_LABELS: Record<string, string> = {
+  atencao: "Atenção",
+  envelhecimento: "Envelhecimento",
+  esquecimento: "Esquecimento",
+  familia: "Família",
+  "funcoes-executivas": "Funções executivas",
+  memoria: "Memória",
+  planejamento: "Planejamento",
+  recife: "Recife",
+};
+
+export function tagLabel(slug: string): string {
+  const label = TAG_LABELS[slug];
+  if (!label) {
+    throw new Error(`etiqueta "${slug}" sem nome em português`);
+  }
+  return label;
+}
+
 const modules = import.meta.glob("../../content/artigos/*.md", {
   eager: true,
   query: "?raw",
@@ -205,7 +225,10 @@ function parseArticle(path: string, raw: string): Article | null {
     coverHeight: asOptionalNumber(file, data, "coverHeight"),
     ogImage,
     category: asOptionalString(data, "category"),
-    tags: asStringList(file, data.tags, "tags"),
+    tags: asStringList(file, data.tags, "tags").map((tag) => {
+      if (!TAG_LABELS[tag]) fail(file, `etiqueta "${tag}" sem nome em português`);
+      return tag;
+    }),
     draft,
     faq: asFaq(file, data.faq),
     related: asRelated(file, data.related),

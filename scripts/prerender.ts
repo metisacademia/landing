@@ -216,6 +216,12 @@ try {
         throw new Error(`índice sem a capa de ${slugName}`);
       }
     }
+    for (const label of ["Atenção", "Funções executivas", "Família", "Memória", "Envelhecimento", "Esquecimento", "Planejamento", "Recife"]) {
+      if (!indexHtml.includes(label)) throw new Error(`índice sem a etiqueta ${label}`);
+    }
+    for (const raw of [">atencao<", ">familia<", ">funcoes-executivas<", ">memoria<"]) {
+      if (indexHtml.includes(raw)) throw new Error(`índice mostra o slug cru ${raw}`);
+    }
     assertLocalImages(conteudosIndex, indexHtml);
   }
 
