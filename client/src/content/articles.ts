@@ -31,6 +31,8 @@ export type Article = {
   coverAlt?: string;
   coverWidth?: number;
   coverHeight?: number;
+  /** Imagem 1200×630 para og:image e twitter:image. Sem isto, o Open Graph usa a capa. */
+  ogImage?: string;
   category?: string;
   tags: string[];
   draft: boolean;
@@ -161,6 +163,7 @@ function parseArticle(path: string, raw: string): Article | null {
   const summary = asString(file, data, "summary");
   const cover = asOptionalString(data, "cover");
   const coverAlt = asOptionalString(data, "coverAlt");
+  const ogImage = asOptionalString(data, "ogImage");
 
   if (slug !== file) fail(file, `o slug "${slug}" precisa ser igual ao nome do arquivo`);
   if (!SLUG.test(slug)) fail(file, "slug usa só letras minúsculas, números e hífen");
@@ -171,6 +174,7 @@ function parseArticle(path: string, raw: string): Article | null {
   if (!DATE.test(date) || !DATE.test(updated)) fail(file, "date e updated usam AAAA-MM-DD");
   if (summary.length > 300) fail(file, `summary tem ${summary.length} caracteres; o máximo é 300`);
   if (cover && !cover.startsWith("/")) fail(file, "cover precisa ser um caminho do site, começando com /");
+  if (ogImage && !ogImage.startsWith("/")) fail(file, "ogImage precisa ser um caminho do site, começando com /");
   if (cover && !coverAlt) fail(file, "coverAlt é obrigatório quando há cover");
   if (!cover && (coverAlt || data.coverWidth !== undefined || data.coverHeight !== undefined)) {
     fail(file, "coverAlt, coverWidth e coverHeight só entram junto com cover");
@@ -199,6 +203,7 @@ function parseArticle(path: string, raw: string): Article | null {
     coverAlt,
     coverWidth: asOptionalNumber(file, data, "coverWidth"),
     coverHeight: asOptionalNumber(file, data, "coverHeight"),
+    ogImage,
     category: asOptionalString(data, "category"),
     tags: asStringList(file, data.tags, "tags"),
     draft,

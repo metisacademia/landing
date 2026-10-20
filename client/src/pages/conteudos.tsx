@@ -109,7 +109,7 @@ function ArticleCard({ article }: { article: Article }) {
           alt={coverAlt}
           width={article.coverWidth}
           height={article.coverHeight}
-          className="aspect-[1200/630] h-auto w-full object-cover"
+          className="h-auto w-full object-cover"
         />
       ) : (
         <div className="bg-[#173b5a] px-6 pb-6 pt-7">

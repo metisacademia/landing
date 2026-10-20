@@ -168,13 +168,30 @@ try {
       if (!articleHtml.includes('"author":{"@type":"Organization","name":"Métis Academia da Mente","url":"https://www.metisacademia.com.br"}')) {
         throw new Error(`${link.canonical} sem autor organização`);
       }
-      const postingAt = articleHtml.indexOf('"@type":"BlogPosting"');
-      const posting = postingAt >= 0 ? articleHtml.slice(postingAt, postingAt + 900) : "";
-      if (!posting.includes('"image":"https://www.metisacademia.com.br/images/logo-metis-bg-color.jpg"')) {
-        throw new Error(`${link.canonical} sem a imagem padrão no BlogPosting`);
-      }
-      if (articleHtml.includes("/images/conteudos/")) {
-        throw new Error(`${link.canonical} ainda aponta para uma capa que não existe`);
+      const slugName = slug.split("/").pop() ?? slug;
+      if (slugName === "esquecimento-e-normal" || slugName === "funcoes-executivas") {
+        const shareUrl = `https://www.metisacademia.com.br/images/conteudos/og/${slugName}.jpg`;
+        const coverUrl = `https://www.metisacademia.com.br/images/conteudos/${slugName}.jpg`;
+        if (!articleHtml.includes(`<meta property="og:image" content="${shareUrl}" />`)) {
+          throw new Error(`${link.canonical} sem og:image da imagem de compartilhamento`);
+        }
+        if (!articleHtml.includes(`<meta name="twitter:image" content="${shareUrl}" />`)) {
+          throw new Error(`${link.canonical} sem twitter:image da imagem de compartilhamento`);
+        }
+        if (!articleHtml.includes('<meta property="og:image:width" content="1200" />')) {
+          throw new Error(`${link.canonical} sem og:image:width 1200`);
+        }
+        if (!articleHtml.includes('<meta property="og:image:height" content="630" />')) {
+          throw new Error(`${link.canonical} sem og:image:height 630`);
+        }
+        const postingAt = articleHtml.indexOf('"@type":"BlogPosting"');
+        const posting = postingAt >= 0 ? articleHtml.slice(postingAt, postingAt + 1200) : "";
+        if (!posting.includes(`"image":"${coverUrl}"`)) {
+          throw new Error(`${link.canonical} sem a capa no BlogPosting`);
+        }
+        if (!articleHtml.includes(`src="/images/conteudos/${slugName}.jpg"`)) {
+          throw new Error(`${link.canonical} sem a capa na página`);
+        }
       }
       assertLocalImages(articleFile, articleHtml);
       for (const href of ["/como-funciona", "/aula-experimental", "/treino-cognitivo-em-recife"]) {
@@ -193,6 +210,11 @@ try {
     }
     if (!executivas.includes('href="/salas/funcoes-executivas"')) {
       throw new Error("artigo de funções executivas sem a sala");
+    }
+    for (const slugName of ["esquecimento-e-normal", "funcoes-executivas"]) {
+      if (!indexHtml.includes(`src="/images/conteudos/${slugName}.jpg"`)) {
+        throw new Error(`índice sem a capa de ${slugName}`);
+      }
     }
     assertLocalImages(conteudosIndex, indexHtml);
   }

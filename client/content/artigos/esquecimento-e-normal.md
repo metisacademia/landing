@@ -6,6 +6,11 @@ date: 2026-10-20
 updated: 2026-10-20
 author: equipe-metis
 summary: "Esquecer um nome e lembrar depois, ou procurar a chave de vez em quando, costuma ser normal, ainda mais com a idade, o cansaço ou o estresse. O esquecimento merece atenção quando fica frequente, piora com o tempo ou atrapalha a rotina, como repetir a mesma pergunta. Nesses casos, procure um médico."
+cover: /images/conteudos/esquecimento-e-normal.jpg
+coverAlt: "Mulher de cerca de 60 anos em casa, olhando o celular com calma ao lado de uma tigela com chaves e óculos"
+coverWidth: 1280
+coverHeight: 720
+ogImage: /images/conteudos/og/esquecimento-e-normal.jpg
 category: Memória
 tags:
   - esquecimento

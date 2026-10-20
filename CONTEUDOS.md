@@ -60,14 +60,15 @@ Quando houver foto, acrescente:
 ```yaml
 cover: /images/conteudos/titulo-do-artigo.jpg
 coverAlt: "Descrição da foto"
-coverWidth: 1200
-coverHeight: 630
+coverWidth: 1280
+coverHeight: 720
+ogImage: /images/conteudos/og/titulo-do-artigo.jpg
 ```
 
-- Capa recomendada: **1200×630**, JPG ou WebP, até cerca de 250 KB.
-- Caminho público, começando com `/images/...`.
+- A capa entra na página e no cartão. JPG ou WebP, até cerca de 200 KB.
 - `coverAlt` é obrigatório junto com `cover`.
-- `coverWidth` e `coverHeight` são opcionais e alimentam as tags Open Graph.
+- `ogImage` é opcional. Quando existe, `og:image` e `twitter:image` usam essa foto em URL absoluta, com 1200×630. O `image` do `BlogPosting` continua sendo a capa.
+- Sem `ogImage`, o Open Graph usa a capa.
 
 ## O que a página já faz
 

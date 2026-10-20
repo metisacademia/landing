@@ -333,7 +333,8 @@ function contributorNode(person: Article["author"]): Record<string, unknown> {
 function articleSeo(article: Article): PageSeo {
   const path = `/conteudos/${article.slug}`;
   const indexable = !article.draft;
-  const image = article.cover ? absoluteAssetUrl(article.cover) : undefined;
+  const coverImage = article.cover ? absoluteAssetUrl(article.cover) : undefined;
+  const shareImage = article.ogImage ? absoluteAssetUrl(article.ogImage) : coverImage;
   const page = buildPage({
     path,
     title: `${article.title} | Métis`,
@@ -348,7 +349,7 @@ function articleSeo(article: Article): PageSeo {
       { name: article.title, path },
     ],
     faqs: article.faq,
-    image,
+    image: coverImage,
     extraNodes: [
       organizationNode(),
       {
@@ -356,7 +357,7 @@ function articleSeo(article: Article): PageSeo {
         "@id": `${canonicalUrl(path)}#artigo`,
         headline: article.title,
         description: article.description,
-        image: image ?? OG_IMAGE,
+        image: coverImage ?? OG_IMAGE,
         datePublished: article.date,
         dateModified: article.updated,
         inLanguage: "pt-BR",
@@ -372,10 +373,10 @@ function articleSeo(article: Article): PageSeo {
   return {
     ...page,
     ogType: "article",
-    ogImage: image,
-    ogImageAlt: article.coverAlt,
-    ogImageWidth: article.coverWidth,
-    ogImageHeight: article.coverHeight,
+    ogImage: shareImage,
+    ogImageAlt: article.ogImage ? article.title : article.coverAlt,
+    ogImageWidth: article.ogImage ? 1200 : article.coverWidth,
+    ogImageHeight: article.ogImage ? 630 : article.coverHeight,
     publishedTime: article.date,
     modifiedTime: article.updated,
   };
