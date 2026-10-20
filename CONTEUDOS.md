@@ -9,14 +9,16 @@ Artigos em português, um arquivo Markdown por texto. O build lê a pasta sozinh
 | Artigo | `client/content/artigos/<slug>.md` |
 | Capa | `client/public/images/conteudos/<arquivo>` |
 | Autor e revisor | `client/src/content/people.ts` |
+| Lista de fontes (não publica) | `docs/conteudos/referencias/<slug>-referencias.md` |
 
 O nome do arquivo é o endereço: `memoria-e-rotina.md` publica em `/conteudos/memoria-e-rotina`. O `slug` do frontmatter tem de ser igual ao nome do arquivo.
 
 ## Publicar ou esconder
 
 - `draft: true` fica de fora do site publicado, do sitemap, do `llms.txt` e do índice.
-- O preview da Vercel e o `npm run dev` mostram o rascunho, para a equipe revisar o modelo.
-- O menu **Conteúdos** (cabeçalho e rodapé) só aparece quando existe pelo menos um artigo com `draft: false`.
+- Uma `date` futura, no calendário de Recife, fica de fora do mesmo jeito até esse dia. O preview mostra o texto com a faixa “Agendado para DD/MM” e `noindex`.
+- O preview da Vercel e o `npm run dev` mostram o rascunho e o artigo agendado, para a equipe revisar.
+- O menu **Conteúdos** (cabeçalho e rodapé) só aparece quando existe pelo menos um artigo já na data, com `draft: false`.
 - `reviewer` é opcional. Sem esse campo, a página não mostra “Revisado por” e o JSON-LD não traz `reviewedBy`.
 
 ## Frontmatter
@@ -51,7 +53,13 @@ Texto do artigo em Markdown, depois da segunda linha `---`. Use `##` e `###` par
 
 `author` e, quando houver, `reviewer` são os `id` de `people.ts`. `equipe-metis` é a organização Equipe Métis, sem CRM. Um revisor pessoa só entra com nome, CRM-PE e RQE confirmados. Não inventar registro. Se `reviewer` ficar de fora, o artigo publica sem linha de revisão.
 
-`tags` ficam em slug, sem acento. O filtro mostra o nome em português: Atenção, Envelhecimento, Esquecimento, Família, Funções executivas, Memória, Planejamento, Recife. Uma etiqueta nova precisa desse nome em `client/src/content/articles.ts`.
+`tags` ficam em slug, sem acento. O filtro mostra o nome em português definido em `client/src/content/articles.ts`, com acento: Aposentadoria, Arte, Atenção, Atividades, Comprometimento cognitivo leve, Concentração, Conversa, Convívio, Cuidador, Cultura, Diagnóstico, Envelhecimento, Esquecimento, Estimulação cognitiva, Família, Foco, Funções executivas, Idosos, Leitura, Memória, Mente ativa, Música, Pais idosos, Planejamento, Presente, Recife, Rotina, Suplementos, Vitaminas. Uma etiqueta nova precisa desse nome no mesmo arquivo.
+
+## Agendar
+
+`date` é o dia em que o artigo entra no ar, em `AAAA-MM-DD`, no fuso de Recife. Use terça ou quinta, com `draft: false`. O build avisa se dois textos caem no mesmo dia ou se a data não é terça nem quinta.
+
+Terças e quintas, por volta das 08:00, o workflow **Publicar artigos agendados** recompila a produção. O passo a passo está no `README.md`.
 
 ## Imagens
 

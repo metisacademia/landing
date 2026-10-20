@@ -3,7 +3,7 @@ import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
-import { includeContentDrafts, isDraftArticleSource } from "./scripts/content-drafts";
+import { includeContentDrafts, isHeldBackArticleSource } from "./scripts/content-drafts";
 
 function stripDraftArticles(includeDrafts: boolean): Plugin {
   return {
@@ -16,7 +16,7 @@ function stripDraftArticles(includeDrafts: boolean): Plugin {
       if (!normalized.endsWith(".md") || !normalized.includes("/content/artigos/")) return null;
       if (!query.includes("raw")) return null;
       const source = fs.readFileSync(filename, "utf8");
-      if (!isDraftArticleSource(source)) return null;
+      if (!isHeldBackArticleSource(source)) return null;
       const stub = "---\ndraft: true\n---\n";
       return `export default ${JSON.stringify(stub)};`;
     },

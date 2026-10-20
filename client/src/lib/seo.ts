@@ -332,7 +332,7 @@ function contributorNode(person: Article["author"]): Record<string, unknown> {
 
 function articleSeo(article: Article): PageSeo {
   const path = `/conteudos/${article.slug}`;
-  const indexable = !article.draft;
+  const indexable = !article.draft && !article.scheduled;
   const coverImage = article.cover ? absoluteAssetUrl(article.cover) : undefined;
   const shareImage = article.ogImage ? absoluteAssetUrl(article.ogImage) : coverImage;
   const page = buildPage({

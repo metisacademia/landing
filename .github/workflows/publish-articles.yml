@@ -1,0 +1,42 @@
+name: Publicar artigos agendados
+
+on:
+  schedule:
+    # 10:55 UTC = 07:55 em Recife (UTC−3). O artigo entra no build desse dia.
+    - cron: "55 10 * * 2,4"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Disparar o deploy mesmo sem artigo na janela
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-scheduled-articles
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Ver artigos na janela
+        id: due
+        env:
+          FORCE_PUBLISH: ${{ inputs.force }}
+        run: node scripts/due-articles.mjs
+
+      - name: Disparar o deploy de produção
+        if: steps.due.outputs.due == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit --allow-empty -m "Publica os artigos agendados para hoje."
+          git push origin HEAD:main
