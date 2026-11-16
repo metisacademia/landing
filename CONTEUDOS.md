@@ -53,7 +53,7 @@ Texto do artigo em Markdown, depois da segunda linha `---`. Use `##` e `###` par
 
 `author` e, quando houver, `reviewer` são os `id` de `people.ts`. `equipe-metis` é a organização Equipe Métis, sem CRM. Um revisor pessoa só entra com nome, CRM-PE e RQE confirmados. Não inventar registro. Se `reviewer` ficar de fora, o artigo publica sem linha de revisão.
 
-`tags` ficam em slug, sem acento. O filtro mostra o nome em português definido em `client/src/content/articles.ts`, com acento: Aposentadoria, Arte, Atenção, Atividades, Comprometimento cognitivo leve, Concentração, Conversa, Convívio, Cuidador, Cultura, Diagnóstico, Envelhecimento, Esquecimento, Estimulação cognitiva, Família, Foco, Funções executivas, Idosos, Leitura, Memória, Mente ativa, Música, Pais idosos, Planejamento, Presente, Recife, Rotina, Suplementos, Vitaminas. Uma etiqueta nova precisa desse nome no mesmo arquivo.
+`tags` ficam em slug, sem acento. O filtro mostra o nome em português definido em `client/src/content/articles.ts`, com acento: Aprendizado, Aposentadoria, Arte, Atenção, Atividades, Avaliação médica, Comprometimento cognitivo leve, Concentração, Conversa, Convívio, Cuidador, Cultura, Diagnóstico, Envelhecimento, Esquecimento, Estimulação cognitiva, Evidências, Família, Foco, Funções executivas, Idosos, Leitura, Memória, Menopausa, Mente ativa, Música, Pais idosos, Planejamento, Presente, Reabilitação cognitiva, Recife, Reserva cognitiva, Rotina, Saúde da mulher, Sono, Suplementos, Teste cognitivo, Teste de memória, Treino cognitivo, Vitaminas. Uma etiqueta nova precisa desse nome no mesmo arquivo.
 
 ## Agendar
 
