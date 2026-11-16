@@ -1,0 +1,33 @@
+# Referências: reserva-cognitiva (M15)
+
+Fontes da seção 8 do brief, verificadas em 16/11/2026 (DOI/PMID conferidos na API do NCBI; links de PMC com HTTP 200; Comissão Lancet lida na versão aceita de acesso aberto da UCL). Listadas na ordem em que aparecem no artigo.
+
+1. Stern Y. Cognitive reserve in ageing and Alzheimer's disease. *Lancet Neurol*. 2012;11(11):1006-1012. DOI: 10.1016/S1474-4422%2812%2970191-6 · PMID: 23079557 · PMCID: PMC3507991 · https://pmc.ncbi.nlm.nih.gov/articles/PMC3507991/
+   - Apoia: "a reserva cognitiva ajuda a explicar por que algumas pessoas toleram mais as mudanças que o envelhecimento ou a doença de Alzheimer provocam no cérebro"; "experiências acumuladas ao longo da vida pesam nessa conta"; a distinção entre reserva cerebral (estrutura) e reserva cognitiva (forma de realizar tarefas); "estudos epidemiológicos [...] sugerem que experiências da vida inteira podem aumentar a reserva"; "o risco de desenvolver doença de Alzheimer é menor em pessoas com mais escolaridade ou com ocupação mais complexa"; a mensagem honesta sobre médias sem garantia individual; "Pesquisas associam uma vida intelectual, social e cultural ativa a maior reserva cognitiva"; estimativa da reserva por escolaridade, ocupação e lazer.
+
+2. Stern Y. What is cognitive reserve? Theory and research application of the reserve concept. *J Int Neuropsychol Soc*. 2002;8(3):448-460. PMID: 11939702 · https://pubmed.ncbi.nlm.nih.gov/11939702/
+   - Apoia: "não parece haver relação direta entre o grau de lesão no cérebro e o que a pessoa manifesta no dia a dia"; os dois caminhos da reserva: uso mais eficiente das redes do cérebro e recrutamento de redes alternativas quando necessário (seção sobre neuroplasticidade).
+
+3. Stern Y, Arenaza-Urquijo EM, Bartrés-Faz D, et al. Whitepaper: Defining and investigating cognitive reserve, brain reserve, and brain maintenance. *Alzheimers Dement*. 2020;16(9):1305-1311. DOI: 10.1016/j.jalz.2018.07.219 · PMID: 30222945 · PMCID: PMC6417987 · https://pmc.ncbi.nlm.nih.gov/articles/PMC6417987/
+   - Apoia: "um grupo de trabalho ligado à Alzheimer's Association propôs definições de consenso para reserva cognitiva, reserva cerebral e manutenção cerebral"; "apontou confusão sobre como medir esses conceitos".
+
+4. Valenzuela MJ, Sachdev P. Brain reserve and dementia: a systematic review. *Psychol Med*. 2006;36(4):441-454. DOI: 10.1017/S0033291705006264 · PMID: 16207391 · https://pubmed.ncbi.nlm.nih.gov/16207391/
+   - Apoia: "22 estudos de coorte [...] mais de 29 mil pessoas, seguidas por uma mediana de 7,1 anos"; "Quem tinha mais reserva, medida por escolaridade, ocupação e atividades mentais, apresentou menor risco de demência"; atividade mental complexa em fases avançadas associada a taxas menores, com relação de dose e resposta; "Os próprios autores, porém, pedem ensaios randomizados"; hábito 2 (atividade mental complexa e menores taxas de demência); estimativa da reserva por indicadores. A razão de chances não foi convertida em porcentagem.
+
+5. Fratiglioni L, Paillard-Borg S, Winblad B. An active and socially integrated lifestyle in late life might protect against dementia. *Lancet Neurol*. 2004;3(6):343-353. DOI: 10.1016/S1474-4422%2804%2900767-7 · PMID: 15157849 · https://pubmed.ncbi.nlm.nih.gov/15157849/
+   - Apoia: "olhou para três frentes: rede social, atividade física e atividade mental. As três sugerem efeito benéfico sobre a cognição"; "um estilo de vida ativo e socialmente integrado se associa a menor risco de demência"; reserva cognitiva como hipótese que une as frentes; "mais pesquisa é necessária"; hábito 3 (conviver).
+
+6. Wilson RS, Boyle PA, Yu L, Barnes LL, Schneider JA, Bennett DA. Life-span cognitive activity, neuropathologic burden, and cognitive aging. *Neurology*. 2013;81(4):314-321. DOI: 10.1212/WNL.0b013e31829c5e8a · PMID: 23825173 · PMCID: PMC3772831 · https://pmc.ncbi.nlm.nih.gov/articles/PMC3772831/
+   - Apoia: "acompanhou pessoas por uma média de 5,8 anos. Depois da morte de 294 participantes, os pesquisadores examinaram o cérebro"; "Atividade cognitiva mais frequente, tanto no início quanto em fases avançadas da vida, se associou a um declínio mais lento [...] independentemente das lesões"; hábito 2 (atividade cognitiva frequente e declínio mais lento); FAQ 4.
+
+7. Livingston G, Huntley J, Liu KY, et al. Dementia prevention, intervention, and care: 2024 report of the Lancet standing Commission. *Lancet*. 2024;404(10452):572-628. DOI: 10.1016/S0140-6736%2824%2901296-0 · PMID: 39096926 · https://doi.org/10.1016/S0140-6736%2824%2901296-0 (versão aceita: https://discovery.ucl.ac.uk/10196488/1/Livingston_Lancet%20Commission%20accepted%20version.pdf)
+   - Apoia: "14 fatores de risco modificáveis respondem por quase metade das demências" (estimativa teórica e populacional); "modificar esses fatores pode prevenir ou adiar a demência"; "algumas associações podem ser só parcialmente causais"; "nunca é cedo nem tarde demais para reduzir o risco de demência"; isolamento social entre os fatores de risco (hábito 3); incentivo ao exercício (hábito 4); aparelho auditivo e avaliação e tratamento da visão (hábito 5).
+
+8. Park DC, Lodi-Smith J, Drew L, et al. The impact of sustained engagement on cognitive function in older adults: the Synapse Project. *Psychol Sci*. 2014;25(1):103-112. DOI: 10.1177/0956797613499592 · PMID: 24214244 · PMCID: PMC4154531 · https://pmc.ncbi.nlm.nih.gov/articles/PMC4154531/
+   - Apoia: hábito 1 ("colchas de retalhos, fotografia digital ou as duas coisas [...] 16,5 horas por semana durante 3 meses [...] melhorou a memória episódica, em comparação com quem fez atividades mais receptivas"); hábito 3 ("as atividades só sociais trouxeram benefício cognitivo limitado").
+
+9. Smid J, Studart-Neto A, César-Freitas KG, et al. Declínio cognitivo subjetivo, comprometimento cognitivo leve e demência – diagnóstico sindrômico: recomendações do Departamento Científico de Neurologia Cognitiva e do Envelhecimento da Academia Brasileira de Neurologia. *Dement Neuropsychol*. 2022;16(3 Suppl 1):1-24. DOI: 10.1590/1980-5764-DN-2022-S101PT · PMID: 36533160 · PMCID: PMC9745999 · https://pmc.ncbi.nlm.nih.gov/articles/PMC9745999/
+   - Apoia: "O consenso da Academia Brasileira de Neurologia orienta como avaliar queixas cognitivas nos diferentes níveis de atenção do SUS. Ou seja, o caminho começa com uma consulta."
+
+10. Ministério da Saúde. AVC (Saúde de A a Z). https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/a/avc
+    - Apoia: "Fraqueza de um lado do corpo, boca torta ou fala enrolada que surgem de repente podem ser sinais de AVC. Ligue imediatamente para o 192 (SAMU)."
